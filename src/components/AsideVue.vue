@@ -45,18 +45,17 @@ import {
   Location,
   Setting,
 } from '@element-plus/icons-vue';
+import { inject } from 'vue';
 import { storeData } from '../store/data.js';
 import { storeToRefs } from 'pinia';
 const store = storeData();
 const { graphs } = storeToRefs(store);
+const $blurBtn = inject('blurBtn');
 
 // TODO 写新图的模板
 // TODO 变成菜单，选择图的种类
 const addNewGraph = (evt) => {
-  evt.target.blur();
-  if (evt.target.nodeName === 'SPAN') {
-    evt.target.parentNode.blur();
-  }
+  $blurBtn(evt);
   store.$patch((state) => {
     state.graphs.push({
       id: 13,

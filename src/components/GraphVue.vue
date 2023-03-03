@@ -11,11 +11,14 @@ import * as echarts from 'echarts';
 import { onMounted, ref } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { storeData } from '../store/data.js';
+import { storeConf } from '../store/config.js';
 import { storeToRefs } from 'pinia';
 const { params } = useRoute();
 const route = useRoute();
-const store = storeData();
-const { graphs } = storeToRefs(store);
+const storeD = storeData();
+const { graphs } = storeToRefs(storeD);
+const storeC = storeConf();
+const { graphTypes } = storeToRefs(storeC);
 
 const drawArea = ref();
 let dataObj;
@@ -35,22 +38,26 @@ onBeforeRouteUpdate((to) => {
 // 绘图
 const draw = () => {
   const myChart = echarts.init(drawArea.value);
+  // 引入配置
+  myChart.setOption(graphTypes.value[0].defaultOpts);
+  // 引入数据，echarts会自动进行合并
   myChart.setOption({
-    title: {
-      text: 'ECharts 入门示例',
-    },
-    tooltip: {},
-    xAxis: {
-      type: 'value',
-    },
-    yAxis: {
-      type: 'value',
-    },
     series: [
       {
-        name: '销量',
-        type: 'line',
-        data: dataObj.data,
+        data: [
+          [1, 2],
+          [2, 2],
+          [3, 0.5],
+          [4, 2],
+        ],
+      },
+      {
+        data: [
+          [0.5, 2],
+          [3, 2],
+          [5, 1],
+          [7, 2],
+        ],
       },
     ],
   });
