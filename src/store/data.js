@@ -28,7 +28,7 @@ export const storeData = defineStore('store_data', {
         },
         {
           id: 3,
-          name: 'line2',
+          name: 'line2   长长长名称',
           graphTypeId: 1,
           data: [
             [0, 10],

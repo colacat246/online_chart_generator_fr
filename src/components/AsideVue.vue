@@ -6,6 +6,24 @@
         <span>home</span>
       </el-menu-item>
     </el-menu>
+    <section class="border-bottom">
+      <el-dropdown>
+        <span class="el-dropdown-link"> 创建新图 </span>
+        <template #dropdown>
+          <!-- 新增图形 -->
+          <el-dropdown-menu style="width: 180px">
+            <el-dropdown-item
+              class="menu__create__new"
+              style="justify-content: center"
+              v-for="graph in graphTypes"
+              :key="graph.graphTypeId"
+              @click="addNewGraph(graph.graphTypeId)"
+              >{{ graph.type }}</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </section>
     <el-scrollbar>
       <el-menu class="no-right-border" :default-active="activeIndex" router>
         <el-menu-item
@@ -16,7 +34,7 @@
         >
           <span>
             <el-icon><document /></el-icon>
-            <span>{{ graph.name }}</span>
+            <span class="graph__name">{{ graph.name }}</span>
           </span>
           <el-popconfirm
             confirm-button-text="是"
@@ -28,28 +46,12 @@
             @cancel="cancelDelete"
           >
             <template #reference>
-              <el-icon  @click.stop class="delete-button"><delete /></el-icon>
+              <el-icon @click.stop class="delete-button"><delete /></el-icon>
             </template>
           </el-popconfirm>
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
-    <footer class="border-top">
-      <el-dropdown>
-        <span class="el-dropdown-link">创建新图</span>
-        <template #dropdown>
-          <!-- 新增图形 -->
-          <el-dropdown-menu>
-            <el-dropdown-item
-              v-for="graph in graphTypes"
-              :key="graph.graphTypeId"
-              @click="addNewGraph(graph.graphTypeId)"
-              >{{ graph.type }}</el-dropdown-item
-            >
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </footer>
   </div>
 </template>
 
@@ -60,6 +62,7 @@ import {
   Location,
   Setting,
   Warning,
+  CirclePlus,
 } from '@element-plus/icons-vue';
 import { ref, inject, computed } from 'vue';
 import { storeData } from '../store/data.js';
@@ -88,9 +91,9 @@ const addNewGraph = (id) => {
   const setName = () => {
     let name = '新建图形';
     let count = 1;
-    graphs.value.forEach((i) => {
-      name = name === i.name ? `新建图形（${++count}）` : name;
-    });
+    while (graphs.value.some((i) => i.name === name)) {
+      name = `新建图形（${++count}）`;
+    }
     return name;
   };
 
@@ -139,6 +142,12 @@ div {
   flex-direction: column;
   .menu__graph {
     justify-content: space-between;
+    .graph__name {
+      overflow: hidden;
+      display: inline-block;
+      width: 100px;
+      text-overflow: ellipsis;
+    }
   }
   .delete-button {
     display: none;
@@ -149,11 +158,15 @@ div {
   .show__icon:hover .delete-button {
     display: inherit;
   }
-  footer {
+  section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
+
+    .menu__create__new *:hover {
+      color: #409eff;
+    }
     .aside__button {
       margin: 8px;
       width: 60%;

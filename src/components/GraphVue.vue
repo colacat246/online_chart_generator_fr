@@ -1,11 +1,15 @@
 <template>
-  <div>
-    名称：{{ curGraph.name }} 路由参数：{{ params.id }}
-    <div ref="drawArea" class="graph__drawing_area"></div>
+  <div class="graph__area__con">
+    <section>
+      名称：{{ curGraph.name }} 路由参数：{{ params.id }}
+      <div ref="drawArea" class="graph__drawing_area"></div>
+    </section>
+    <GraphControlVue />
   </div>
 </template>
 
 <script setup>
+import GraphControlVue from './GraphControlVue.vue';
 import * as echarts from 'echarts';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
@@ -55,6 +59,17 @@ const initChart = () => {
 </script>
 
 <style lang="less" scoped>
+.graph__area__con {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 350px;
+  grid-template-rows: 100%;
+  // border: 1px solid gold;
+  & > * {
+    box-sizing: border-box;
+  }
+}
 .graph__drawing_area {
   margin: 0 auto;
   width: 700px;
