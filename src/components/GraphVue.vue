@@ -63,7 +63,7 @@ const initChart = () => {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: auto 350px;
+  grid-template-columns: auto 400px;
   grid-template-rows: 100%;
   // border: 1px solid gold;
   & > * {
@@ -72,7 +72,7 @@ const initChart = () => {
 }
 .graph__drawing_area {
   margin: 0 auto;
-  width: 700px;
+  width: 600px;
   height: 500px;
   border: 1px solid red;
 }

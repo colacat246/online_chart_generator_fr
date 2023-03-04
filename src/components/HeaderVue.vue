@@ -11,7 +11,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: var(--el-box-shadow);
+  border-bottom: 1px solid var(--el-border-color);
+  color: #66b1ff;
+  // color: #e5eaf3;
+  // opacity: 0.8;
+  // box-shadow: var(--el-box-shadow);
   h1 {
     font-size: 22px;
     margin: 0;

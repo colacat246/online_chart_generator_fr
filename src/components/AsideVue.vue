@@ -8,7 +8,11 @@
     </el-menu>
     <section class="border-bottom">
       <el-dropdown>
-        <span class="el-dropdown-link"> 创建新图 </span>
+        
+        <span class="el-dropdown-link">
+          <el-icon><circle-plus /></el-icon>
+          <span> 创建新图</span>
+        </span>
         <template #dropdown>
           <!-- 新增图形 -->
           <el-dropdown-menu style="width: 180px">
@@ -161,9 +165,16 @@ div {
   section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 10px;
+    align-items: left;
+    padding: 15px;
+    padding-left: 22px;
 
+    .el-dropdown-link {
+      display: flex;
+      & > * {
+        margin: 0 4px;
+      }
+    }
     .menu__create__new *:hover {
       color: #409eff;
     }

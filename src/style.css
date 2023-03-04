@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .border-top {
   border-top: 1px solid var(--el-border-color);
 }
