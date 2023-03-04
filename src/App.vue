@@ -19,7 +19,7 @@ import AsideVue from './components/AsideVue.vue';
 .con {
   height: 100vh;
   display: grid;
-  grid-template-rows: 10% 90%;
+  grid-template-rows: 5% 95%;
   grid-template-columns: 200px auto;
 }
 .header {

@@ -5,7 +5,7 @@ import GraphVue from '../components/GraphVue.vue';
 const routes = [
   { path: '/', redirect: '/home' },
   { path: '/home', component: HomeVue },
-  { path: '/graph/:id', component: GraphVue },
+  { path: '/graph/:id/:graphTypeId', component: GraphVue },
 ];
 
 const router = createRouter({

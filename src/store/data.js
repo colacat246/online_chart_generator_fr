@@ -6,7 +6,8 @@ export const storeData = defineStore('store_data', {
       graphs: [
         {
           id: 1,
-          type: 'line',
+          graphTypeId: 1,
+          name: 'line1',
           data: [
             [1, 3],
             [2, 2],
@@ -16,7 +17,8 @@ export const storeData = defineStore('store_data', {
         },
         {
           id: 2,
-          type: 'line',
+          name: 'bar1',
+          graphTypeId: 2,
           data: [
             [0, 10],
             [2, 2],
@@ -26,7 +28,8 @@ export const storeData = defineStore('store_data', {
         },
         {
           id: 3,
-          type: 'line',
+          name: 'line2',
+          graphTypeId: 1,
           data: [
             [0, 10],
             [2, 2],
@@ -36,87 +39,13 @@ export const storeData = defineStore('store_data', {
         },
         {
           id: 4,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
+          name: 'empty',
+          graphTypeId: 1,
         },
         {
           id: 5,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 6,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 7,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 8,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 9,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 10,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 11,
-          type: 'line',
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
-          ],
-        },
-        {
-          id: 12,
-          type: 'line',
+          name: 'line3',
+          graphTypeId: 1,
           data: [
             [0, 10],
             [2, 2],
