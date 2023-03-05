@@ -11,6 +11,7 @@ export const storeData = defineStore('store_data', {
           name: 'line1',
           series: [
             {
+              id: '11',
               type: 'line',
               name: 'line 1~~~',
               data: [
@@ -21,6 +22,7 @@ export const storeData = defineStore('store_data', {
               ],
             },
             {
+              id: '12',
               type: 'line',
               name: 'myLine 2',
               data: [

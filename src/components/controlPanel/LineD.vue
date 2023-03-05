@@ -1,8 +1,21 @@
 <template>
   <el-scrollbar>
-    <div v-if="curGraph && curGraph.series">
-      <div v-for="curData in curGraph.series" :key="curData.id">
-        <div class="border-bottom">
+    <el-collapse
+      accordion
+      v-if="curGraph && curGraph.series"
+      @change="handleElCollapseChange"
+    >
+      <template v-for="curData in curGraph.series" :key="curData.id">
+        <el-collapse-item :name="curData.id">
+          <template #title>
+            <div
+              class="title-con"
+              title="点击编辑曲线"
+              :ref="(el) => setGraphRef(el, curData.id)"
+            >
+              {{ curData.name }}
+            </div>
+          </template>
           <div class="item-con">
             <span>名称</span>
             <input type="text" v-model="curData.name" />
@@ -27,20 +40,27 @@
               "
             />
           </div>
-        </div>
-      </div>
-    </div>
+          <el-alert
+            v-show="curData.axisWarn"
+            class="axis-warning"
+            title="X轴与Y轴数据个数不一致"
+            type="warning"
+          />
+        </el-collapse-item>
+      </template>
+    </el-collapse>
     <el-button type="primary" @click="addNewLine($event)">添加新曲线</el-button>
   </el-scrollbar>
 </template>
 
 <script setup>
-import { inject, computed, ref, watch, onUnmounted } from 'vue';
+import { inject, computed, shallowRef, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
 
 const blurBtn = inject('blurBtn');
+const genId = inject('genId');
 const genNewName = inject('genNewName');
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
@@ -61,6 +81,7 @@ const unzipData = (val, axis) => {
   return val.map((i) => i[axis]).filter((i) => !isNaN(i));
 };
 const updateData = (val, data, axis, placeToReplace) => {
+  placeToReplace.axisWarn = false;
   val = val
     .trim()
     .replace(/^,/, '')
@@ -73,15 +94,20 @@ const updateData = (val, data, axis, placeToReplace) => {
 
   axis = axis === 'x' ? 0 : 1;
   otherAxis = otherAxis === 'x' ? 0 : 1;
+
+  // BUG 坐标数量检查
+  // TODO 删除曲线、修改线形
   const maxLengh =
     val.length > otherData.length ? val.length : otherData.length;
   const res = [];
   for (let i = 0; i < maxLengh; i++) {
-    if (!val[i]) {
+    if (!val[i] && val[i] !== 0) {
       val.push(NaN);
+      placeToReplace.axisWarn = true;
     }
-    if (!otherData[i]) {
+    if (!otherData[i] && otherData[i] !== 0) {
       otherData.push(NaN);
+      placeToReplace.axisWarn = true;
     }
     const arr = Array(2);
     arr[axis] = val[i];
@@ -96,6 +122,7 @@ const addNewLine = (evt) => {
   blurBtn(evt);
   const curSeries = graphs.value.find((i) => i.id === curGraphId.value).series;
   const defaultLineTemplate = {
+    id: genId(),
     name: genNewName('新曲线', curSeries),
     data: [[], []],
     type: 'line',
@@ -105,22 +132,49 @@ const addNewLine = (evt) => {
   };
   curSeries.push(defaultLineTemplate);
 };
+
+// 折叠面板展开时不显示提示title
+let graphRefs = {};
+const setGraphRef = (el, type) => {
+  if (el) {
+    graphRefs[type] = el;
+  }
+};
+const handleElCollapseChange = (activeName) => {
+  for (const i in graphRefs) {
+    graphRefs[i].title = '点击编辑曲线';
+  }
+  graphRefs[activeName].title = '';
+};
 </script>
 
 <style lang="less" scoped>
+.title-con {
+  margin-left: 10px;
+  font-size: 13px;
+  color: #409eff;
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .item-con {
-  padding: 5px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin: 10px 20px 0 10px;
+  font-size: 13px;
+  .axis-warning {
+    margin: 20px 0 0;
+    width: 50px;
+  }
   input {
     flex: 1;
   }
   span {
     color: #303133;
-    padding-right: 10px;
-    text-align: right;
-    font-size: 14px;
-    width: 35px;
+    margin-right: 5px;
+    min-width: 30px;
   }
 }
 </style>
