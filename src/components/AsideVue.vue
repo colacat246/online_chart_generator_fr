@@ -8,7 +8,6 @@
     </el-menu>
     <section class="border-bottom">
       <el-dropdown>
-        
         <span class="el-dropdown-link">
           <el-icon><circle-plus /></el-icon>
           <span> 创建新图</span>
@@ -107,6 +106,10 @@ const addNewGraph = (id) => {
       name: setName(),
       graphTypeId: graph.graphTypeId,
       type: graph.type,
+      data: [
+        {dataSet: [[]]},
+        {dataSet: [[]]},
+      ]
     });
   });
   const curPath = `/graph/${graphId}/${graph.graphTypeId}`;

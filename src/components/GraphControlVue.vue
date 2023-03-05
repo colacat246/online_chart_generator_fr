@@ -29,7 +29,6 @@ const panels = shallowRef({
   '2/data': BarD,
   '2/conf': BarC,
 });
-
 watch([() => currentRoute.value.params.graphTypeId, panelType], () => {
   panelName.value =
     currentRoute.value.params.graphTypeId + '/' + panelType.value;
