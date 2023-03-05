@@ -79,6 +79,7 @@ const storeC = storeConf();
 const { graphs } = storeToRefs(storeD);
 const { graphTypes } = storeToRefs(storeC);
 const genId = inject('genId');
+const genNewName = inject('genNewName');
 
 const { currentRoute } = useRouter();
 const activeIndex = computed(() => currentRoute.value.path);
@@ -91,25 +92,13 @@ const addNewGraph = (id) => {
   const graphId = genId();
 
   // 确定新图形名称
-  const setName = () => {
-    let name = '新建图形';
-    let count = 1;
-    while (graphs.value.some((i) => i.name === name)) {
-      name = `新建图形（${++count}）`;
-    }
-    return name;
-  };
-
   storeD.$patch((state) => {
     state.graphs.push({
       id: graphId,
-      name: setName(),
+      name: genNewName('新建图形', graphs.value),
       graphTypeId: graph.graphTypeId,
       type: graph.type,
-      data: [
-        {dataSet: [[]]},
-        {dataSet: [[]]},
-      ]
+      series: [],
     });
   });
   const curPath = `/graph/${graphId}/${graph.graphTypeId}`;

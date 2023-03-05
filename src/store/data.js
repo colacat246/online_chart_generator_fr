@@ -7,22 +7,27 @@ export const storeData = defineStore('store_data', {
         {
           id: 'a1',
           graphTypeId: 1,
+          type: 'line',
           name: 'line1',
-          data: [
+          series: [
             {
-              id: 'l1',
+              type: 'line',
               name: 'line 1~~~',
-              dataSet: [
-                [1, 2, 3, 4],
-                [3, 2, 5, 3],
+              data: [
+                [1, 3],
+                [2, 6],
+                [4, 19],
+                [6, 1],
               ],
             },
             {
-              id: 'l2',
+              type: 'line',
               name: 'myLine 2',
-              dataSet: [
-                [0.5, 2, 3.5, 4],
-                [8, 2, 0.5, 5],
+              data: [
+                [2, 4],
+                [5, 2],
+                [6, 11],
+                [7, 4],
               ],
             },
           ],
@@ -31,11 +36,15 @@ export const storeData = defineStore('store_data', {
           id: 'b2',
           name: 'bar1',
           graphTypeId: 2,
-          data: [
-            [0, 10],
-            [2, 2],
-            [6, 8],
-            [8, 2.5],
+          series: [
+            {
+              data: [
+                [0, 10],
+                [2, 2],
+                [6, 8],
+                [8, 2.5],
+              ],
+            },
           ],
         },
       ],

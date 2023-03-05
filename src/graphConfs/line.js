@@ -201,40 +201,40 @@ export default {
   },
   animation: false,
   series: [
-    {
-      name: 'data1',
-      type: 'line',
-      lineStyle: { color: 'blue', type: 'solid' },
-      symbol: 'rect',
-      symbolSize: 5,
-    },
-    {
-      name: 'data2',
-      type: 'line',
-      symbol: 'rect',
-      symbolSize: 5,
-      // markLine: {
-      // data: [{ type: 'average', value: 'avg' }],
-      // },
-      // smooth: true,
-      // 这样设置可以线和marker同色
-      itemStyle: {
-        normal: {
-          // shadowColor: 'red',
-          // shadowBlur: 2,
-          color: 'orange',
-        },
-      },
-      lineStyle: { type: 'solid' },
-      // label: { show: true, rotate: 30, position: 'outside' },
-    },
+    // {
+    //   name: 'data1',
+    //   type: 'line',
+    //   lineStyle: { color: 'blue', type: 'solid' },
+    //   symbol: 'rect',
+    //   symbolSize: 5,
+    // },
+    // {
+    //   name: 'data2',
+    //   type: 'line',
+    //   symbol: 'rect',
+    //   symbolSize: 5,
+    //   // markLine: {
+    //   // data: [{ type: 'average', value: 'avg' }],
+    //   // },
+    //   // smooth: true,
+    //   // 这样设置可以线和marker同色
+    //   itemStyle: {
+    //     normal: {
+    //       // shadowColor: 'red',
+    //       // shadowBlur: 2,
+    //       color: 'orange',
+    //     },
+    //   },
+    //   lineStyle: { type: 'solid' },
+    //   // label: { show: true, rotate: 30, position: 'outside' },
+    // },
   ],
   legend: {
     show: true,
     orient: 'horizontal',
     padding: 25,
-    right: 0,
+    // right: 0,
     itemStyle: {},
-    data: ['data1', 'data2'],
+    // data: ['data1', 'data2'],
   },
 };

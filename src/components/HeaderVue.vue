@@ -12,7 +12,6 @@
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid var(--el-border-color);
-  color: #66b1ff;
   // color: #e5eaf3;
   // opacity: 0.8;
   // box-shadow: var(--el-box-shadow);
@@ -22,6 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #66b1ff;
   }
 }
 </style>

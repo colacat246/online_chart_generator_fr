@@ -1,8 +1,8 @@
 <template>
   <div class="graph__area__con">
     <section>
-      第一个数据：{{ graphs[0].data[0].dataSet }} 第二个数据：{{
-        graphs[0].data[1].dataSet
+      第一个数据：{{ graphs[0].series[0].data }} 第二个数据：{{
+        graphs[0].series[1].data
       }}
       <div ref="drawArea" class="graph__drawing_area"></div>
     </section>
@@ -36,6 +36,7 @@ const curGraphId = computed(() => {
 
 let curGraphIdx = ref(graphs.value.findIndex((i) => i.id === curGraphId.value));
 watch(
+  // BUG 监控两个变量导致删除图片时出错
   [curGraphId, storeD], // 发生增加或删除时同步更新数组位置
   () => {
     curGraphIdx.value = graphs.value.findIndex(
@@ -52,29 +53,15 @@ onMounted(() => {
 // 初始化新图形
 const initChart = () => {
   // 引入配置
+  console.log(curGraphIdx.value);
   const defaultOpts = graphTypes.value.find(
     (i) => i.graphTypeId === graphs.value[curGraphIdx.value].graphTypeId
   ).defaultOpts;
   chart.setOption(defaultOpts, true); // 第二个参数表示不合并opts，直接创建新组件
+
   // 引入数据，echarts会自动进行合并
-  chart.setOption({
-    series: [
-      {
-        data: graphs.value[curGraphIdx.value].data[0].dataSet[0].map(
-          (i, idx) => {
-            return [i, graphs.value[curGraphIdx.value].data[0].dataSet[1][idx]];
-          }
-        ),
-      },
-      {
-        data: graphs.value[curGraphIdx.value].data[1].dataSet[0].map(
-          (i, idx) => {
-            return [i, graphs.value[curGraphIdx.value].data[1].dataSet[1][idx]];
-          }
-        ),
-      },
-    ],
-  });
+  const series = graphs.value[curGraphIdx.value].series;
+  chart.setOption({ series });
 };
 </script>
 

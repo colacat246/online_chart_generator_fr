@@ -35,6 +35,7 @@ app.provide('blurBtn', (evt) => {
     evt.target.parentNode.blur();
   }
 });
+// 生成Id
 app.provide('genId', () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0,
@@ -42,5 +43,16 @@ app.provide('genId', () => {
     return v.toString(16);
   });
 });
-
+// 计算新名称
+app.provide('genNewName', (namePrefix, arrForCompare) => {
+  let name = namePrefix;
+  let count = 1;
+  console.log('called');
+  // 空验证
+  if (!arrForCompare) return name;
+  while (arrForCompare.some((i) => i.name === name)) {
+    name = `${namePrefix}（${++count}）`;
+  }
+  return name;
+});
 app.mount('#app');
