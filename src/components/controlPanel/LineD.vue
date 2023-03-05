@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar>
-    <div v-if="graphs[curGraphIdx].series">
-      <div v-for="curData in graphs[curGraphIdx].series" :key="curData.id">
+    <div v-if="curGraph && curGraph.series">
+      <div v-for="curData in curGraph.series" :key="curData.id">
         <div class="border-bottom">
           <div class="item-con">
             <span>名称</span>
@@ -35,48 +35,37 @@
 </template>
 
 <script setup>
-import { inject, computed, reactive, ref, watch } from 'vue';
+import { inject, computed, ref, watch, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
 
 const blurBtn = inject('blurBtn');
-const genId = inject('genId');
 const genNewName = inject('genNewName');
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
-// 拿到图形Id
 const { currentRoute } = useRouter();
+
+// 图表Id
 const curGraphId = computed(() => {
   return currentRoute.value.params.id;
 });
-
-// 拿到图形对象并确保当前图形对象在store数组中序号正确
-let curGraphIdx = ref('');
-watch(
-  [curGraphId, storeD], // 发生增加或删除时同步更新数组位置
-  () => {
-    curGraphIdx.value = graphs.value.findIndex(
-      (i) => i.id === curGraphId.value
-    );
-  },
-  {
-    immediate: true,
-  }
+// 通过图表Id拿到当前图表对象
+const curGraph = computed(() =>
+  graphs.value.find((i) => i.id === curGraphId.value)
 );
 
-// 转换用户输入
+// 转换input的输出、输入
 const unzipData = (val, axis) => {
   axis = axis === 'x' ? 0 : 1;
   return val.map((i) => i[axis]).filter((i) => !isNaN(i));
 };
-
 const updateData = (val, data, axis, placeToReplace) => {
   val = val
     .trim()
     .replace(/^,/, '')
     .replace(/,$/, '')
-    .split(/\D+/)
+    .split(/, *,?/)
     .map((i) => parseFloat(i));
 
   let otherAxis = axis === 'x' ? 'y' : 'x';
@@ -105,15 +94,16 @@ const updateData = (val, data, axis, placeToReplace) => {
 // 添加新折线
 const addNewLine = (evt) => {
   blurBtn(evt);
+  const curSeries = graphs.value.find((i) => i.id === curGraphId.value).series;
   const defaultLineTemplate = {
-    name: genNewName('新曲线', graphs.value[curGraphIdx.value].series),
+    name: genNewName('新曲线', curSeries),
     data: [[], []],
     type: 'line',
     lineStyle: {},
     symbol: undefined,
     symbolSize: undefined,
   };
-  graphs.value[curGraphIdx.value].series.push(defaultLineTemplate);
+  curSeries.push(defaultLineTemplate);
 };
 </script>
 

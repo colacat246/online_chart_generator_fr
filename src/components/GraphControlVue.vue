@@ -32,7 +32,7 @@ const panels = shallowRef({
 watch([() => currentRoute.value.params.graphTypeId, panelType], () => {
   panelName.value =
     currentRoute.value.params.graphTypeId + '/' + panelType.value;
-});
+}, {immediate: true});
 
 // let panelName = ref('');
 // watch(

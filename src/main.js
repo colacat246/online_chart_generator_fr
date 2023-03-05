@@ -47,7 +47,6 @@ app.provide('genId', () => {
 app.provide('genNewName', (namePrefix, arrForCompare) => {
   let name = namePrefix;
   let count = 1;
-  console.log('called');
   // 空验证
   if (!arrForCompare) return name;
   while (arrForCompare.some((i) => i.name === name)) {

@@ -83,7 +83,6 @@ const genNewName = inject('genNewName');
 
 const { currentRoute } = useRouter();
 const activeIndex = computed(() => currentRoute.value.path);
-console.log();
 
 // TODO 写新图的模板
 // TODO 增加示意图
@@ -105,6 +104,7 @@ const addNewGraph = (id) => {
   router.push({ path: curPath }); // 跳转到新建立的图表
 };
 
+// 删除
 const confirmDelete = (id) => {
   const idx = graphs.value.findIndex((i) => i.id === id);
   storeD.$patch((state) => {

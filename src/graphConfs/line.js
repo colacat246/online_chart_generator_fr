@@ -233,7 +233,7 @@ export default {
     show: true,
     orient: 'horizontal',
     padding: 25,
-    // right: 0,
+    right: 0,
     itemStyle: {},
     // data: ['data1', 'data2'],
   },
