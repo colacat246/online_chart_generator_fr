@@ -1,44 +1,41 @@
 <template>
-  <div class="item-con">
-    <span>配色方案</span>
-    <el-switch
-      active-text="自定义"
-      inactive-text="默认"
-      v-model="showColorSelector"
-      @change="handleColorSwitchChange"
-      style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
-    />
-    <!-- 勾选自定义颜色后弹出颜色选择框 -->
-    <div class="demo-color-block">
-      <div v-show="showColorSelector">
-        <el-color-picker v-model="curColor" />
-      </div>
-    </div>
+  <div>
+    <span>配色</span>
+    <el-color-picker v-model="curColor" @change="setColor" />
+    <el-button @click="resetColor($event)">恢复默认配色</el-button>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-const { modelValue } = defineProps(['modelValue']);
+import { nextTick, ref, inject } from 'vue';
+import bus from '../../libs/bus.js';
+const { modelValue, idx } = defineProps(['modelValue', 'idx']);
 const emit = defineEmits(['update:modelValue']);
-const showColorSelector = ref(modelValue ? true : false);
-
-// 暂存当前选择的颜色
-const curColor = ref(modelValue);
-
-watch(curColor, () => {
-  emit('update:modelValue', curColor.value);
+const blurBtn = inject('blurBtn');
+// 拿到myChart
+const curChart = inject('curChart');
+// 获取颜色
+const curColor = ref();
+nextTick(() => {
+  curColor.value = curChart.value.getVisual({ seriesIndex: idx }, 'color');
 });
-
-// 关闭开关时，颜色回到默认，开启时，回到先前选择的颜色
-const handleColorSwitchChange = (val) => {
-  if (!val) {
-    emit('update:modelValue', undefined);
-  } else {
-    emit('update:modelValue', curColor.value);
-  }
+// 设置颜色
+const setColor = (val) => {
+  emit('update:modelValue', val);
+  bus.emit('lineD:updateColor'); // 通知所有组件改变颜色
+};
+const resetColor = (evt) => {
+  blurBtn(evt);
+  emit('update:modelValue', undefined);
+  bus.emit('lineD:updateColor'); // 通知所有组件改变颜色
 };
 
+// 当有一条曲线改变颜色时，更新全部曲线颜色
+bus.on('lineD:updateColor', () => {
+  nextTick(() => {
+    curColor.value = curChart.value.getVisual({ seriesIndex: idx }, 'color');
+  });
+});
 </script>
 
 <style lang="less" scoped></style>

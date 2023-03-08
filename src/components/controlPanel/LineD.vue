@@ -5,7 +5,7 @@
       v-if="curGraph && curGraph.series"
       v-model="activeData"
     >
-      <template v-for="curData in curGraph.series" :key="curData.id">
+      <template v-for="(curData, idx) in curGraph.series" :key="curData.id">
         <el-collapse-item :name="curData.id">
           <template #title>
             <div
@@ -50,7 +50,7 @@
             <span>线宽</span>
             <input type="text" />
           </div>
-          <SwitchColorVue v-model="curData.color"></SwitchColorVue>
+          <SwitchColorVue v-model="curData.color" :idx="idx" class="item-con"></SwitchColorVue>
           <div class="item-con">
             <span>标记</span>
             <input type="text" />
@@ -79,18 +79,6 @@ const genNewName = inject('genNewName');
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const { currentRoute } = useRouter();
-// 拿到myChart
-const curChart = inject('curChart');
-nextTick(() => {
-  for (let i = 0; i < 2; i++) {
-    // TODO 在新曲线的模板中计算颜色，然后就不改变了
-    const color = curChart.value.getModel().option.color;
-    // .getSeriesByIndex(i)
-    // .getData()
-    // .getVisual('color');
-    console.log(color);
-  }
-});
 
 // 图表Id
 const curGraphId = computed(() => {
@@ -144,6 +132,7 @@ const updateData = (val, data, axis, placeToReplace) => {
 };
 
 // 添加新折线
+// TODO name不能重复
 const addNewLine = (evt) => {
   blurBtn(evt);
   const curSeries = graphs.value.find((i) => i.id === curGraphId.value).series;

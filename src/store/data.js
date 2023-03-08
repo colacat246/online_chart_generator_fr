@@ -20,7 +20,7 @@ export const storeData = defineStore('store_data', {
                 [4, 19],
                 [6, 1],
               ],
-              color: 'red',
+              color: undefined,
             },
             {
               id: '12',
