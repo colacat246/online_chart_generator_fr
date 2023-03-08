@@ -3,14 +3,14 @@
     <el-collapse
       accordion
       v-if="curGraph && curGraph.series"
-      @change="handleElCollapseChange"
+      v-model="activeData"
     >
       <template v-for="curData in curGraph.series" :key="curData.id">
         <el-collapse-item :name="curData.id">
           <template #title>
             <div
               class="title-con"
-              title="点击编辑曲线"
+              title="_"
               :ref="(el) => setGraphRef(el, curData.id)"
             >
               {{ curData.name }}
@@ -51,9 +51,18 @@
             <input type="text" />
           </div>
           <div class="item-con">
-            <span>颜色</span>
+            <span>自定义颜色</span>
+            <!-- <el-switch
+              v-model="value2"
+              class="ml-2"
+              style="
+                --el-switch-on-color: #13ce66;
+                --el-switch-off-color: #ff4949;
+              "
+            /> -->
+            <!-- 勾选自定义颜色后弹出颜色选择框 -->
             <div class="demo-color-block">
-              <el-color-picker v-model="color1" />
+              <el-color-picker v-model="curData.color" />
             </div>
           </div>
           <div class="item-con">
@@ -72,7 +81,15 @@
 </template>
 
 <script setup>
-import { inject, computed, ref, shallowRef, onMounted } from 'vue';
+import {
+  inject,
+  computed,
+  ref,
+  shallowRef,
+  onMounted,
+  watch,
+  nextTick,
+} from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
@@ -134,16 +151,14 @@ const updateData = (val, data, axis, placeToReplace) => {
   }
   placeToReplace.data = res;
 };
-// 曲线颜色
-const color1 = ref('#409aaa');
 
-console.log(color1.value);
 // 添加新折线
 const addNewLine = (evt) => {
   blurBtn(evt);
   const curSeries = graphs.value.find((i) => i.id === curGraphId.value).series;
+  const id = genId();
   const defaultLineTemplate = {
-    id: genId(),
+    id,
     name: genNewName('新曲线', curSeries),
     data: [[], []],
     type: 'line',
@@ -153,21 +168,36 @@ const addNewLine = (evt) => {
     symbolSize: undefined,
   };
   curSeries.push(defaultLineTemplate);
+  // 展开新面板
+  activeData.value = id;
+};
+
+// 控制面板当前曲线，默认展开第一个
+const activeData = ref(curGraph.value.series[0].id);
+
+// 控制面板属性
+let graphControlProps = {
+  refs: {},
 };
 
 // 折叠面板展开时不显示提示title
-let graphRefs = {};
-const setGraphRef = (el, type) => {
+const setGraphRef = (el, curDataId) => {
   if (el) {
-    graphRefs[type] = el;
+    graphControlProps.refs[curDataId] = el;
   }
 };
-const handleElCollapseChange = (activeName) => {
-  for (const i in graphRefs) {
-    graphRefs[i].title = '点击编辑曲线';
-  }
-  graphRefs[activeName].title = '';
-};
+watch(
+  activeData,
+  async () => {
+    await nextTick();
+    for (const i in graphControlProps.refs) {
+      graphControlProps.refs[i].title = '点击编辑曲线';
+    }
+    if (activeData.value === '') return; // 面板未改变时返回
+    graphControlProps.refs[activeData.value].title = '收起';
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="less" scoped>
