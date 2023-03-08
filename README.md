@@ -23,3 +23,7 @@
 * latex支持
 * 保存
 * 调整高宽比
+
+## ref
+
+[编写vite插件](https://juejin.cn/post/7075678169122439181)

@@ -46,6 +46,24 @@
             title="X轴与Y轴数据个数不一致"
             type="warning"
           />
+          <div class="item-con">
+            <span>线宽</span>
+            <input type="text" />
+          </div>
+          <div class="item-con">
+            <span>颜色</span>
+            <div class="demo-color-block">
+              <el-color-picker v-model="color1" />
+            </div>
+          </div>
+          <div class="item-con">
+            <span>标记</span>
+            <input type="text" />
+          </div>
+          <div class="item-con">
+            <span>平滑</span>
+            <input type="text" />
+          </div>
         </el-collapse-item>
       </template>
     </el-collapse>
@@ -54,7 +72,7 @@
 </template>
 
 <script setup>
-import { inject, computed, shallowRef, onMounted } from 'vue';
+import { inject, computed, ref, shallowRef, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
@@ -116,7 +134,10 @@ const updateData = (val, data, axis, placeToReplace) => {
   }
   placeToReplace.data = res;
 };
+// 曲线颜色
+const color1 = ref('#409aaa');
 
+console.log(color1.value);
 // 添加新折线
 const addNewLine = (evt) => {
   blurBtn(evt);
@@ -126,6 +147,7 @@ const addNewLine = (evt) => {
     name: genNewName('新曲线', curSeries),
     data: [[], []],
     type: 'line',
+    color: undefined,
     lineStyle: {},
     symbol: undefined,
     symbolSize: undefined,

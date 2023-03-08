@@ -16,7 +16,6 @@
 <script setup>
 import { shallowRef, ref, computed, watch } from 'vue';
 import { LineD, LineC, BarC, BarD } from './controlPanel';
-
 import { useRouter } from 'vue-router';
 const { currentRoute } = useRouter();
 
@@ -29,10 +28,14 @@ const panels = shallowRef({
   '2/data': BarD,
   '2/conf': BarC,
 });
-watch([() => currentRoute.value.params.graphTypeId, panelType], () => {
-  panelName.value =
-    currentRoute.value.params.graphTypeId + '/' + panelType.value;
-}, {immediate: true});
+watch(
+  [() => currentRoute.value.params.graphTypeId, panelType],
+  () => {
+    panelName.value =
+      currentRoute.value.params.graphTypeId + '/' + panelType.value;
+  },
+  { immediate: true }
+);
 
 // let panelName = ref('');
 // watch(
