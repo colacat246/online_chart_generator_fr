@@ -23,6 +23,10 @@ export const storeData = defineStore('store_data', {
               color: undefined,
               symbol: 'none',
               symbolSize: 17,
+              lineStyle: {
+                width: 1.5,
+                type: 'solid',
+              },
             },
             {
               id: '12',
@@ -37,6 +41,10 @@ export const storeData = defineStore('store_data', {
               color: undefined,
               symbol: 'none',
               symbolSize: 7,
+              lineStyle: {
+                width: 1.5,
+                type: 'solid',
+              },
             },
           ],
         },

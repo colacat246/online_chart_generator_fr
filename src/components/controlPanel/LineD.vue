@@ -46,10 +46,7 @@
             title="X轴与Y轴数据个数不一致"
             type="warning"
           />
-          <div class="item-con">
-            <span>线宽</span>
-            <input type="text" />
-          </div>
+          <LineStyleVue class="item-con" v-model="curData.lineStyle.type" v-model:lineWidth="curData.lineStyle.width"></LineStyleVue>
           <SwitchColorVue
             v-model="curData.color"
             :idx="idx"
@@ -78,6 +75,7 @@ import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
 import SwitchColorVue from '../controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '../controlItems/SymbolSelector.vue';
+import LineStyleVue from '../controlItems/LineStyle.vue';
 
 const blurBtn = inject('blurBtn');
 const genId = inject('genId');
@@ -152,6 +150,10 @@ const addNewLine = (evt) => {
     lineStyle: {},
     symbol: 'none',
     symbolSize: 7,
+    lineStyle: {
+      width: 1.5,
+      type: 'solid',
+    },
   };
   curSeries.push(defaultLineTemplate);
   // 展开新面板
