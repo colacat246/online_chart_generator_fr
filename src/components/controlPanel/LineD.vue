@@ -46,7 +46,11 @@
             title="X轴与Y轴数据个数不一致"
             type="warning"
           />
-          <LineStyleVue class="item-con" v-model="curData.lineStyle.type" v-model:lineWidth="curData.lineStyle.width"></LineStyleVue>
+          <LineStyleVue
+            class="item-con"
+            v-model="curData.lineStyle.type"
+            v-model:lineWidth="curData.lineStyle.width"
+          ></LineStyleVue>
           <SwitchColorVue
             v-model="curData.color"
             :idx="idx"
@@ -59,7 +63,13 @@
           ></SymbolSelectorVue>
           <div class="item-con">
             <span>平滑</span>
-            <input type="text" />
+            <el-input-number
+              v-model="curData.smooth"
+              :min="0"
+              :max="5"
+              :step="0.02"
+              :value-on-clear="0"
+            />
           </div>
         </el-collapse-item>
       </template>
@@ -154,6 +164,7 @@ const addNewLine = (evt) => {
       width: 1.5,
       type: 'solid',
     },
+    smooth: 0,
   };
   curSeries.push(defaultLineTemplate);
   // 展开新面板

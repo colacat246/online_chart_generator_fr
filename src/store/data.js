@@ -27,6 +27,7 @@ export const storeData = defineStore('store_data', {
                 width: 1.5,
                 type: 'solid',
               },
+              smooth: 0,
             },
             {
               id: '12',
@@ -45,6 +46,7 @@ export const storeData = defineStore('store_data', {
                 width: 1.5,
                 type: 'solid',
               },
+              smooth: 0,
             },
           ],
         },
