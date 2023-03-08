@@ -17,7 +17,7 @@ import {
   watch,
   computed,
   ref,
-  reactive,
+  provide,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeData } from '../store/data.js';
@@ -33,7 +33,9 @@ const storeC = storeConf();
 const { graphTypes } = storeToRefs(storeC);
 const { proxy } = getCurrentInstance();
 const drawArea = ref();
-let chart;
+let chartRef = ref();;
+
+provide('curChart', chartRef);
 
 // 图表Id
 const curGraphId = computed(() => {
@@ -45,7 +47,7 @@ const curGraph = computed(() =>
 );
 
 onMounted(() => {
-  chart = echarts.init(drawArea.value);
+  chartRef.value = echarts.init(drawArea.value);
   initChart();
 });
 
@@ -66,11 +68,11 @@ const initChart = () => {
   const defaultOpts = graphTypes.value.find(
     (i) => i.graphTypeId === curGraph.value.graphTypeId
   ).defaultOpts;
-  chart.setOption(defaultOpts, true); // 第二个参数表示不合并opts，直接创建新组件
+  chartRef.value.setOption(defaultOpts, true); // 第二个参数表示不合并opts，直接创建新组件
 
   // 引入数据，echarts会自动进行合并
   const series = curGraph.value.series;
-  chart.setOption({ series });
+  chartRef.value.setOption({ series });
 };
 </script>
 

@@ -50,21 +50,7 @@
             <span>线宽</span>
             <input type="text" />
           </div>
-          <div class="item-con">
-            <span>自定义颜色</span>
-            <!-- <el-switch
-              v-model="value2"
-              class="ml-2"
-              style="
-                --el-switch-on-color: #13ce66;
-                --el-switch-off-color: #ff4949;
-              "
-            /> -->
-            <!-- 勾选自定义颜色后弹出颜色选择框 -->
-            <div class="demo-color-block">
-              <el-color-picker v-model="curData.color" />
-            </div>
-          </div>
+          <SwitchColorVue v-model="curData.color"></SwitchColorVue>
           <div class="item-con">
             <span>标记</span>
             <input type="text" />
@@ -81,18 +67,11 @@
 </template>
 
 <script setup>
-import {
-  inject,
-  computed,
-  ref,
-  shallowRef,
-  onMounted,
-  watch,
-  nextTick,
-} from 'vue';
+import { inject, computed, ref, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
+import SwitchColorVue from '../controlItems/SwitchColor.vue';
 
 const blurBtn = inject('blurBtn');
 const genId = inject('genId');
@@ -100,6 +79,18 @@ const genNewName = inject('genNewName');
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const { currentRoute } = useRouter();
+// 拿到myChart
+const curChart = inject('curChart');
+nextTick(() => {
+  for (let i = 0; i < 2; i++) {
+    // TODO 在新曲线的模板中计算颜色，然后就不改变了
+    const color = curChart.value.getModel().option.color;
+    // .getSeriesByIndex(i)
+    // .getData()
+    // .getVisual('color');
+    console.log(color);
+  }
+});
 
 // 图表Id
 const curGraphId = computed(() => {
@@ -175,7 +166,7 @@ const addNewLine = (evt) => {
 // 控制面板当前曲线，默认展开第一个
 const activeData = ref(curGraph.value.series[0].id);
 
-// 控制面板属性
+// 控制面板属性，结构为 属性 -> id
 let graphControlProps = {
   refs: {},
 };
