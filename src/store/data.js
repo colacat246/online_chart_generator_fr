@@ -22,7 +22,7 @@ export const storeData = defineStore('store_data', {
               ],
               color: undefined,
               symbol: 'none',
-              symbolSize: 7,
+              symbolSize: 17,
             },
             {
               id: '12',

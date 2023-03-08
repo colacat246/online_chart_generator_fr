@@ -9,12 +9,20 @@
         :value="item.value"
       />
     </el-select>
+    <span>大小</span>
+    <el-input-number
+      :model-value="symbolSize"
+      :min="1"
+      :max="20"
+      @change="changeSymbolSize"
+      :value-on-clear="1"
+    />
   </div>
 </template>
 
 <script setup>
-const { modelValue } = defineProps(['modelValue']);
-const emit = defineEmits(['update:modelValue']);
+const { modelValue, symbolSize } = defineProps(['modelValue', 'symbolSize']);
+const emit = defineEmits(['update:modelValue', 'update:symbolSize']);
 
 const symbolOptions = [
   { label: '无', value: 'none' },
@@ -28,6 +36,9 @@ const symbolOptions = [
 
 const changeValue = (val) => {
   emit('update:modelValue', val);
+};
+const changeSymbolSize = (val) => {
+  emit('update:symbolSize', val);
 };
 </script>
 

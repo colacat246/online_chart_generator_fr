@@ -57,6 +57,7 @@
           ></SwitchColorVue>
           <SymbolSelectorVue
             v-model="curData.symbol"
+            v-model:symbolSize="curData.symbolSize"
             class="item-con"
           ></SymbolSelectorVue>
           <div class="item-con">
