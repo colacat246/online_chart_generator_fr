@@ -234,7 +234,7 @@ export default {
     orient: 'horizontal',
     padding: 25,
     right: 0,
-    itemStyle: {},
+    // itemStyle: {},
     // data: ['data1', 'data2'],
   },
 };

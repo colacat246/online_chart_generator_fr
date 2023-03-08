@@ -50,11 +50,15 @@
             <span>线宽</span>
             <input type="text" />
           </div>
-          <SwitchColorVue v-model="curData.color" :idx="idx" class="item-con"></SwitchColorVue>
-          <div class="item-con">
-            <span>标记</span>
-            <input type="text" />
-          </div>
+          <SwitchColorVue
+            v-model="curData.color"
+            :idx="idx"
+            class="item-con"
+          ></SwitchColorVue>
+          <SymbolSelectorVue
+            v-model="curData.symbol"
+            class="item-con"
+          ></SymbolSelectorVue>
           <div class="item-con">
             <span>平滑</span>
             <input type="text" />
@@ -72,6 +76,7 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { storeData } from '../../store/data.js';
 import SwitchColorVue from '../controlItems/SwitchColor.vue';
+import SymbolSelectorVue from '../controlItems/SymbolSelector.vue';
 
 const blurBtn = inject('blurBtn');
 const genId = inject('genId');
@@ -144,8 +149,8 @@ const addNewLine = (evt) => {
     type: 'line',
     color: undefined,
     lineStyle: {},
-    symbol: undefined,
-    symbolSize: undefined,
+    symbol: 'none',
+    symbolSize: 7,
   };
   curSeries.push(defaultLineTemplate);
   // 展开新面板

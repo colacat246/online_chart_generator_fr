@@ -25,15 +25,14 @@ import { storeConf } from '../store/config.js';
 import { storeToRefs } from 'pinia';
 let { params } = useRoute();
 const { currentRoute } = useRouter();
-const router = useRouter();
-const route = useRoute();
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const storeC = storeConf();
 const { graphTypes } = storeToRefs(storeC);
-const { proxy } = getCurrentInstance();
 const drawArea = ref();
 let chartRef = ref();;
+
+// BUG 点击图例时报错
 
 provide('curChart', chartRef);
 
