@@ -93,14 +93,24 @@ const genNewName = inject('genNewName');
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const { currentRoute } = useRouter();
-
 // 图表Id
 const curGraphId = computed(() => {
   return currentRoute.value.params.id;
 });
 // 通过图表Id拿到当前图表对象
-const curGraph = computed(() =>
-  graphs.value.find((i) => i.id === curGraphId.value)
+const curGraph = computed(
+  () => {
+    // FINDOUT 这里的computed属性返回对象，这个对象的属性是否都是响应式的？
+    return graphs.value.find((i) => i.id === curGraphId.value);
+  },
+  {
+    onTrack(e) {
+      // console.log(e.target);
+    },
+    onTrigger(e) {
+      // console.log(e);
+    },
+  }
 );
 
 // 转换input的输出、输入
@@ -149,7 +159,7 @@ const updateData = (val, data, axis, placeToReplace) => {
 // TODO name不能重复
 const addNewLine = (evt) => {
   blurBtn(evt);
-  const curSeries = graphs.value.find((i) => i.id === curGraphId.value).series;
+  const curSeries = curGraph.value.series;
   const id = genId();
   const defaultLineTemplate = {
     id,
@@ -185,18 +195,18 @@ const setGraphRef = (el, curDataId) => {
     graphControlProps.refs[curDataId] = el;
   }
 };
-watch(
-  activeData,
-  async () => {
-    await nextTick();
-    for (const i in graphControlProps.refs) {
-      graphControlProps.refs[i].title = '点击编辑曲线';
-    }
-    if (activeData.value === '') return; // 面板未改变时返回
-    graphControlProps.refs[activeData.value].title = '收起';
-  },
-  { immediate: true }
-);
+
+watch([curGraphId, activeData], handleTitleTip, { immediate: true });
+
+// 处理鼠标悬浮title提示
+async function handleTitleTip() {
+  await nextTick();
+  for (const i in graphControlProps.refs) {
+    graphControlProps.refs[i].title = '点击编辑曲线';
+  }
+  if (activeData.value === '') return; // 面板未改变时返回
+  graphControlProps.refs[activeData.value].title = '收起';
+}
 </script>
 
 <style lang="less" scoped>

@@ -32,7 +32,7 @@ const { graphTypes } = storeToRefs(storeC);
 const drawArea = ref();
 let chartRef = ref();;
 
-// BUG 点击图例时报错
+// BUG 点击图例时报错且toolbox会不正常缩放
 
 provide('curChart', chartRef);
 
