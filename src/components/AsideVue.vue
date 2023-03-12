@@ -39,19 +39,23 @@
             <el-icon><document /></el-icon>
             <span class="graph__name">{{ graph.name }}</span>
           </span>
-          <el-popconfirm
+          <!-- <el-popconfirm
             confirm-button-text="是"
             cancel-button-text="否"
             :icon="Warning"
             icon-color="#f56c6c"
             title="确认删除吗？"
             @confirm="confirmDelete(graph.id)"
-            @cancel="cancelDelete"
           >
             <template #reference>
               <el-icon @click.stop class="delete-button"><delete /></el-icon>
             </template>
-          </el-popconfirm>
+          </el-popconfirm> -->
+          <DeleteButton
+            class="del-button"
+            :item-to-delete="graph.id"
+            @delete-item="confirmDelete"
+          />
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
@@ -59,6 +63,7 @@
 </template>
 
 <script setup>
+import DeleteButton from './generalComponents/DeleteButton.vue';
 import {
   Document,
   Menu as IconMenu,
@@ -124,9 +129,6 @@ const confirmDelete = (id) => {
     router.push({ path: curPath }); // 跳转到新建立的图表
   }
 };
-const cancelDelete = () => {
-  return;
-};
 </script>
 
 <style lang="less" scoped>
@@ -145,13 +147,7 @@ div {
       text-overflow: ellipsis;
     }
   }
-  .delete-button {
-    display: none;
-  }
-  .delete-button:hover {
-    color: #f56c6c;
-  }
-  .show__icon:hover .delete-button {
+  :deep(.show__icon:hover .del-button) {
     display: inherit;
   }
   section {
