@@ -8,14 +8,21 @@
       <template v-for="(curData, idx) in curGraph.series" :key="curData.id">
         <el-collapse-item :name="curData.id">
           <template #title>
-            <div
-              class="title-con"
-              title=""
-              :ref="(el) => setGraphRef(el, curData.id)"
-            >
-              {{ curData.name }}
+            <div class="title-con">
+              <section
+                class="title-item"
+                title=""
+                :ref="(el) => setGraphRef(el, curData.id)"
+              >
+                {{ curData.name }}
+              </section>
+              <DeleteButtonVue
+                :item-to-delete="curData.id"
+                @delete-item="handleDeleteLine"
+                size="16"
+                class="del-button"
+              ></DeleteButtonVue>
             </div>
-            <el-icon><Delete /></el-icon>
           </template>
           <div class="item-con">
             <span>名称</span>
@@ -87,6 +94,8 @@ import { storeData } from '../../store/data.js';
 import SwitchColorVue from '../controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '../controlItems/SymbolSelector.vue';
 import LineStyleVue from '../controlItems/LineStyle.vue';
+import DeleteButtonVue from '../generalComponents/DeleteButton.vue';
+import bus from '../../libs/bus.js';
 
 const blurBtn = inject('blurBtn');
 const genId = inject('genId');
@@ -182,6 +191,13 @@ const addNewLine = (evt) => {
   activeData.value = id;
 };
 
+// 删除曲线
+const handleDeleteLine = (id) => {
+  const idx = curGraph.value.series.findIndex((i) => i.id === id);
+  curGraph.value.series.splice(idx, 1);
+  bus.emit('lineD:updateColor'); // BUG 通知更新颜色无效
+};
+
 // 控制面板当前曲线，默认展开第一个
 const activeData = ref(
   curGraph.value.series[0] ? curGraph.value.series[0].id : ''
@@ -214,12 +230,22 @@ async function handleTitleTip() {
 
 <style lang="less" scoped>
 .title-con {
-  margin-left: 10px;
-  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
   color: #409eff;
-  width: 90%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  .title-item {
+    flex: 1;
+    margin-left: 10px;
+    font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  :deep(&:hover .del-button) {
+    display: inherit;
+  }
 }
 </style>

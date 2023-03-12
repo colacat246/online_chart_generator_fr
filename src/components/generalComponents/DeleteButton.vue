@@ -8,7 +8,7 @@
     @confirm="emit('deleteItem', itemToDelete)"
   >
     <template  #reference>
-      <!-- 父组件的class绑定到这个上面，父组件用/deep/穿透可实现悬浮显示 -->
+      <!-- 父组件的class绑定到这个上面，父组件用:deep()穿透可实现悬浮显示 -->
       <el-icon v-bind="$attrs" @click.stop class="delete-button"><delete /></el-icon>
     </template>
   </el-popconfirm>
@@ -23,7 +23,7 @@ const emit = defineEmits(['deleteItem']);
 
 <style lang="less" scoped>
 .delete-button {
-  display: none;
+  // display: none;
   &:hover {
 
   color: #f56c6c;
