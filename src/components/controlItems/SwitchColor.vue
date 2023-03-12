@@ -1,9 +1,15 @@
 <template>
-  <div>
+  <section>
     <span>配色</span>
-    <el-color-picker v-model="curColor" @change="setColor" />
-    <el-button @click="resetColor($event)">恢复默认配色</el-button>
-  </div>
+    <section class="switcher">
+      <el-color-picker v-model="curColor" @change="setColor" size="default" />
+      <el-button 
+      type="primary"
+      @click="resetColor($event)" size="small"
+        >恢复默认配色</el-button
+      >
+    </section>
+  </section>
 </template>
 
 <script setup>
@@ -38,4 +44,17 @@ bus.on('lineD:updateColor', () => {
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.switcher {
+  display: flex;
+  // margin-left: 5px;
+  justify-content: space-between;
+  align-items: center;
+  & > * {
+    flex: 1;
+    &:last-child {
+      margin-left: 20px;
+    }
+  }
+}
+</style>

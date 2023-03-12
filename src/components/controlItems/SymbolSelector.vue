@@ -1,22 +1,27 @@
 <template>
   <div>
-    <span>标记</span>
-    <el-select :model-value="modelValue" @change="changeValue">
-      <el-option
-        v-for="item in symbolOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+    <section>
+      <span>标记</span>
+      <el-select size="small" :model-value="modelValue" @change="changeValue">
+        <el-option
+          v-for="item in symbolOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </section>
+    <section>
+      <span>大小</span>
+      <el-input-number
+        size="small"
+        :model-value="symbolSize"
+        :min="1"
+        :max="20"
+        @change="changeSymbolSize"
+        :value-on-clear="1"
       />
-    </el-select>
-    <span>大小</span>
-    <el-input-number
-      :model-value="symbolSize"
-      :min="1"
-      :max="20"
-      @change="changeSymbolSize"
-      :value-on-clear="1"
-    />
+    </section>
   </div>
 </template>
 

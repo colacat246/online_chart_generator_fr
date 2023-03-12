@@ -1,6 +1,7 @@
 a {
   text-decoration: none;
 }
+
 input {
   border: 1px solid var(--el-border-color);
   color: #606266;
@@ -20,42 +21,43 @@ input {
 .border-right {
   border-right: 1px solid var(--el-border-color);
 }
+
 .item-con {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin: 10px 20px 0 10px;
   font-size: 13px;
-}
-.item-con .axis-warning {
-  margin: 20px 0 0;
-  width: 50px;
-}
-.item-con input {
-  flex: 1;
-}
-.item-con span {
-  margin-right: 5px;
-  min-width: 30px;
+  .axis-warning {
+    margin: 20px 0 0;
+    width: 50px;
+  }
+  input {
+    flex: 1;
+  }
+  span {
+    margin-right: 5px;
+    min-width: 30px;
+  }
 }
 .item-con-double {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
   margin: 10px 20px 0 10px;
-}
-.item-con-double > section {
-  display: flex;
-}
-.item-con-double > section > * {
-  align-self: center;
-}
-.item-con-double > section > span {
-  margin-right: 5px;
-  min-width: 30px;
-}
-.item-con-double > section > *:not(span) {
-  flex: 1;
-}
-.item-con-double > section:first-child {
-  margin-right: 10px;
+  & > section {
+    display: flex;
+    & > * {
+      align-self: center;
+    }
+    & > span {
+      margin-right: 5px;
+      min-width: 30px;
+    }
+    & > *:not(span) {
+      flex: 1;
+    }
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 }

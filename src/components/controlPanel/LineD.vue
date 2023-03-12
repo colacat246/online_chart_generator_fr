@@ -10,11 +10,12 @@
           <template #title>
             <div
               class="title-con"
-              title="_"
+              title=""
               :ref="(el) => setGraphRef(el, curData.id)"
             >
               {{ curData.name }}
             </div>
+            <!-- <span>删除</span> -->
           </template>
           <div class="item-con">
             <span>名称</span>
@@ -46,31 +47,34 @@
             title="X轴与Y轴数据个数不一致"
             type="warning"
           />
+
           <LineStyleVue
-            class="item-con"
+            class="item-con-double"
             v-model="curData.lineStyle.type"
             v-model:lineWidth="curData.lineStyle.width"
           ></LineStyleVue>
-          <SwitchColorVue
-            v-model="curData.color"
-            :idx="idx"
-            class="item-con"
-          ></SwitchColorVue>
+          <div class="item-con-double">
+            <section>
+              <span>平滑</span>
+              <el-input-number
+                size="small"
+                v-model="curData.smooth"
+                :min="0"
+                :max="5"
+                :step="0.02"
+                :value-on-clear="0"
+              />
+            </section>
+            <SwitchColorVue
+              v-model="curData.color"
+              :idx="idx"
+            ></SwitchColorVue>
+          </div>
           <SymbolSelectorVue
             v-model="curData.symbol"
             v-model:symbolSize="curData.symbolSize"
-            class="item-con"
+            class="item-con-double"
           ></SymbolSelectorVue>
-          <div class="item-con">
-            <span>平滑</span>
-            <el-input-number
-              v-model="curData.smooth"
-              :min="0"
-              :max="5"
-              :step="0.02"
-              :value-on-clear="0"
-            />
-          </div>
         </el-collapse-item>
       </template>
     </el-collapse>
@@ -218,24 +222,5 @@ async function handleTitleTip() {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.item-con {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 20px 0 10px;
-  font-size: 13px;
-  .axis-warning {
-    margin: 20px 0 0;
-    width: 50px;
-  }
-  input {
-    flex: 1;
-  }
-  span {
-    color: #303133;
-    margin-right: 5px;
-    min-width: 30px;
-  }
 }
 </style>

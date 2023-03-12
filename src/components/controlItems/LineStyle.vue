@@ -1,23 +1,34 @@
 <template>
   <div>
-    <span>线形</span>
-    <el-select :model-value="modelValue" @change="changeValue">
-      <el-option
-        v-for="item in symbolOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+    <section>
+      <span>线形</span>
+      <el-select
+        class="el-select"
+        :model-value="modelValue"
+        @change="changeValue"
+        size="small"
+      >
+        <el-option
+          v-for="item in symbolOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </section>
+    <section>
+      <span>线宽</span>
+      <el-input-number
+        class="el-input-number"
+        size="small"
+        :model-value="lineWidth"
+        :min="0.5"
+        :max="5"
+        :step="0.1"
+        @change="changeLineWidth"
+        :value-on-clear="1"
       />
-    </el-select>
-    <span>线宽</span>
-    <el-input-number
-      :model-value="lineWidth"
-      :min="0.5"
-      :max="5"
-      :step="0.1"
-      @change="changeLineWidth"
-      :value-on-clear="1"
-    />
+    </section>
   </div>
 </template>
 
@@ -39,4 +50,5 @@ const changeLineWidth = (val) => {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>
