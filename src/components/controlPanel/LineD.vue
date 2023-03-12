@@ -15,7 +15,7 @@
             >
               {{ curData.name }}
             </div>
-            <!-- <span>删除</span> -->
+            <el-icon><Delete /></el-icon>
           </template>
           <div class="item-con">
             <span>名称</span>
@@ -65,10 +65,7 @@
                 :value-on-clear="0"
               />
             </section>
-            <SwitchColorVue
-              v-model="curData.color"
-              :idx="idx"
-            ></SwitchColorVue>
+            <SwitchColorVue v-model="curData.color" :idx="idx"></SwitchColorVue>
           </div>
           <SymbolSelectorVue
             v-model="curData.symbol"
@@ -186,7 +183,9 @@ const addNewLine = (evt) => {
 };
 
 // 控制面板当前曲线，默认展开第一个
-const activeData = ref(curGraph.value.series[0].id);
+const activeData = ref(
+  curGraph.value.series[0] ? curGraph.value.series[0].id : ''
+);
 
 // 控制面板属性，结构为 属性 -> id
 let graphControlProps = {
