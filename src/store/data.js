@@ -7,8 +7,43 @@ export const storeData = defineStore('store_data', {
         {
           id: 'a1',
           graphTypeId: 1,
-          type: 'line',
           name: 'line1',
+          type: 'line',
+          // newAdd
+          title: {
+            show: true,
+            text: 'data1',
+            textStyle: {
+              color: '#000',
+              fontWeight: 'bold',
+              fontSize: 18,
+            },
+            // borderWidth: 2,
+            // textAligh: 'left',
+            left: 'center',
+            top: 23,
+          },
+          grid: {
+            // show: true,
+            left: '18%',
+            top: '15%',
+            // right: '50%',
+            // bottom: 70,
+            // containLabel: true,
+            // backgroundColor: '#ccc',
+            borderWidth: 1.5,
+            borderColor: '#666',
+          },
+          height: '70%',
+          width: '70%',
+          legend: {
+            show: true,
+            orient: 'horizontal',
+            top: 22,
+            right: 22,
+            // itemStyle: {},
+            // data: ['data1', 'data2'],
+          },
           series: [
             {
               id: '11',

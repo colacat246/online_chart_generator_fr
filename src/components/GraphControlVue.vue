@@ -2,26 +2,26 @@
   <section class="graph-control-con">
     <el-menu
       :ellipsis="false"
-      default-active="1"
+      default-active="2"
       class="el-menu-graph-control"
       mode="horizontal"
     >
-      <el-menu-item index="1" @click="panelType = 'data'">数据</el-menu-item>
-      <el-menu-item index="2" @click="panelType = 'conf'">样式</el-menu-item>
+      <el-menu-item index="1" @click="panelType = 'data'">曲线</el-menu-item>
+      <el-menu-item index="2" @click="panelType = 'conf'">绘图区域</el-menu-item>
     </el-menu>
     <component :is="panels[panelName]"></component>
   </section>
 </template>
 
 <script setup>
-import { shallowRef, ref, computed, watch } from 'vue';
+import { shallowRef, ref, watch } from 'vue';
 import { LineD, LineC, BarC, BarD } from './controlPanel';
 import { useRouter } from 'vue-router';
 const { currentRoute } = useRouter();
 
 // 切换面板
-let panelName = ref('1/data');
-let panelType = ref('data');
+let panelName = ref('1/conf');
+let panelType = ref('conf');
 const panels = shallowRef({
   '1/data': LineD,
   '1/conf': LineC,
@@ -36,24 +36,6 @@ watch(
   },
   { immediate: true }
 );
-
-// let panelName = ref('');
-// watch(
-//   () => currentRoute.value.params,
-//   (newVal, oldVal) => {
-//     switch (newVal.graphTypeId) {
-//       case '1': {
-//         panelName.value = 'LineD';
-//         break;
-//       }
-//       case '2': {
-//         panelName.value = 'BarD';
-//         break;
-//       }
-//     }
-//   },
-//   { immediate: true }
-// );
 </script>
 
 <style lang="less" scoped>

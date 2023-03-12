@@ -16,16 +16,14 @@
 
 <script setup>
 import { Warning } from '@element-plus/icons-vue';
-import { defineProps, defineEmits } from 'vue';
 const { itemToDelete } = defineProps(['itemToDelete']);
 const emit = defineEmits(['deleteItem']);
 </script>
 
 <style lang="less" scoped>
 .delete-button {
-  // display: none;
+  display: none;
   &:hover {
-
   color: #f56c6c;
   }
 }

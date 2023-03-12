@@ -70,8 +70,10 @@ const initChart = () => {
   chartRef.value.setOption(defaultOpts, true); // 第二个参数表示不合并opts，直接创建新组件
 
   // 引入数据，echarts会自动进行合并
-  const series = curGraph.value.series;
-  chartRef.value.setOption({ series });
+  // const series = curGraph.value.series;
+  // chartRef.value.setOption({ series });
+  const opt = curGraph.value;
+  chartRef.value.setOption(opt);
 };
 </script>
 

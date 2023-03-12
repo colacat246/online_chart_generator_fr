@@ -31,10 +31,10 @@ input {
   margin: 20px 0 0;
   width: 50px;
 }
-.item-con input {
+.item-con > input {
   flex: 1;
 }
-.item-con span {
+.item-con > span {
   margin-right: 5px;
   min-width: 30px;
 }
@@ -58,4 +58,19 @@ input {
 }
 .item-con-double > section:first-child {
   margin-right: 10px;
+}
+.title-con {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
+  color: #409eff;
+}
+.title-con .title-item {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

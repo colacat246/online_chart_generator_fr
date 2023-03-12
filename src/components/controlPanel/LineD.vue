@@ -72,7 +72,11 @@
                 :value-on-clear="0"
               />
             </section>
-            <SwitchColorVue v-model="curData.color" :series = "curGraph.series" :id="curData.id"></SwitchColorVue>
+            <SwitchColorVue
+              v-model="curData.color"
+              :series="curGraph.series"
+              :id="curData.id"
+            ></SwitchColorVue>
           </div>
           <SymbolSelectorVue
             v-model="curData.symbol"
@@ -95,11 +99,11 @@ import SwitchColorVue from '../controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '../controlItems/SymbolSelector.vue';
 import LineStyleVue from '../controlItems/LineStyle.vue';
 import DeleteButtonVue from '../generalComponents/DeleteButton.vue';
-import bus from '../../libs/bus.js';
 
 const blurBtn = inject('blurBtn');
 const genId = inject('genId');
 const genNewName = inject('genNewName');
+
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const { currentRoute } = useRouter();
@@ -108,20 +112,9 @@ const curGraphId = computed(() => {
   return currentRoute.value.params.id;
 });
 // 通过图表Id拿到当前图表对象
-const curGraph = computed(
-  () => {
-    // FINDOUT 这里的computed属性返回对象，这个对象的属性是否都是响应式的？
-    return graphs.value.find((i) => i.id === curGraphId.value);
-  },
-  {
-    onTrack(e) {
-      // console.log(e.target);
-    },
-    onTrigger(e) {
-      // console.log(e);
-    },
-  }
-);
+const curGraph = computed(() => {
+  return graphs.value.find((i) => i.id === curGraphId.value);
+});
 
 // 转换input的输出、输入
 const unzipData = (val, axis) => {
@@ -229,20 +222,6 @@ async function handleTitleTip() {
 
 <style lang="less" scoped>
 .title-con {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 92%;
-  color: #409eff;
-  .title-item {
-    flex: 1;
-    margin-left: 10px;
-    font-size: 13px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
   :deep(&:hover .del-button) {
     display: inherit;
   }

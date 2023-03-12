@@ -1,6 +1,6 @@
 <template>
   <div class="border-right">
-    <el-menu default-active="2" class="no-right-border border-bottom" router>
+    <el-menu class="no-right-border border-bottom" router>
       <el-menu-item index="/home">
         <el-icon><icon-menu /></el-icon>
         <span>home</span>
@@ -28,6 +28,7 @@
       </el-dropdown>
     </section>
     <el-scrollbar>
+      <!-- TODO 修改名称 -->
       <el-menu class="no-right-border" :default-active="activeIndex" router>
         <el-menu-item
           class="menu__graph show__icon"
@@ -97,12 +98,52 @@ const addNewGraph = (id) => {
 
   // 确定新图形名称
   storeD.$patch((state) => {
+    const newName = genNewName('新建图形', graphs.value);
     state.graphs.push({
       id: graphId,
-      name: genNewName('新建图形', graphs.value),
+      name: newName,
       graphTypeId: graph.graphTypeId,
       type: graph.type,
+      // 数据
       series: [],
+      // 标题
+      title: {
+        show: true,
+        text: newName,
+        textStyle: {
+          color: '#000',
+          fontSize: 14,
+          fontWeight: 'normal',
+        },
+        // borderWidth: undefined,
+        // borderRadius: undefined,
+        // borderColor: undefined,
+        // textAligh: undefined,
+        left: 'center',
+        top: 23,
+      },
+      grid: {
+        // show: true,
+        left: '18%',
+        top: '15%',
+        // right: '50%',
+        // bottom: 70,
+        // containLabel: true,
+        // backgroundColor: '#ccc',
+        borderWidth: 1.5,
+        borderColor: '#666',
+      },
+      height: '70%',
+      width: '70%',
+      legend: {
+        show: true,
+        orient: 'horizontal',
+        // padding: 25,
+        top: 22,
+        right: 22,
+        // itemStyle: {},
+        // data: ['data1', 'data2'],
+      },
     });
   });
   const curPath = `/graph/${graphId}/${graph.graphTypeId}`;

@@ -1,47 +1,31 @@
 export default {
-  height: '70%',
-  width: '70%',
-  title: {
-    show: true,
-    text: 'windData',
-    textStyle: {
-      color: '#000',
-      fontWeight: 500,
-    },
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: 'green',
-    textAligh: 'right',
-    left: 'center',
-    top: 23,
-  },
-  toolbox: {
-    show: true,
-    orient: 'horizontal',
-    itemSize: 20,
-    itemGap: 10,
-    bottom: 15,
-    right: 15,
-    feature: {
-      saveAsImage: {
-        type: 'png',
-        pixelRatio: 5,
-      },
-      dataView: {},
-      restore: {},
-      dataZoom: {},
-      magicType: {
-        type: ['pie'],
-      },
-    },
-  },
-  tooltip: {
-    trigger: 'item',
-    triggerOn: 'click',
-    formatter: (arg) => {
-      return arg.name + ' ' + arg.value;
-    },
-  },
+  // toolbox: {
+  //   show: true,
+  //   orient: 'horizontal',
+  //   itemSize: 20,
+  //   itemGap: 10,
+  //   bottom: 15,
+  //   right: 15,
+  //   feature: {
+  //     saveAsImage: {
+  //       type: 'png',
+  //       pixelRatio: 5,
+  //     },
+  //     dataView: {},
+  //     restore: {},
+  //     dataZoom: {},
+  //     magicType: {
+  //       type: ['pie'],
+  //     },
+  //   },
+  // },
+  // tooltip: {
+  //   trigger: 'item',
+  //   triggerOn: 'click',
+  //   formatter: (arg) => {
+  //     return arg.name + ' ' + arg.value;
+  //   },
+  // },
   xAxis: {
     name: 'ws\n$aa$',
     nameLocation: 'middle',
@@ -188,17 +172,6 @@ export default {
     boundaryGap: ['1%', '2%'],
     // scale: true, // 坐标轴从非0起始
   },
-  grid: {
-    // show: true,
-    left: '20%',
-    top: '15%',
-    // right: '50%',
-    // bottom: 70,
-    // containLabel: true,
-    // backgroundColor: '#ccc',
-    borderWidth: 1.5,
-    borderColor: '#666',
-  },
   animation: false,
   series: [
     // {
@@ -229,12 +202,4 @@ export default {
     //   // label: { show: true, rotate: 30, position: 'outside' },
     // },
   ],
-  legend: {
-    show: true,
-    orient: 'horizontal',
-    padding: 25,
-    right: 0,
-    // itemStyle: {},
-    // data: ['data1', 'data2'],
-  },
 };
