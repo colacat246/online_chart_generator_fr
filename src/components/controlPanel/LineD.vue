@@ -5,7 +5,7 @@
       v-if="curGraph && curGraph.series"
       v-model="activeData"
     >
-      <template v-for="(curData, idx) in curGraph.series" :key="curData.id">
+      <template v-for="curData in curGraph.series" :key="curData.id">
         <el-collapse-item :name="curData.id">
           <template #title>
             <div class="title-con">
@@ -72,7 +72,7 @@
                 :value-on-clear="0"
               />
             </section>
-            <SwitchColorVue v-model="curData.color" :idx="idx"></SwitchColorVue>
+            <SwitchColorVue v-model="curData.color" :series = "curGraph.series" :id="curData.id"></SwitchColorVue>
           </div>
           <SymbolSelectorVue
             v-model="curData.symbol"
@@ -195,7 +195,6 @@ const addNewLine = (evt) => {
 const handleDeleteLine = (id) => {
   const idx = curGraph.value.series.findIndex((i) => i.id === id);
   curGraph.value.series.splice(idx, 1);
-  bus.emit('lineD:updateColor'); // BUG 通知更新颜色无效
 };
 
 // 控制面板当前曲线，默认展开第一个

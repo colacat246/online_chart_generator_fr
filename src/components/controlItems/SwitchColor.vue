@@ -3,9 +3,7 @@
     <span>配色</span>
     <section class="switcher">
       <el-color-picker v-model="curColor" @change="setColor" size="default" />
-      <el-button 
-      type="primary"
-      @click="resetColor($event)" size="small"
+      <el-button type="primary" @click="resetColor($event)" size="small"
         >恢复默认配色</el-button
       >
     </section>
@@ -13,18 +11,22 @@
 </template>
 
 <script setup>
-import { nextTick, ref, inject } from 'vue';
+import { nextTick, ref, inject, computed, watch } from 'vue';
 import bus from '../../libs/bus.js';
-const { modelValue, idx } = defineProps(['modelValue', 'idx']);
+const { modelValue, series, id } = defineProps(['modelValue', 'series', 'id']);
 const emit = defineEmits(['update:modelValue']);
 const blurBtn = inject('blurBtn');
 // 拿到myChart
 const curChart = inject('curChart');
 // 获取颜色
 const curColor = ref();
-nextTick(() => {
-  curColor.value = curChart.value.getVisual({ seriesIndex: idx }, 'color');
+
+const idx = computed(() => {
+  return series.findIndex((i) => i.id === id);
 });
+
+watch(idx, updateColor, { immediate: true, flush: 'post' });
+
 // 设置颜色
 const setColor = (val) => {
   emit('update:modelValue', val);
@@ -38,10 +40,17 @@ const resetColor = (evt) => {
 
 // 当有一条曲线改变颜色时，更新全部曲线颜色
 bus.on('lineD:updateColor', () => {
-  nextTick(() => {
-    curColor.value = curChart.value.getVisual({ seriesIndex: idx }, 'color');
-  });
+  updateColor();
 });
+
+function updateColor() {
+  nextTick(() => {
+    curColor.value = curChart.value.getVisual(
+      { seriesIndex: idx.value },
+      'color'
+    );
+  });
+}
 </script>
 
 <style lang="less" scoped>
