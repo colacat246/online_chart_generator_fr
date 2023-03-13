@@ -4,6 +4,7 @@
       <div>curGraphId: {{ curGraphId }}</div>
       <div ref="drawArea" class="graph__drawing_area"></div>
     </section>
+    <!-- OPTIMIZE 弄个插槽，把conf和line的控件插进去，从而把路由参数的判断逻辑全放在这里 -->
     <GraphControlVue />
   </div>
 </template>
@@ -35,7 +36,7 @@ let chartRef = ref();;
 // BUG 点击图例时报错且toolbox会不正常缩放
 
 provide('curChart', chartRef);
-
+// OPTIMIZE 这里curGraph时引用对象，可以让control子组件从这里拿数据，不影响v-model数据更新，然后路由参数切换时，从而避免多个组件同时watch/compute路由参数，然后刷新
 // 图表Id
 const curGraphId = computed(() => {
   return currentRoute.value.params.id;
@@ -49,7 +50,7 @@ onMounted(() => {
   chartRef.value = echarts.init(drawArea.value);
   initChart();
 });
-
+// FINDOUT 能不能用forceupdate方法直接重新加载组件
 watch(
   curGraph,
   (newVal, oldVal) => {

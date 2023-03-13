@@ -137,7 +137,6 @@ const updateData = (val, data, axis, placeToReplace) => {
   otherAxis = otherAxis === 'x' ? 0 : 1;
 
   // BUG 坐标数量检查
-  // TODO 删除曲线、修改线形
   const maxLengh =
     val.length > otherData.length ? val.length : otherData.length;
   const res = [];
@@ -223,7 +222,9 @@ async function handleTitleTip() {
 <style lang="less" scoped>
 .title-con {
   :deep(&:hover .del-button) {
-    display: inherit;
+    // display: inherit;
+    visibility: visible;
+    opacity: 1;
   }
 }
 </style>

@@ -90,7 +90,7 @@ const genNewName = inject('genNewName');
 const { currentRoute } = useRouter();
 const activeIndex = computed(() => currentRoute.value.path);
 
-// TODO 写新图的模板
+// TODO 写新图的模板逻辑挪到graphConfs中
 // TODO 增加示意图
 const addNewGraph = (id) => {
   const graph = graphTypes.value.find((i) => i.graphTypeId === id);
@@ -189,7 +189,9 @@ div {
     }
   }
   :deep(.show__icon:hover .del-button) {
-    display: inherit;
+    // display: inherit;
+    visibility: visible;
+    opacity: 1;
   }
   section {
     display: flex;
