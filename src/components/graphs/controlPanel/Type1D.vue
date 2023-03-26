@@ -86,8 +86,12 @@
           ></SymbolSelectorVue>
         </el-collapse-item>
       </template>
+      <div class="flex_con">
+        <el-button type="primary" size="small" @click="addNewLine($event)"
+          >添加新曲线</el-button
+        >
+      </div>
     </el-collapse>
-    <el-button type="primary" @click="addNewLine($event)">添加新曲线</el-button>
   </el-scrollbar>
 </template>
 
@@ -167,8 +171,8 @@ const addNewLine = (evt) => {
   const defaultLineTemplate = {
     $extra: {
       id,
-      name: genNewName('新曲线', curSeries),
     },
+    name: genNewName('新曲线', curSeries, (i) => i.name),
     data: [[], []],
     type: 'line',
     color: undefined,

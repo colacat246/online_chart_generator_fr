@@ -1,8 +1,10 @@
 <template>
   <div class="graph__area__con">
-    <section>
-      <div>graphId: {{ graph.$extra.uuid }}</div>
-      <div ref="drawArea" class="graph__drawing_area"></div>
+    <section class="graph__drawing_area">
+      <div ref="drawArea"></div>
+      <section class="save_image_con">
+        <el-button @click="handleSaveIamge">保存图片</el-button>
+      </section>
     </section>
     <GraphControlVue :graph="graph" />
   </div>
@@ -34,6 +36,19 @@ function initChart() {
 // BUG 点击图例时报错且toolbox会不正常缩放
 
 provide('curChart', chartRef);
+
+// 保存图片
+const handleSaveIamge = () => {
+  const url = chartRef.value.getDataURL({
+    pixelRatio: 2,
+    backgroundColor: '#fff',
+  });
+  const a = document.createElement('a');
+  const evt = new MouseEvent('click');
+  a.download = 'newFig';
+  a.href = url;
+  a.dispatchEvent(evt);
+};
 </script>
 
 <style lang="less" scoped>
@@ -43,15 +58,32 @@ provide('curChart', chartRef);
   display: grid;
   grid-template-columns: auto 400px;
   grid-template-rows: 100%;
-  // border: 1px solid gold;
   & > * {
     box-sizing: border-box;
   }
-}
-.graph__drawing_area {
-  margin: 0 auto;
-  width: 600px;
-  height: 500px;
-  border: 1px solid red;
+
+  .graph__drawing_area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    & > div {
+      // border: 1px solid var(--el-border-color);
+      // border: 1px solid #409eff;
+      box-sizing: border-box;
+      // box-shadow: ;
+      height: 100%;
+      width: 100%;
+    }
+
+    .save_image_con {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+  }
 }
 </style>

@@ -18,7 +18,12 @@
 
 <script setup>
 import { toRefs, ref } from 'vue';
-import { Type1C, Type1D, Type2C, Type2D } from '@/components/graphs/controlPanel';
+import {
+  Type1C,
+  Type1D,
+  Type2C,
+  Type2D,
+} from '@/components/graphs/controlPanel';
 const props = defineProps(['graph']);
 const { graph } = toRefs(props);
 const panelType = ref('data');
@@ -32,16 +37,6 @@ const panels = {
     2: Type2C,
   },
 };
-
-// 切换面板
-// watch(
-//   [() => currentRoute.value.params.graphTypeId, panelType],
-//   () => {
-//     panelName.value =
-//       currentRoute.value.params.graphTypeId + '/' + panelType.value;
-//   },
-//   { immediate: true }
-// );
 </script>
 
 <style lang="less" scoped>

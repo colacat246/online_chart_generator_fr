@@ -49,7 +49,7 @@ function addNewGraph(graphTypeId) {
   const Generator = ref.class;
   // 确定新图形名称
   const uuid = genId();
-  const name = genNewName(ref.name, graphs.value);
+  const name = genNewName(ref.name, graphs.value, (i) => i.title.text);
   const template = new Generator(uuid, name).template;
 
   graphs.value.push(template);

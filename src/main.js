@@ -42,12 +42,12 @@ app.provide('genUuid', () => {
   return uuidv4();
 });
 // 计算新名称
-app.provide('genNewName', (namePrefix, arrForCompare) => {
+app.provide('genNewName', (namePrefix, arrForCompare, propReflect) => {
   let name = namePrefix;
   let count = 1;
   // 空验证
   if (!arrForCompare) return name;
-  while (arrForCompare.some((i) => i.title.text === name)) {
+  while (arrForCompare.some((i) => propReflect(i) === name)) {
     name = `${namePrefix}（${++count}）`;
   }
   return name;

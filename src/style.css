@@ -57,7 +57,7 @@ input {
   flex: 1;
 }
 .item-con-double > section:first-child {
-  margin-right: 10px;
+  margin-right: 25px;
 }
 .title-con {
   display: flex;
@@ -73,4 +73,10 @@ input {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.flex_con {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
