@@ -222,7 +222,6 @@ async function handleTitleTip() {
 <style lang="less" scoped>
 .title-con {
   :deep(&:hover .del-button) {
-    // display: inherit;
     visibility: visible;
     opacity: 1;
   }

@@ -9,7 +9,7 @@
   >
     <template #reference>
       <!-- 父组件的class绑定到这个上面，父组件用:deep()穿透可实现悬浮显示 -->
-      <el-icon v-bind="$attrs" @click.stop class="delete-button"
+      <el-icon title="删除" v-bind="$attrs" @click.stop class="delete-button"
         ><delete
       /></el-icon>
     </template>
@@ -24,10 +24,9 @@ const emit = defineEmits(['deleteItem']);
 
 <style lang="less" scoped>
 .delete-button {
-  // display: none;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.5s;
+  transition: opacity 0.5s, color 0.2s;
   &:hover {
     color: #f56c6c;
   }

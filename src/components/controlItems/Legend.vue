@@ -38,7 +38,6 @@
 </template>
 
 <script setup>
-import { template } from 'lodash';
 import { ref } from 'vue';
 const { curGraph } = defineProps(['curGraph']);
 
@@ -49,20 +48,6 @@ if (parseFloat(curGraph.title.left).toString() === 'NaN') {
   isCentering.value = true;
 } else {
   leftPadding.value = curGraph.title.left;
-}
-
-function handleLeftPadding(val) {
-  leftPadding.value = val;
-  curGraph.title.left = val;
-}
-function handleLeftPaddingCentering(val) {
-  if (val) {
-    isCentering.value = true;
-    curGraph.title.left = 'center';
-  } else {
-    isCentering.value = false;
-    curGraph.title.left = leftPadding.value;
-  }
 }
 </script>
 
