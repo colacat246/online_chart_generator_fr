@@ -6,7 +6,7 @@
       @select-graph="handleSelectGraph"
     ></AsideVue>
     <!-- TODO 处理空值 -->
-    <GraphVue :graph="graph" v-if="graph"/>
+    <GraphVue :graph="graph" v-if="graph" />
     <div v-else>待添加图形</div>
   </div>
 </template>
@@ -32,9 +32,10 @@ function handleSelectGraph(uuid) {
 
 <style lang="less" scoped>
 .graphs_con {
-  height: 100%;
-  width: 100%;
+  position: relative;
+  height: calc(100vh - @header-height);
+  width: 100vw;
   display: grid;
-  grid-template-columns: 200px auto;
+  grid-template-columns: @aside-width calc(100vw - @aside-width);
 }
 </style>

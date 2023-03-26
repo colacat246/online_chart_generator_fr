@@ -1,7 +1,7 @@
 <template>
   <div class="app_con">
     <HeaderVue class="header"></HeaderVue>
-    <RouterView/>
+    <RouterView />
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import HeaderVue from '@/components/Header.vue';
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-rows: 50px auto;
+  grid-template-rows: @header-height calc(100vh - @header-height);
 }
 .header {
   z-index: 999;

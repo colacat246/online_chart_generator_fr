@@ -58,23 +58,25 @@ const handleSaveIamge = () => {
 </script>
 
 <style lang="less" scoped>
+@graph-area-height: calc(100vh - @header-height);
+@drawing-area-width: calc(@graph-area-width - 400px);
 .graph__area__con {
-  height: 100%;
-  width: 100%;
+  height: @graph-area-height;
+  width: @graph-area-width;
   display: grid;
-  grid-template-columns: auto 400px;
-  grid-template-rows: 100%;
+  grid-template-columns: @drawing-area-width 400px;
   & > * {
     box-sizing: border-box;
   }
 
   .graph__drawing_area {
     position: relative;
+    // overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    height: @graph-area-height;
+    width: @drawing-area-width;
     box-sizing: border-box;
     & > div {
       border: 1px solid var(--el-border-color);
@@ -85,6 +87,8 @@ const handleSaveIamge = () => {
       overflow: hidden;
       height: 80%;
       width: 80%;
+      max-height: 85%;
+      max-width: 100%;
     }
 
     .save_image_con {
