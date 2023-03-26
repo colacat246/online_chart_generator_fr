@@ -19,7 +19,7 @@
         >
           <span>
             <el-icon><document /></el-icon>
-            <span class="graph__name">{{ graph.$extra.name }}</span>
+            <span class="graph__name">{{ graph.title.text ? graph.title.text : '未命名图形' }}</span>
           </span>
           <DeleteButton
             class="del-button"
@@ -35,8 +35,7 @@
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import AddGraph from './AsideComponents/AddGraph.vue';
-import { Document, CirclePlus } from '@element-plus/icons-vue';
-import { watch, ref, toRefs, nextTick } from 'vue';
+import { ref, toRefs } from 'vue';
 
 const props = defineProps(['graphs']); // 为普通数组，数组中为proxy对象
 const { graphs } = toRefs(props);

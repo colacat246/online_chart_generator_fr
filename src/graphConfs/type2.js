@@ -4,7 +4,6 @@ export default class Type2 {
     this.template = {
       $extra: {
         uuid,
-        name,
         graphTypeId: 2,
       },
       animation: false, // 关闭/开启动画

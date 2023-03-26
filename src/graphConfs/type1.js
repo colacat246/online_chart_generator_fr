@@ -4,7 +4,6 @@ export default class Type1 {
     this.template = {
       $extra: {
         uuid,
-        name,
         graphTypeId: 1,
       },
       // type: 'line', // FINDOUT 好像只需要在series里定义
