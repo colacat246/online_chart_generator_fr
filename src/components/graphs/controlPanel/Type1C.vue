@@ -10,13 +10,13 @@
 </template>
 
 <script setup>
-import TitleStyle from '../controlItems/TitleStyle.vue';
-import GraphArea from '../controlItems/GraphArea.vue';
-import Legend from '../controlItems/Legend.vue';
+import TitleStyle from '@/components/graphs/controlItems/TitleStyle.vue';
+import GraphArea from '@/components/graphs/controlItems/GraphArea.vue';
+import Legend from '@/components/graphs/controlItems/Legend.vue';
 import { inject, computed, ref, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { storeData } from '../../store/data.js';
+import { storeData } from '@/store/data.js';
 const storeD = storeData();
 const { graphs } = storeToRefs(storeD);
 const { currentRoute } = useRouter();

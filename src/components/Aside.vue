@@ -1,11 +1,11 @@
 <template>
   <div class="border-right">
-    <el-menu class="no-right-border border-bottom" router>
+    <!-- <el-menu class="no-right-border border-bottom" router>
       <el-menu-item index="/home">
         <el-icon><icon-menu /></el-icon>
         <span>home</span>
       </el-menu-item>
-    </el-menu>
+    </el-menu> -->
     <section class="border-bottom">
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -29,16 +29,17 @@
     </section>
     <el-scrollbar>
       <!-- TODO 修改名称 -->
-      <el-menu class="no-right-border" :default-active="activeIndex" router>
+      <el-menu class="no-right-border">
         <el-menu-item
           class="menu__graph show__icon"
-          v-for="graph in graphs"
-          :key="graph.id"
-          :index="'/graph/' + graph.id + '/' + graph.graphTypeId"
+          v-for="info in graphInfoList"
+          :key="info.uuid"
+          :index="info.uuid"
+          @click="emit('selectGraph', info.uuid)"
         >
           <span>
             <el-icon><document /></el-icon>
-            <span class="graph__name">{{ graph.name }}</span>
+            <span class="graph__name">{{ info.name }}</span>
           </span>
           <!-- <el-popconfirm
             confirm-button-text="是"
@@ -54,7 +55,7 @@
           </el-popconfirm> -->
           <DeleteButton
             class="del-button"
-            :item-to-delete="graph.id"
+            :item-to-delete="info.uuid"
             @delete-item="confirmDelete"
           />
         </el-menu-item>
@@ -64,7 +65,7 @@
 </template>
 
 <script setup>
-import DeleteButton from './generalComponents/DeleteButton.vue';
+import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import {
   Document,
   Menu as IconMenu,
@@ -77,18 +78,21 @@ import { ref, inject, computed } from 'vue';
 import { storeData } from '../store/data.js';
 import { storeConf } from '../store/config.js';
 import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
-const router = useRouter();
-const storeD = storeData();
-const storeC = storeConf();
-const { graphs } = storeToRefs(storeD);
-const { graphTypes } = storeToRefs(storeC);
-const genId = inject('genId');
+const { graphInfoList } = defineProps(['graphInfoList']); // 为普通数组，数组中为proxy对象
+const emit = defineEmits(['selectGraph']);
+
+// const router = useRouter();
+// const storeD = storeData();
+// const storeC = storeConf();
+// const { graphs } = storeToRefs(storeD);
+// const { graphTypes } = storeToRefs(storeC);
+const genId = inject('genUuid');
 const genNewName = inject('genNewName');
 
-const { currentRoute } = useRouter();
-const activeIndex = computed(() => currentRoute.value.path);
+// const { currentRoute } = useRouter();
+// const activeIndex = computed(() => currentRoute.value.path);
 
 // TODO 写新图的模板逻辑挪到graphConfs中
 // TODO 增加示意图

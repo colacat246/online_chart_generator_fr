@@ -5,9 +5,11 @@ export const storeData = defineStore('store_data', {
     return {
       graphs: [
         {
-          id: 'a1',
-          graphTypeId: 1,
-          name: 'line1',
+          $extra: {
+            uuid: 'fbb02f03-6657-4040-972e-9d4443eae9cc',
+            name: 'line1',
+            graphTypeId: 1,
+          },
           type: 'line',
           // newAdd
           title: {
@@ -86,9 +88,12 @@ export const storeData = defineStore('store_data', {
           ],
         },
         {
-          id: 'b2',
-          name: 'bar1',
-          graphTypeId: 2,
+          $extra: {
+            uuid: 'b7e25892-214b-4422-98ad-8cecbb158e73',
+            name: 'bar1',
+            graphTypeId: 2,
+          },
+          type: 'bar',
           series: [
             {
               data: [

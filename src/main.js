@@ -1,12 +1,13 @@
 import { createApp } from 'vue';
-import './normalize.css';
-import './style.css';
+import '@/normalize.css';
+import '@/style.css';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
-import App from './App.vue';
-import router from './routes/index.js';
+import App from '@/App.vue';
+import router from '@/routes/index.js';
 import { createPinia } from 'pinia';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { v4 as uuidv4 } from 'uuid';
 
 const app = createApp(App);
 
@@ -37,12 +38,8 @@ app.provide('blurBtn', (evt) => {
   }
 });
 // 生成Id
-app.provide('genId', () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+app.provide('genUuid', () => {
+  return uuidv4();
 });
 // 计算新名称
 app.provide('genNewName', (namePrefix, arrForCompare) => {

@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeVue from '../components/HomeVue.vue';
-import GraphVue from '../components/GraphVue.vue';
+import HomeVue from '@/components/Home.vue';
+import GraphsVue from '@/components/graphs/Graphs.vue';
 
 const routes = [
-  { path: '/', redirect: '/home' },
+  { path: '/', redirect: '/graphs' },
   { path: '/home', component: HomeVue },
-  { path: '/graph/:id/:graphTypeId', component: GraphVue },
+  { path: '/graphs', component: GraphsVue },
 ];
 
 const router = createRouter({

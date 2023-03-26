@@ -31,7 +31,7 @@
       </section>
       <section>
         <span>垂直位置</span>
-        <el-input-number size="small" v-model="curGraph.legend.right" />
+        <el-input-number size="small" v-model="curGraph.legend.top" />
       </section>
     </div>
   </el-collapse-item>

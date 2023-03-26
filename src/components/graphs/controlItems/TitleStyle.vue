@@ -78,7 +78,6 @@
 </template>
 
 <script setup>
-import { template } from 'lodash';
 import { ref } from 'vue';
 const { curGraph } = defineProps(['curGraph']);
 

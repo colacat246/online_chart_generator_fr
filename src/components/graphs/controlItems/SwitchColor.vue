@@ -12,7 +12,7 @@
 
 <script setup>
 import { nextTick, ref, inject, computed, watch } from 'vue';
-import bus from '../../libs/bus.js';
+import bus from '@/libs/bus.js';
 const { modelValue, series, id } = defineProps(['modelValue', 'series', 'id']);
 const emit = defineEmits(['update:modelValue']);
 const blurBtn = inject('blurBtn');
