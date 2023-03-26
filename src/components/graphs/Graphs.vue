@@ -2,22 +2,29 @@
   <div class="graphs_con">
     <AsideVue
       class="aside"
-      :graph-info-list="storeD.graphs.map((i) => i.$extra)"
+      :graphs="storeD.graphs"
       @select-graph="handleSelectGraph"
     ></AsideVue>
-    <GraphVue :graph="graph" />
+    <!-- TODO 处理空值 -->
+    <GraphVue :graph="graph" v-if="graph"/>
+    <div v-else>待添加图形</div>
   </div>
 </template>
 
 <script setup>
-import AsideVue from '@/components/Aside.vue';
+import AsideVue from '@/components/graphs/Aside.vue';
 import GraphVue from '@/components/graphs/Graph.vue';
-import { ref, inject } from 'vue';
+import { ref } from 'vue';
 import { storeData } from '@/store/data';
+
 const storeD = storeData();
 const graph = ref(storeD.graphs[0]);
 
 function handleSelectGraph(uuid) {
+  if (!uuid) {
+    graph.value = null;
+    return;
+  }
   const newGraph = storeD.graphs.find((i) => i.$extra.uuid === uuid);
   graph.value = newGraph;
 }
@@ -29,10 +36,5 @@ function handleSelectGraph(uuid) {
   width: 100%;
   display: grid;
   grid-template-columns: 200px auto;
-}
-.aside {
-  // grid-row: 1;
-  // grid-column: 1;
-  // height: 100%;
 }
 </style>

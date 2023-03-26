@@ -13,20 +13,24 @@
 import TitleStyle from '@/components/graphs/controlItems/TitleStyle.vue';
 import GraphArea from '@/components/graphs/controlItems/GraphArea.vue';
 import Legend from '@/components/graphs/controlItems/Legend.vue';
-import { inject, computed, ref, watch, nextTick } from 'vue';
-import { useRouter } from 'vue-router';
-import { storeToRefs } from 'pinia';
-import { storeData } from '@/store/data.js';
-const storeD = storeData();
-const { graphs } = storeToRefs(storeD);
-const { currentRoute } = useRouter();
+import { inject, computed, toRefs, ref, watch, nextTick } from 'vue';
+// import { useRouter } from 'vue-router';
+// import { storeToRefs } from 'pinia';
+// import { storeData } from '@/store/data.js';
+
+const props = defineProps(['graph']);
+const { graph: curGraph } = toRefs(props);
+
+// const storeD = storeData();
+// const { graphs } = storeToRefs(storeD);
+// const { currentRoute } = useRouter();
 // 图表Id
-const curGraphId = computed(() => {
-  return currentRoute.value.params.id;
-});
-const curGraph = computed(() => {
-  return graphs.value.find((i) => i.id === curGraphId.value);
-});
+// const curGraphId = computed(() => {
+//   return currentRoute.value.params.id;
+// });
+// const curGraph = computed(() => {
+//   return graphs.value.find((i) => i.id === curGraphId.value);
+// });
 const activeData = ref('legend');
 </script>
 

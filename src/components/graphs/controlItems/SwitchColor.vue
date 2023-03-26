@@ -22,7 +22,7 @@ const curChart = inject('curChart');
 const curColor = ref();
 
 const idx = computed(() => {
-  return series.findIndex((i) => i.id === id);
+  return series.findIndex((i) => i.$extra.id === id);
 });
 
 watch(idx, updateColor, { immediate: true, flush: 'post' });

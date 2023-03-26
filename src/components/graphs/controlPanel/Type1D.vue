@@ -5,19 +5,19 @@
       v-if="curGraph && curGraph.series"
       v-model="activeData"
     >
-      <template v-for="curData in curGraph.series" :key="curData.id">
-        <el-collapse-item :name="curData.id">
+      <template v-for="curData in curGraph.series" :key="curData.$extra.id">
+        <el-collapse-item :name="curData.$extra.id">
           <template #title>
             <div class="title-con">
               <section
                 class="title-item"
                 title=""
-                :ref="(el) => setGraphRef(el, curData.id)"
+                :ref="(el) => setGraphRef(el, curData.$extra.id)"
               >
                 {{ curData.name }}
               </section>
               <DeleteButtonVue
-                :item-to-delete="curData.id"
+                :item-to-delete="curData.$extra.id"
                 @delete-item="handleDeleteLine"
                 size="16"
                 class="del-button"
@@ -25,6 +25,7 @@
             </div>
           </template>
           <div class="item-con">
+            <!-- TODO 检查标题重复，去掉series.$extra.id -->
             <span>名称</span>
             <input type="text" v-model="curData.name" />
           </div>
@@ -75,7 +76,7 @@
             <SwitchColorVue
               v-model="curData.color"
               :series="curGraph.series"
-              :id="curData.id"
+              :id="curData.$extra.id"
             ></SwitchColorVue>
           </div>
           <SymbolSelectorVue
@@ -164,8 +165,10 @@ const addNewLine = (evt) => {
   const curSeries = curGraph.value.series;
   const id = genId();
   const defaultLineTemplate = {
-    id,
-    name: genNewName('新曲线', curSeries),
+    $extra: {
+      id,
+      name: genNewName('新曲线', curSeries),
+    },
     data: [[], []],
     type: 'line',
     color: undefined,
@@ -185,13 +188,13 @@ const addNewLine = (evt) => {
 
 // 删除曲线
 const handleDeleteLine = (id) => {
-  const idx = curGraph.value.series.findIndex((i) => i.id === id);
+  const idx = curGraph.value.series.findIndex((i) => i.$extra.id === id);
   curGraph.value.series.splice(idx, 1);
 };
 
 // 控制面板当前曲线，默认展开第一个
 const activeData = ref(
-  curGraph.value.series[0] ? curGraph.value.series[0].id : ''
+  curGraph.value.series[0] ? curGraph.value.series[0].$extra.id : ''
 );
 
 // 控制面板属性，结构为 属性 -> id

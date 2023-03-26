@@ -29,7 +29,7 @@
         <el-input-number
           size="small"
           :model-value="parseInt(curGraph.width)"
-          @change="(val) => (curGraph.grid.width = val.toString() + '%')"
+          @change="(val) => (curGraph.width = val.toString() + '%')"
         />
       </section>
       <section>
@@ -37,7 +37,7 @@
         <el-input-number
           size="small"
           :model-value="parseInt(curGraph.height)"
-          @change="(val) => (curGraph.grid.height = val.toString() + '%')"
+          @change="(val) => (curGraph.height = val.toString() + '%')"
         />
       </section>
     </div>
@@ -45,29 +45,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const { curGraph } = defineProps(['curGraph']);
+import { ref, toRefs } from 'vue';
+const props = defineProps(['curGraph']);
+const { curGraph } = toRefs(props);
 
 // 处理左边距
 const isCentering = ref(false);
 const leftPadding = ref(0);
-if (parseFloat(curGraph.title.left).toString() === 'NaN') {
+if (parseFloat(curGraph.value.title.left).toString() === 'NaN') {
   isCentering.value = true;
 } else {
-  leftPadding.value = curGraph.title.left;
+  leftPadding.value = curGraph.value.title.left;
 }
 
 function handleLeftPadding(val) {
   leftPadding.value = val;
-  curGraph.title.left = val;
+  curGraph.value.title.left = val;
 }
 function handleLeftPaddingCentering(val) {
   if (val) {
     isCentering.value = true;
-    curGraph.title.left = 'center';
+    curGraph.value.title.left = 'center';
   } else {
     isCentering.value = false;
-    curGraph.title.left = leftPadding.value;
+    curGraph.value.title.left = leftPadding.value;
   }
 }
 </script>

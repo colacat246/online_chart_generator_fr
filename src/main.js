@@ -47,7 +47,7 @@ app.provide('genNewName', (namePrefix, arrForCompare) => {
   let count = 1;
   // 空验证
   if (!arrForCompare) return name;
-  while (arrForCompare.some((i) => i.name === name)) {
+  while (arrForCompare.some((i) => i.$extra.name === name)) {
     name = `${namePrefix}（${++count}）`;
   }
   return name;
