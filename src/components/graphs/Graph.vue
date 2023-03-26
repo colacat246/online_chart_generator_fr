@@ -14,30 +14,36 @@
 // 此组件接收graph属性
 import GraphControlVue from '@/components/graphs/GraphControl.vue';
 import * as echarts from 'echarts';
-import { onMounted, watch, ref, toRefs, provide } from 'vue';
+import { onMounted, watch, ref, toRefs, provide, nextTick, markRaw } from 'vue';
 
 const drawArea = ref();
-let chartRef = ref();
+let chartRef = ref({}); // 这个用来provide给ColorSwitcher
+let chartInstance;
 const props = defineProps(['graph']);
 const { graph } = toRefs(props); // 把属性变成响应式
 
 onMounted(() => {
-  chartRef.value = echarts.init(drawArea.value);
+  chartInstance = echarts.init(drawArea.value);
+  chartRef.value = chartInstance; // HACK
   initChart();
+  const observer = new MutationObserver(() => {
+    nextTick(() => {
+      chartInstance.resize();
+    });
+  });
+  observer.observe(drawArea.value, { attributes: true });
 });
 
 watch(graph, () => initChart(), { deep: true });
 
+provide('curChart', chartRef);
 // 初始化新图形
 function initChart() {
-  chartRef.value.setOption(graph.value, true); // 第二个参数表示不合并opts，直接创建新组件
+  chartInstance.setOption(graph.value, true); // 第二个参数表示不合并opts，直接创建新组件
 }
-// OPTIMIZE 这里curGraph时引用对象，可以让control子组件从这里拿数据，不影响v-model数据更新，然后路由参数切换时，从而避免多个组件同时watch/compute路由参数，然后刷新
-// BUG 点击图例时报错且toolbox会不正常缩放
-
-provide('curChart', chartRef);
 
 // 保存图片
+// TODO 改成选项框，选择像素、文件名等
 const handleSaveIamge = () => {
   const url = chartRef.value.getDataURL({
     pixelRatio: 2,
@@ -45,7 +51,7 @@ const handleSaveIamge = () => {
   });
   const a = document.createElement('a');
   const evt = new MouseEvent('click');
-  a.download = 'newFig';
+  a.download = graph.value.title.text;
   a.href = url;
   a.dispatchEvent(evt);
 };
@@ -71,12 +77,14 @@ const handleSaveIamge = () => {
     width: 100%;
     box-sizing: border-box;
     & > div {
-      // border: 1px solid var(--el-border-color);
+      border: 1px solid var(--el-border-color);
       // border: 1px solid #409eff;
       box-sizing: border-box;
       // box-shadow: ;
-      height: 100%;
-      width: 100%;
+      resize: both;
+      overflow: hidden;
+      height: 80%;
+      width: 80%;
     }
 
     .save_image_con {
