@@ -91,34 +91,6 @@ export const storeData = defineStore('store_data', {
               smooth: 0,
             },
           ],
-          // TODO 待修改
-          // toolbox: {
-          //   show: true,
-          //   orient: 'horizontal',
-          //   itemSize: 20,
-          //   itemGap: 10,
-          //   bottom: 15,
-          //   right: 15,
-          //   feature: {
-          //     saveAsImage: {
-          //       type: 'png',
-          //       pixelRatio: 5,
-          //     },
-          //     dataView: {},
-          //     restore: {},
-          //     dataZoom: {},
-          //     magicType: {
-          //       type: ['pie'],
-          //     },
-          //   },
-          // },
-          // tooltip: {
-          //   trigger: 'item',
-          //   triggerOn: 'click',
-          //   formatter: (arg) => {
-          //     return arg.name + ' ' + arg.value;
-          //   },
-          // },
           xAxis: {
             name: 'x轴内容',
             nameLocation: 'middle',
@@ -144,7 +116,7 @@ export const storeData = defineStore('store_data', {
             position: 'bottom',
             axisLine: {
               show: true,
-              // onZero: true,
+              // onZero: false,
               // 线形
               lineStyle: {
                 color: '#666',
@@ -184,7 +156,7 @@ export const storeData = defineStore('store_data', {
             minorSplitLine: {
               show: false,
               lineStyle: {
-                color: '#666',
+                color: '#e9e9e9',
                 width: 1,
               },
             },
@@ -201,7 +173,7 @@ export const storeData = defineStore('store_data', {
             // boundaryGap: ['0%', '0%'], //相当于坐标边界距离数据极值的距离
           },
           yAxis: {
-            name: 'y axis content',
+            name: 'y轴内容',
             nameLocation: 'middle',
             nameTextStyle: {
               color: '#000',
@@ -215,7 +187,6 @@ export const storeData = defineStore('store_data', {
               // TODO 富文本
               rich: {},
             },
-            // 最小值
             min: function (val) {
               return Math.floor(val.min);
             },
@@ -226,7 +197,7 @@ export const storeData = defineStore('store_data', {
             position: 'bottom',
             axisLine: {
               show: true,
-              // onZero: true,
+              // onZero: false,
               // 线形
               lineStyle: {
                 color: '#666',
@@ -266,7 +237,7 @@ export const storeData = defineStore('store_data', {
             minorSplitLine: {
               show: false,
               lineStyle: {
-                color: '#666',
+                color: '#e9e9e9',
                 width: 1,
               },
             },
@@ -280,7 +251,7 @@ export const storeData = defineStore('store_data', {
             splitArea: {
               show: false,
             },
-            boundaryGap: ['0%', '0%'],
+            // boundaryGap: ['0%', '0%'], //相当于坐标边界距离数据极值的距离
           },
           animation: false,
           // series: [

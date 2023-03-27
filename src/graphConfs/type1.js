@@ -5,10 +5,9 @@ export default class Type1 {
       $extra: {
         uuid,
         graphTypeId: 1,
-        divHeight: 1000,
-        w2hRatio: 4 / 3,
+        divHeight: 800,
+        w2hRatio: 1.33,
       },
-      // type: 'line', // FINDOUT 好像只需要在series里定义
       // 数据
       series: [],
       // 标题
@@ -17,18 +16,17 @@ export default class Type1 {
         text: name,
         textStyle: {
           color: '#000',
-          fontSize: 14,
-          fontWeight: 'normal',
+          fontWeight: 'bold',
+          fontSize: 18,
         },
-        // borderWidth: undefined,
-        // borderRadius: undefined,
-        // borderColor: undefined,
-        // textAligh: undefined,
+        // borderWidth: 2,
+        // textAligh: 'left',
         left: 'center',
         top: 23,
       },
+
       grid: {
-        // show: true,
+        show: false,
         left: '18%',
         top: '15%',
         // right: '50%',
@@ -43,63 +41,37 @@ export default class Type1 {
       legend: {
         show: true,
         orient: 'horizontal',
-        // padding: 25,
         top: 22,
         right: 22,
         // itemStyle: {},
         // data: ['data1', 'data2'],
       },
-      // TODO 待修改
-      // toolbox: {
-      //   show: true,
-      //   orient: 'horizontal',
-      //   itemSize: 20,
-      //   itemGap: 10,
-      //   bottom: 15,
-      //   right: 15,
-      //   feature: {
-      //     saveAsImage: {
-      //       type: 'png',
-      //       pixelRatio: 5,
-      //     },
-      //     dataView: {},
-      //     restore: {},
-      //     dataZoom: {},
-      //     magicType: {
-      //       type: ['pie'],
-      //     },
-      //   },
-      // },
-      // tooltip: {
-      //   trigger: 'item',
-      //   triggerOn: 'click',
-      //   formatter: (arg) => {
-      //     return arg.name + ' ' + arg.value;
-      //   },
-      // },
       xAxis: {
-        name: 'ws\n$aa$',
+        name: 'x轴标题',
         nameLocation: 'middle',
         nameTextStyle: {
           color: '#000',
           fontStyle: 'normal',
           fontFamily: 'times new roman',
           fontSize: 18,
+          fontWeight: 'normal',
           align: 'center',
           lineHeight: 20,
-          padding: 5,
+          padding: 10,
           // TODO 富文本
           rich: {},
         },
-        // 最小值
         min: function (val) {
           return Math.floor(val.min);
+        },
+        max: function (val) {
+          return Math.ceil(val.max);
         },
         type: 'value',
         position: 'bottom',
         axisLine: {
           show: true,
-          // onZero: true,
+          // onZero: false,
           // 线形
           lineStyle: {
             color: '#666',
@@ -111,7 +83,7 @@ export default class Type1 {
           // 箭头
           symbol: ['none', 'none'],
           symbolSize: [7, 15],
-          symbolOffset: 15,
+          symbolOffset: [0, 16],
         },
         // 刻度
         axisTick: {
@@ -121,6 +93,7 @@ export default class Type1 {
           lineStyle: {
             width: 1.5,
             cap: 'butt',
+            color: '#666',
           },
         },
         // 刻度密度
@@ -138,7 +111,7 @@ export default class Type1 {
         minorSplitLine: {
           show: false,
           lineStyle: {
-            color: 'red',
+            color: '#e9e9e9',
             width: 1,
           },
         },
@@ -146,29 +119,40 @@ export default class Type1 {
           show: true,
           lineStyle: {
             color: '#ccc',
+            width: 1,
           },
         },
         splitArea: {
           show: false,
         },
-        boundaryGap: ['0%', '0%'],
+        // boundaryGap: ['0%', '0%'], //相当于坐标边界距离数据极值的距离
       },
       yAxis: {
-        type: 'value',
-        name: 'response',
+        name: 'y轴标题',
         nameLocation: 'middle',
         nameTextStyle: {
           color: '#000',
           fontStyle: 'normal',
           fontFamily: 'times new roman',
           fontSize: 18,
+          fontWeight: 'normal',
           align: 'center',
           lineHeight: 20,
-          // nameGap: 200,
-          padding: 40,
+          padding: 10,
+          // TODO 富文本
+          rich: {},
         },
+        min: function (val) {
+          return Math.floor(val.min);
+        },
+        max: function (val) {
+          return Math.ceil(val.max);
+        },
+        type: 'value',
+        position: 'bottom',
         axisLine: {
           show: true,
+          // onZero: false,
           // 线形
           lineStyle: {
             color: '#666',
@@ -180,7 +164,7 @@ export default class Type1 {
           // 箭头
           symbol: ['none', 'none'],
           symbolSize: [7, 15],
-          symbolOffset: 15,
+          symbolOffset: [0, 16],
         },
         // 刻度
         axisTick: {
@@ -190,13 +174,14 @@ export default class Type1 {
           lineStyle: {
             width: 1.5,
             cap: 'butt',
+            color: '#666',
           },
         },
         // 刻度密度
-        splitNumber: 5,
+        splitNumber: 7,
         minorTick: {
           show: true,
-          splitNumber: 4,
+          splitNumber: 5,
           length: 3,
           lineStyle: {
             color: '#666',
@@ -207,7 +192,7 @@ export default class Type1 {
         minorSplitLine: {
           show: false,
           lineStyle: {
-            color: 'red',
+            color: '#e9e9e9',
             width: 1,
           },
         },
@@ -215,44 +200,15 @@ export default class Type1 {
           show: true,
           lineStyle: {
             color: '#ccc',
+            width: 1,
           },
         },
         splitArea: {
           show: false,
         },
-        boundaryGap: ['1%', '2%'],
-        // scale: true, // 坐标轴从非0起始
+        // boundaryGap: ['0%', '0%'], //相当于坐标边界距离数据极值的距离
       },
       animation: false,
-      // series: [
-      // {
-      //   name: 'data1',
-      //   type: 'line',
-      //   lineStyle: { color: 'blue', type: 'solid' },
-      //   symbol: 'rect',
-      //   symbolSize: 5,
-      // },
-      // {
-      //   name: 'data2',
-      //   type: 'line',
-      //   symbol: 'rect',
-      //   symbolSize: 5,
-      //   // markLine: {
-      //   // data: [{ type: 'average', value: 'avg' }],
-      //   // },
-      //   // smooth: true,
-      //   // 这样设置可以线和marker同色
-      //   itemStyle: {
-      //     normal: {
-      //       // shadowColor: 'red',
-      //       // shadowBlur: 2,
-      //       color: 'orange',
-      //     },
-      //   },
-      //   lineStyle: { type: 'solid' },
-      //   // label: { show: true, rotate: 30, position: 'outside' },
-      // },
-      // ],
     };
   }
 }

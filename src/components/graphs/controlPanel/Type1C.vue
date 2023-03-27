@@ -7,8 +7,16 @@
       <Legend name="legend" :cur-graph="curGraph"></Legend>
       <AxisVal name="xAxis" axis-title="X轴" :axis="curGraph.xAxis"></AxisVal>
       <AxisVal name="yAxis" axis-title="Y轴" :axis="curGraph.yAxis"></AxisVal>
-      <AuxLine name="xAuxLine" axis-title="X方向" :axis="curGraph.xAxis"></AuxLine>
-      <AuxLine name="yAuxLine" axis-title="Y方向" :axis="curGraph.yAxis"></AuxLine>
+      <AuxLine
+        name="xAuxLine"
+        axis-title="X方向"
+        :axis="curGraph.xAxis"
+      ></AuxLine>
+      <AuxLine
+        name="yAuxLine"
+        axis-title="Y方向"
+        :axis="curGraph.yAxis"
+      ></AuxLine>
     </el-collapse>
   </el-scrollbar>
 </template>
@@ -19,13 +27,11 @@ import GraphArea from '@/components/graphs/controlItems/GraphArea.vue';
 import Legend from '@/components/graphs/controlItems/Legend.vue';
 import AxisVal from '@/components/graphs/controlItems/AxisVal.vue';
 import AuxLine from '@/components/graphs/controlItems/AuxLine.vue';
-import { inject, computed, toRefs, ref, watch, nextTick } from 'vue';
+import { toRefs, ref } from 'vue';
 const props = defineProps(['graph']);
 const { graph: curGraph } = toRefs(props);
-console.log(curGraph.value);
 
 const activeData = ref('xAuxLine');
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>
