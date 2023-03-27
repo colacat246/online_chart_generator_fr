@@ -1,6 +1,5 @@
 <!-- 建立风琴抽屉，进行二级归类 -->
 <template>
-  <el-scrollbar>
     <el-collapse accordion v-if="curGraph" v-model="activeData">
       <TitleStyle name="title" :cur-graph="curGraph"></TitleStyle>
       <GraphArea name="graphArea" :cur-graph="curGraph"></GraphArea>
@@ -18,7 +17,6 @@
         :axis="curGraph.yAxis"
       ></AuxLine>
     </el-collapse>
-  </el-scrollbar>
 </template>
 
 <script setup>

@@ -9,10 +9,12 @@
       <el-menu-item index="1" @click="panelType = 'data'">数据区</el-menu-item>
       <el-menu-item index="2" @click="panelType = 'conf'">背景区</el-menu-item>
     </el-menu>
-    <component class="control-comp"
-      :is="panels[panelType][graph.$extra.graphTypeId]"
-      :graph="graph"
-    />
+    <el-scrollbar class="control-comp">
+      <component
+        :is="panels[panelType][graph.$extra.graphTypeId]"
+        :graph="graph"
+      />
+    </el-scrollbar>
   </section>
 </template>
 
@@ -44,6 +46,8 @@ const panels = {
   border-left: 1px solid var(--el-border-color);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  height: 100%;
   .el-menu-graph-control {
     flex: 0;
     li {

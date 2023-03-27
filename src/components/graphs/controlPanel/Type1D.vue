@@ -1,98 +1,96 @@
 <template>
-  <el-scrollbar>
-    <el-collapse
-      accordion
-      v-if="curGraph && curGraph.series"
-      v-model="activeData"
-    >
-      <template v-for="curData in curGraph.series" :key="curData.$extra.id">
-        <el-collapse-item :name="curData.$extra.id">
-          <template #title>
-            <div class="title-con">
-              <section
-                class="title-item"
-                title=""
-                :ref="(el) => setGraphRef(el, curData.$extra.id)"
-              >
-                {{ curData.name }}
-              </section>
-              <DeleteButtonVue
-                :item-to-delete="curData.$extra.id"
-                @delete-item="handleDeleteLine"
-                size="16"
-                class="del-button"
-              ></DeleteButtonVue>
-            </div>
-          </template>
-          <div class="item-con">
-            <!-- TODO 检查标题重复，去掉series.$extra.id -->
-            <span>名称</span>
-            <input type="text" v-model="curData.name" />
-          </div>
-          <div class="item-con">
-            <span>X轴</span>
-            <input
-              type="text"
-              :value="unzipData(curData.data, 'x')"
-              @change="
-                updateData($event.target.value, curData.data, 'x', curData)
-              "
-            />
-          </div>
-          <div class="item-con">
-            <span>Y轴</span>
-            <input
-              type="text"
-              :value="unzipData(curData.data, 'y')"
-              @change="
-                updateData($event.target.value, curData.data, 'y', curData)
-              "
-            />
-          </div>
-          <el-alert
-            v-show="curData.axisWarn"
-            class="axis-warning"
-            title="X轴与Y轴数据个数不一致"
-            type="warning"
-          />
-
-          <LineStyleVue
-            class="item-con-double"
-            v-model="curData.lineStyle.type"
-            v-model:lineWidth="curData.lineStyle.width"
-          ></LineStyleVue>
-          <div class="item-con-double">
-            <section>
-              <span>平滑</span>
-              <el-input-number
-                size="small"
-                v-model="curData.smooth"
-                :min="0"
-                :max="5"
-                :step="0.02"
-                :value-on-clear="0"
-              />
+  <el-collapse
+    accordion
+    v-if="curGraph && curGraph.series"
+    v-model="activeData"
+  >
+    <template v-for="curData in curGraph.series" :key="curData.$extra.id">
+      <el-collapse-item :name="curData.$extra.id">
+        <template #title>
+          <div class="title-con">
+            <section
+              class="title-item"
+              title=""
+              :ref="(el) => setGraphRef(el, curData.$extra.id)"
+            >
+              {{ curData.name }}
             </section>
-            <SwitchColorVue
-              v-model="curData.color"
-              :series="curGraph.series"
-              :id="curData.$extra.id"
-            ></SwitchColorVue>
+            <DeleteButtonVue
+              :item-to-delete="curData.$extra.id"
+              @delete-item="handleDeleteLine"
+              size="16"
+              class="del-button"
+            ></DeleteButtonVue>
           </div>
-          <SymbolSelectorVue
-            v-model="curData.symbol"
-            v-model:symbolSize="curData.symbolSize"
-            class="item-con-double"
-          ></SymbolSelectorVue>
-        </el-collapse-item>
-      </template>
-      <div class="flex_con">
-        <el-button type="primary" size="small" @click="addNewLine($event)"
-          >添加新曲线</el-button
-        >
-      </div>
-    </el-collapse>
-  </el-scrollbar>
+        </template>
+        <div class="item-con">
+          <!-- TODO 检查标题重复，去掉series.$extra.id -->
+          <span>名称</span>
+          <input type="text" v-model="curData.name" />
+        </div>
+        <div class="item-con">
+          <span>X轴</span>
+          <input
+            type="text"
+            :value="unzipData(curData.data, 'x')"
+            @change="
+              updateData($event.target.value, curData.data, 'x', curData)
+            "
+          />
+        </div>
+        <div class="item-con">
+          <span>Y轴</span>
+          <input
+            type="text"
+            :value="unzipData(curData.data, 'y')"
+            @change="
+              updateData($event.target.value, curData.data, 'y', curData)
+            "
+          />
+        </div>
+        <el-alert
+          v-show="curData.axisWarn"
+          class="axis-warning"
+          title="X轴与Y轴数据个数不一致"
+          type="warning"
+        />
+
+        <LineStyleVue
+          class="item-con-double"
+          v-model="curData.lineStyle.type"
+          v-model:lineWidth="curData.lineStyle.width"
+        ></LineStyleVue>
+        <div class="item-con-double">
+          <section>
+            <span>平滑</span>
+            <el-input-number
+              size="small"
+              v-model="curData.smooth"
+              :min="0"
+              :max="5"
+              :step="0.02"
+              :value-on-clear="0"
+            />
+          </section>
+          <SwitchColorVue
+            v-model="curData.color"
+            :series="curGraph.series"
+            :id="curData.$extra.id"
+          ></SwitchColorVue>
+        </div>
+        <SymbolSelectorVue
+          v-model="curData.symbol"
+          v-model:symbolSize="curData.symbolSize"
+          class="item-con-double"
+        ></SymbolSelectorVue>
+      </el-collapse-item>
+    </template>
+    <div class="flex_con">
+      <el-button type="primary" size="small" @click="addNewLine($event)"
+        >添加新曲线</el-button
+      >
+    </div>
+  </el-collapse>
 </template>
 
 <script setup>

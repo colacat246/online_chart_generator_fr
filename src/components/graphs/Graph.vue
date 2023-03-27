@@ -64,8 +64,8 @@ function scaling() {
   const w2hRatio = graph.value.$extra.w2hRatio;
   const picWidth = picHeight * w2hRatio;
 
-  const w = drawAreaCon.value.offsetWidth - 4; // 注意减掉border尺寸
-  const h = drawAreaCon.value.offsetHeight - 4;
+  const w = drawAreaCon.value.offsetWidth - 15; // 注意减掉border尺寸
+  const h = drawAreaCon.value.offsetHeight - 15;
   const w2hRatioWindow = w / h;
   let scaleRatio;
   if (w2hRatioWindow < w2hRatio) {
@@ -81,7 +81,7 @@ function scaling() {
 // TODO 改成选项框，选择像素、文件名等
 const handleSaveIamge = () => {
   const url = chartRef.value.getDataURL({
-    pixelRatio: 2,
+    pixelRatio: 1,
     backgroundColor: '#fff',
   });
   const a = document.createElement('a');
@@ -106,7 +106,6 @@ const handleSaveIamge = () => {
 
   .graph__drawing_area {
     position: relative;
-    // overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,17 +113,13 @@ const handleSaveIamge = () => {
     width: @drawing-area-width;
     box-sizing: border-box;
     & > div {
-      border: 1px solid var(--el-border-color);
-      // border: 1px solid #409eff;
+      // border: 1px solid var(--el-border-color);
+      box-shadow: var(--el-box-shadow-light);
       position: absolute;
       box-sizing: content-box;
-      // box-shadow: ;
-      // resize: both;
       overflow: hidden;
       height: 100%;
       width: 100%;
-      // max-height: 85%;
-      // max-width: 100%;
     }
 
     .save_image_con {
