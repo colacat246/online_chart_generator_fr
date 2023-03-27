@@ -9,7 +9,7 @@ export const storeData = defineStore('store_data', {
             uuid: 'fbb02f03-6657-4040-972e-9d4443eae9cc',
             graphTypeId: 1,
             divHeight: 500,
-            w2hRatio: 4 / 8,
+            w2hRatio: 0.67,
           },
           // type: 'line',
           // newAdd
@@ -301,7 +301,7 @@ export const storeData = defineStore('store_data', {
             uuid: 'b7e25892-214b-4422-98ad-8cecbb158e73',
             graphTypeId: 2,
             divHeight: 200,
-            w2hRatio: 4 / 3,
+            w2hRatio: 1.33,
           },
           title: {
             text: 'bar',

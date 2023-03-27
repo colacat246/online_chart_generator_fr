@@ -7,19 +7,16 @@
     </template>
     <div class="item-con-double">
       <section>
-        <span>画布宽度</span>
-        <el-input-number
-          size="small"
-          :model-value="parseInt(curGraph.$extra.width)"
-          @change="(val) => (curGraph.width = val.toString() + '%')"
-        />
+        <span>画布高度</span>
+        <el-input-number size="small" v-model="curGraph.$extra.divHeight" />
       </section>
       <section>
-        <span>画布高度</span>
+        <span>画布高宽比</span>
         <el-input-number
           size="small"
-          :model-value="parseInt(curGraph.height)"
-          @change="(val) => (curGraph.height = val.toString() + '%')"
+          v-model="curGraph.$extra.w2hRatio"
+          :min="0.01"
+          :step="0.02"
         />
       </section>
     </div>

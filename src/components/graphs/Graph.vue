@@ -33,18 +33,6 @@ onMounted(() => {
   };
 });
 
-setTimeout(() => {
-  graph.value.$extra.w2hRatio = 4 / 3;
-}, 2000);
-setTimeout(() => {
-  graph.value.$extra.divHeight = 2000;
-}, 3000);
-
-setTimeout(() => {
-  graph.value.$extra.divHeight = 500;
-  graph.value.$extra.w2hRatio = 6 / 3;
-}, 4000);
-
 watch(
   graph,
   () => {
