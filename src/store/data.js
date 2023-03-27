@@ -8,8 +8,8 @@ export const storeData = defineStore('store_data', {
           $extra: {
             uuid: 'fbb02f03-6657-4040-972e-9d4443eae9cc',
             graphTypeId: 1,
-            divHeight: 500,
-            w2hRatio: 0.67,
+            divHeight: 800,
+            w2hRatio: 1.33,
           },
           // type: 'line',
           // newAdd
@@ -27,7 +27,7 @@ export const storeData = defineStore('store_data', {
             top: 23,
           },
           grid: {
-            // show: true,
+            show: false,
             left: '18%',
             top: '15%',
             // right: '50%',
@@ -120,22 +120,25 @@ export const storeData = defineStore('store_data', {
           //   },
           // },
           xAxis: {
-            name: 'ws\n$aa$',
+            name: 'x轴内容',
             nameLocation: 'middle',
             nameTextStyle: {
               color: '#000',
               fontStyle: 'normal',
               fontFamily: 'times new roman',
               fontSize: 18,
+              fontWeight: 'normal',
               align: 'center',
               lineHeight: 20,
-              padding: 5,
+              padding: 10,
               // TODO 富文本
               rich: {},
             },
-            // 最小值
             min: function (val) {
               return Math.floor(val.min);
+            },
+            max: function (val) {
+              return Math.ceil(val.max);
             },
             type: 'value',
             position: 'bottom',
@@ -153,7 +156,7 @@ export const storeData = defineStore('store_data', {
               // 箭头
               symbol: ['none', 'none'],
               symbolSize: [7, 15],
-              symbolOffset: 15,
+              symbolOffset: [0, 16],
             },
             // 刻度
             axisTick: {
@@ -163,6 +166,7 @@ export const storeData = defineStore('store_data', {
               lineStyle: {
                 width: 1.5,
                 cap: 'butt',
+                color: '#666',
               },
             },
             // 刻度密度
@@ -180,7 +184,7 @@ export const storeData = defineStore('store_data', {
             minorSplitLine: {
               show: false,
               lineStyle: {
-                color: 'red',
+                color: '#666',
                 width: 1,
               },
             },
@@ -188,29 +192,41 @@ export const storeData = defineStore('store_data', {
               show: true,
               lineStyle: {
                 color: '#ccc',
+                width: 1,
               },
             },
             splitArea: {
               show: false,
             },
-            boundaryGap: ['0%', '0%'],
+            // boundaryGap: ['0%', '0%'], //相当于坐标边界距离数据极值的距离
           },
           yAxis: {
-            type: 'value',
-            name: 'response',
+            name: 'y axis content',
             nameLocation: 'middle',
             nameTextStyle: {
               color: '#000',
               fontStyle: 'normal',
               fontFamily: 'times new roman',
               fontSize: 18,
+              fontWeight: 'normal',
               align: 'center',
               lineHeight: 20,
-              // nameGap: 200,
-              padding: 40,
+              padding: 10,
+              // TODO 富文本
+              rich: {},
             },
+            // 最小值
+            min: function (val) {
+              return Math.floor(val.min);
+            },
+            max: function (val) {
+              return Math.ceil(val.max);
+            },
+            type: 'value',
+            position: 'bottom',
             axisLine: {
               show: true,
+              // onZero: true,
               // 线形
               lineStyle: {
                 color: '#666',
@@ -222,7 +238,7 @@ export const storeData = defineStore('store_data', {
               // 箭头
               symbol: ['none', 'none'],
               symbolSize: [7, 15],
-              symbolOffset: 15,
+              symbolOffset: [0, 16],
             },
             // 刻度
             axisTick: {
@@ -232,13 +248,14 @@ export const storeData = defineStore('store_data', {
               lineStyle: {
                 width: 1.5,
                 cap: 'butt',
+                color: '#666',
               },
             },
             // 刻度密度
-            splitNumber: 5,
+            splitNumber: 7,
             minorTick: {
               show: true,
-              splitNumber: 4,
+              splitNumber: 5,
               length: 3,
               lineStyle: {
                 color: '#666',
@@ -249,7 +266,7 @@ export const storeData = defineStore('store_data', {
             minorSplitLine: {
               show: false,
               lineStyle: {
-                color: 'red',
+                color: '#666',
                 width: 1,
               },
             },
@@ -257,13 +274,13 @@ export const storeData = defineStore('store_data', {
               show: true,
               lineStyle: {
                 color: '#ccc',
+                width: 1,
               },
             },
             splitArea: {
               show: false,
             },
-            boundaryGap: ['1%', '2%'],
-            // scale: true, // 坐标轴从非0起始
+            boundaryGap: ['0%', '0%'],
           },
           animation: false,
           // series: [

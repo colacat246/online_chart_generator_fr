@@ -2,14 +2,14 @@
   <section class="graph-control-con">
     <el-menu
       :ellipsis="false"
-      default-active="1"
+      default-active="2"
       class="el-menu-graph-control"
       mode="horizontal"
     >
       <el-menu-item index="1" @click="panelType = 'data'">数据区</el-menu-item>
       <el-menu-item index="2" @click="panelType = 'conf'">背景区</el-menu-item>
     </el-menu>
-    <component
+    <component class="control-comp"
       :is="panels[panelType][graph.$extra.graphTypeId]"
       :graph="graph"
     />
@@ -26,7 +26,7 @@ import {
 } from '@/components/graphs/controlPanel';
 const props = defineProps(['graph']);
 const { graph } = toRefs(props);
-const panelType = ref('data');
+const panelType = ref('conf');
 const panels = {
   data: {
     1: Type1D,
@@ -50,8 +50,8 @@ const panels = {
       flex: 1;
     }
   }
-  .graph-control-content {
-    flex: 1;
+  .control-comp {
+    max-height: 100%;
   }
 }
 </style>

@@ -6,7 +6,7 @@
         <el-button @click="handleSaveIamge">保存图片</el-button>
       </section>
     </section>
-    <GraphControlVue :graph="graph" />
+    <GraphControlVue class="graph-control" :graph="graph" />
   </div>
 </template>
 
@@ -132,6 +132,9 @@ const handleSaveIamge = () => {
       bottom: 10px;
       right: 10px;
     }
+  }
+  .graph-control {
+    max-height: 100%;
   }
 }
 </style>
