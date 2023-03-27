@@ -7,6 +7,24 @@
     </template>
     <div class="item-con-double">
       <section>
+        <span>画布宽度</span>
+        <el-input-number
+          size="small"
+          :model-value="parseInt(curGraph.$extra.width)"
+          @change="(val) => (curGraph.width = val.toString() + '%')"
+        />
+      </section>
+      <section>
+        <span>画布高度</span>
+        <el-input-number
+          size="small"
+          :model-value="parseInt(curGraph.height)"
+          @change="(val) => (curGraph.height = val.toString() + '%')"
+        />
+      </section>
+    </div>
+    <div class="item-con-double">
+      <section>
         <span>水平位置</span>
         <el-input-number
           size="small"
@@ -33,7 +51,7 @@
         />
       </section>
       <section>
-        <span>垂直位置</span>
+        <span>垂直缩放</span>
         <el-input-number
           size="small"
           :model-value="parseInt(curGraph.height)"

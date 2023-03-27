@@ -1,6 +1,6 @@
 <template>
   <div class="graph__area__con">
-    <section class="graph__drawing_area">
+    <section class="graph__drawing_area" ref="drawAreaCon">
       <div ref="drawArea"></div>
       <section class="save_image_con">
         <el-button @click="handleSaveIamge">保存图片</el-button>
@@ -14,9 +14,10 @@
 // 此组件接收graph属性
 import GraphControlVue from '@/components/graphs/GraphControl.vue';
 import * as echarts from 'echarts';
-import { onMounted, watch, ref, toRefs, provide, nextTick, markRaw } from 'vue';
+import { onMounted, watch, ref, toRefs, provide } from 'vue';
 
 const drawArea = ref();
+const drawAreaCon = ref();
 let chartRef = ref({}); // 这个用来provide给ColorSwitcher
 let chartInstance;
 const props = defineProps(['graph']);
@@ -26,20 +27,66 @@ onMounted(() => {
   chartInstance = echarts.init(drawArea.value);
   chartRef.value = chartInstance; // HACK
   initChart();
-  const observer = new MutationObserver(() => {
-    nextTick(() => {
-      chartInstance.resize();
-    });
-  });
-  observer.observe(drawArea.value, { attributes: true });
+  window.onresize = () => {
+    chartInstance.resize();
+    scaling();
+  };
 });
 
-watch(graph, () => initChart(), { deep: true });
+setTimeout(() => {
+  graph.value.$extra.w2hRatio = 4 / 3;
+}, 2000);
+setTimeout(() => {
+  graph.value.$extra.divHeight = 2000;
+}, 3000);
+
+setTimeout(() => {
+  graph.value.$extra.divHeight = 500;
+  graph.value.$extra.w2hRatio = 6 / 3;
+}, 4000);
+
+watch(
+  graph,
+  () => {
+    initChart();
+  },
+  { deep: true }
+);
 
 provide('curChart', chartRef);
 // 初始化新图形
 function initChart() {
+  setPicSize(); // 设定尺寸
   chartInstance.setOption(graph.value, true); // 第二个参数表示不合并opts，直接创建新组件
+  scaling(); // 缩放显示
+}
+
+// 按原图设定尺寸
+function setPicSize() {
+  const h = graph.value.$extra.divHeight;
+  const w = graph.value.$extra.divHeight * graph.value.$extra.w2hRatio;
+  drawArea.value.style.width = w + 'px';
+  drawArea.value.style.height = h + 'px';
+  chartInstance.resize();
+}
+
+// 原图尺寸高于显示尺寸，则进行缩放
+function scaling() {
+  const picHeight = graph.value.$extra.divHeight;
+  const w2hRatio = graph.value.$extra.w2hRatio;
+  const picWidth = picHeight * w2hRatio;
+
+  const w = drawAreaCon.value.offsetWidth - 4; // 注意减掉border尺寸
+  const h = drawAreaCon.value.offsetHeight - 4;
+  const w2hRatioWindow = w / h;
+  let scaleRatio;
+  if (w2hRatioWindow < w2hRatio) {
+    scaleRatio = w / picWidth;
+  } else {
+    scaleRatio = h / picHeight;
+  }
+  if (scaleRatio > 1) scaleRatio = 1;
+  drawArea.value.style.transform = `scale(${scaleRatio})`;
 }
 
 // 保存图片
@@ -81,14 +128,15 @@ const handleSaveIamge = () => {
     & > div {
       border: 1px solid var(--el-border-color);
       // border: 1px solid #409eff;
-      box-sizing: border-box;
+      position: absolute;
+      box-sizing: content-box;
       // box-shadow: ;
-      resize: both;
+      // resize: both;
       overflow: hidden;
-      height: 80%;
-      width: 80%;
-      max-height: 85%;
-      max-width: 100%;
+      height: 100%;
+      width: 100%;
+      // max-height: 85%;
+      // max-width: 100%;
     }
 
     .save_image_con {

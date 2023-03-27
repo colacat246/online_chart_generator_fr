@@ -31,7 +31,7 @@ const { graph: curGraph } = toRefs(props);
 // const curGraph = computed(() => {
 //   return graphs.value.find((i) => i.id === curGraphId.value);
 // });
-const activeData = ref('legend');
+const activeData = ref('graphArea');
 </script>
 
 <style lang="less" scoped>

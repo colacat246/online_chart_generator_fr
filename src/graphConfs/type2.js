@@ -5,6 +5,8 @@ export default class Type2 {
       $extra: {
         uuid,
         graphTypeId: 2,
+        divHeight: 1000,
+        w2hRatio: 4 / 3,
       },
       animation: false, // 关闭/开启动画
       // animationDuration: 2000,

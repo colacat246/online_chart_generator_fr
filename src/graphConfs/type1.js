@@ -5,6 +5,8 @@ export default class Type1 {
       $extra: {
         uuid,
         graphTypeId: 1,
+        divHeight: 1000,
+        w2hRatio: 4 / 3,
       },
       // type: 'line', // FINDOUT 好像只需要在series里定义
       // 数据
