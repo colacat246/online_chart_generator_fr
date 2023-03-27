@@ -44,9 +44,9 @@ watch(
 provide('curChart', chartRef);
 // 初始化新图形
 function initChart() {
+  scaling(); // 缩放显示
   setPicSize(); // 设定尺寸
   chartInstance.setOption(graph.value, true); // 第二个参数表示不合并opts，直接创建新组件
-  scaling(); // 缩放显示
 }
 
 // 按原图设定尺寸
