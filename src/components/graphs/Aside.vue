@@ -3,18 +3,16 @@
     <section class="border-bottom">
       <AddGraph
         class="menu__create__new"
-        :graphs="graphs"
-        @added="handleGraphAdded"
       />
     </section>
     <el-scrollbar>
       <el-menu class="no-right-border" :default-active="activeGraph">
         <el-menu-item
           class="menu__graph show__icon"
-          v-for="graph in graphs"
+          v-for="graph in graphList"
           :key="graph.createdGraphId"
           :index="graph.createdGraphId.toString()"
-          @click="emit('selectGraph', graph.createdGraphId, graph.graphTypeId)"
+          @click="handleSelectGraph(graph.createdGraphId)"
         >
           <span>
             <el-icon><document /></el-icon>
@@ -34,31 +32,33 @@
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import AddGraph from './AsideComponents/AddGraph.vue';
-import { ref, toRefs } from 'vue';
+import { ref, watchEffect, inject } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useGraphListStore } from '@/store/graphList';
+const graphListStore = useGraphListStore();
+const { graphList } = storeToRefs(graphListStore);
 
-const props = defineProps(['graphs']); // 为普通数组，数组中为proxy对象
-const { graphs } = toRefs(props);
-const emit = defineEmits(['selectGraph']);
+const handleSelectGraph = inject('handleSelectGraph');
 
-const activeGraph = ref(graphs.value[0] ? graphs.value[0].$extra.uuid : null);
-const handleGraphAdded = (uuid) => {
-  activeGraph.value = uuid;
-  emit('selectGraph', uuid);
-};
+const activeGraph = ref(null);
+watchEffect(() => {
+  activeGraph.value =
+    graphList.value.length > 0 ? graphList.value[0].createdGraphId.toString() : null;
+});
 
 // TODO 增加示意图
 
 // 删除
 const confirmDelete = (id) => {
-  const idx = graphs.value.findIndex((i) => i.$extra.uuid === id);
-  graphs.value.splice(idx, 1);
+  const idx = graphList.value.findIndex((i) => i.$extra.uuid === id);
+  graphList.value.splice(idx, 1);
 
   // 删除后的路由跳转
   if (id !== activeGraph.value) return;
-  const graphToShow = graphs.value[idx - 1]
-    ? graphs.value[idx - 1]
-    : graphs.value[idx]
-    ? graphs.value[idx]
+  const graphToShow = graphList.value[idx - 1]
+    ? graphList.value[idx - 1]
+    : graphList.value[idx]
+    ? graphList.value[idx]
     : null;
   let res;
   if (!graphToShow) {

@@ -1,59 +1,81 @@
 <!-- 新增图形 -->
 <template>
-  <el-dropdown>
-    <span class="el-dropdown-link">
-      <el-icon><circle-plus /></el-icon>
-      <span>创建新图形</span>
-    </span>
-    <template #dropdown>
-      <el-dropdown-menu style="width: 180px">
-        <el-dropdown-item
-          style="justify-content: center"
-          v-for="graph in typeRef"
-          :key="graph.id"
-          @click="addNewGraph(graph.id)"
-          >{{ graph.name }}</el-dropdown-item
-        >
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <div>
+    <el-dropdown>
+      <span class="el-dropdown-link">
+        <el-icon><circle-plus /></el-icon>
+        <span>创建新图形</span>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu style="width: 180px">
+          <el-dropdown-item
+            style="justify-content: center"
+            v-for="graph in graphTypes"
+            :key="graph.id"
+            @click="openAddNewGraphDialog(graph)"
+          >
+            {{ graph.name }}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+
+    <el-dialog
+      v-model="addGraphDialogVisible"
+      :title="`创建新${newGraph.graphName}`"
+      width="30%"
+      align-center
+    >
+      <el-form :model="newGraph">
+        <el-form-item label="名称">
+          <el-input v-model="newGraph.graphName" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="addGraphDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="addNewGraph">创建</el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
-import { toRefs, inject } from 'vue';
-import Type1 from '@/graphConfs/type1.js';
-import Type2 from '@/graphConfs/type2.js';
+import { ref, reactive, inject } from 'vue';
+import api from '@/config/createRequest.js';
+import { graphTypes } from '@/config/graphTypes';
+import { storeToRefs } from 'pinia';
+import { useGraphListStore } from '@/store/graphList';
+const graphListStore = useGraphListStore();
+const { graphList } = storeToRefs(graphListStore);
 
-const genId = inject('genUuid');
-const genNewName = inject('genNewName');
+const handleSelectGraph = inject('handleSelectGraph');
 
-const emit = defineEmits(['added']);
-const props = defineProps(['graphs']);
-const { graphs } = toRefs(props);
+const newGraph = reactive({
+  graphTypeId: undefined,
+  graphName: undefined,
+});
+const addGraphDialogVisible = ref(false);
 
-const typeRef = [
-  {
-    id: 1,
-    name: '折线图',
-    class: Type1,
-  },
-  {
-    id: 2,
-    name: '柱状图',
-    class: Type2,
-  },
-];
+function openAddNewGraphDialog(graph) {
+  newGraph.graphTypeId = graph.id;
+  newGraph.graphName = `新${graph.name}`;
+  addGraphDialogVisible.value = true;
+}
 
-function addNewGraph(graphTypeId) {
-  const ref = typeRef.find((i) => i.id === graphTypeId);
-  const Generator = ref.class;
-  // 确定新图形名称
-  const uuid = genId();
-  const name = genNewName(ref.name, graphs.value, (i) => i.title.text);
-  const template = new Generator(uuid, name).template;
-
-  graphs.value.push(template);
-  emit('added', uuid);
+async function addNewGraph() {
+  // TODO 做一个全局提示逻辑，处理异常
+  try {
+    const res = await api.post('/userGraph', newGraph);
+    if (res.data.statusCodeValue !== 999) return null;
+    graphList.value = res.data.data.graphList;
+    addGraphDialogVisible.value = false;
+    await handleSelectGraph(res.data.data.newGraphId);
+  } catch (err) {
+    // TODO
+    console.log('添加图形错误');
+  }
 }
 </script>
 

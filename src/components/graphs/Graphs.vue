@@ -2,9 +2,6 @@
   <div class="graphs_con">
     <AsideVue
       class="aside"
-      :graphs="graphList"
-      @select-graph="handleSelectGraph"
-      @delete-graph="handleDeleteGraph"
     ></AsideVue>
     <GraphVue v-if="graph" :graph="graph" />
     <!-- TODO 待添加图形的页面编写 -->
@@ -15,7 +12,7 @@
 <script setup>
 import AsideVue from '@/components/graphs/Aside.vue';
 import GraphVue from '@/components/graphs/Graph.vue';
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect, provide } from 'vue';
 import api from '@/config/createRequest.js';
 import { storeToRefs } from 'pinia';
 // store
@@ -45,7 +42,7 @@ watchEffect(async () => {
         noGraphState.value = 'noGraphCreated';
       } else {
         await handleSelectGraph(data[0].createdGraphId, data[0].graphTypeId);
-      };
+      }
       return;
     default:
       graphListStore.$reset();
@@ -56,27 +53,27 @@ watchEffect(async () => {
 });
 
 async function getGraphList() {
-  let res;
   try {
-    res = await api.get('/userGraphList');
+    const res = await api.get('/userGraphList');
+    if (res.data.statusCodeValue !== 999) {
+      // TODO 处理错误记录
+      return null;
+    }
+    return res.data.data;
   } catch (err) {
     // TODO 处理错误记录
     return null;
   }
-  if (res.data.statusCodeValue !== 999) {
-    // TODO 处理错误记录
-    return null;
-  }
-  return res.data.data;
 }
 
-async function handleSelectGraph(createdGraphId, graphTypeId) {
-  const res = await api.get(`/userGraph/${graphTypeId}/${createdGraphId}`);
+async function handleSelectGraph(createdGraphId) {
+  const res = await api.get(`/userGraph/${createdGraphId}`);
   // TODO catch error
   graph.value = res.data.data;
 }
 
-function handleDeleteGraph() {}
+provide('handleSelectGraph', handleSelectGraph);
+
 </script>
 
 <style lang="less" scoped>
