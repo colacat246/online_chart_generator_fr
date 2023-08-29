@@ -58,7 +58,6 @@ export default class Type1 {
           align: 'center',
           lineHeight: 20,
           padding: 10,
-          // TODO 富文本
           rich: {},
         },
         min: function (val) {
@@ -139,7 +138,7 @@ export default class Type1 {
           align: 'center',
           lineHeight: 20,
           padding: 10,
-          // TODO 富文本
+          // 富文本
           rich: {},
         },
         min: function (val) {

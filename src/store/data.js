@@ -6,6 +6,55 @@ export const storeData = defineStore('store_data', {
       graphs: [
         {
           $extra: {
+            uuid: 'b7e25892-214b-4422-98ad-8cecbb158e73',
+            graphTypeId: 2,
+            divHeight: 500,
+            w2hRatio: 1.33,
+          },
+          title: {
+            show: true,
+            left: 'left',
+            text: 'MyBar',
+
+          },
+          series: [
+            {
+              $extra: {
+                id: '11',
+              },
+              name: 'bar1',
+              type: 'bar',
+              data: [1, 2, 8, 2.5],
+            },
+            {
+              $extra: {
+                id: '12',
+              },
+              name: 'bar2',
+              type: 'bar',
+              data: [10, 5, 4, 6.5],
+            },
+          ],
+          animation: false, // 关闭/开启动画
+          // animationDuration: 2000,
+          // animationEasing: 'bounceOut', // 动画变化的线性
+          // animationThreshold: 5, // 超过多少个元素后关闭动画
+          // animationDuration: function(args) {
+          // console.log(args);
+          // return 1000 * args;
+          // }, // 动画时长，可接收number(ms) 或回调函数，分别
+          xAxis: {
+            type: 'category',
+          },
+          yAxis: {
+            type: 'value',
+          },
+          legend: {
+            show: true,
+          },
+        },
+        {
+          $extra: {
             uuid: 'fbb02f03-6657-4040-972e-9d4443eae9cc',
             graphTypeId: 1,
             divHeight: 800,
@@ -103,7 +152,6 @@ export const storeData = defineStore('store_data', {
               align: 'center',
               lineHeight: 20,
               padding: 10,
-              // TODO 富文本
               rich: {},
             },
             min: function (val) {
@@ -184,7 +232,6 @@ export const storeData = defineStore('store_data', {
               align: 'center',
               lineHeight: 20,
               padding: 10,
-              // TODO 富文本
               rich: {},
             },
             min: function (val) {
@@ -283,43 +330,6 @@ export const storeData = defineStore('store_data', {
           //   // label: { show: true, rotate: 30, position: 'outside' },
           // },
           // ],
-        },
-        {
-          $extra: {
-            uuid: 'b7e25892-214b-4422-98ad-8cecbb158e73',
-            graphTypeId: 2,
-            divHeight: 200,
-            w2hRatio: 1.33,
-          },
-          title: {
-            text: 'bar',
-          },
-          series: [
-            {
-              type: 'bar',
-              data: [
-                [0, 10],
-                [2, 2],
-                [6, 8],
-                [8, 2.5],
-              ],
-            },
-          ],
-          // TODO
-          animation: false, // 关闭/开启动画
-          // animationDuration: 2000,
-          // animationEasing: 'bounceOut', // 动画变化的线性
-          // animationThreshold: 5, // 超过多少个元素后关闭动画
-          // animationDuration: function(args) {
-          // console.log(args);
-          // return 1000 * args;
-          // }, // 动画时长，可接收number(ms) 或回调函数，分别
-          xAxis: {
-            type: 'value',
-          },
-          yAxis: {
-            type: 'value',
-          },
         },
       ],
     };

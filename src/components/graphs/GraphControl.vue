@@ -2,7 +2,7 @@
   <section class="graph-control-con">
     <el-menu
       :ellipsis="false"
-      default-active="2"
+      default-active="1"
       class="el-menu-graph-control"
       mode="horizontal"
     >
@@ -28,7 +28,7 @@ import {
 } from '@/components/graphs/controlPanel';
 const props = defineProps(['graph']);
 const { graph } = toRefs(props);
-const panelType = ref('conf');
+const panelType = ref('data');
 const panels = {
   data: {
     1: Type1D,

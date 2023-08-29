@@ -8,6 +8,7 @@ import router from '@/routes/index.js';
 import { createPinia } from 'pinia';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { v4 as uuidv4 } from 'uuid';
+import { VueCookies } from 'vue-cookies';
 
 const app = createApp(App);
 
@@ -52,4 +53,6 @@ app.provide('genNewName', (namePrefix, arrForCompare, propReflect) => {
   }
   return name;
 });
+
+app.config.globalProperties.$cookies = VueCookies;
 app.mount('#app');

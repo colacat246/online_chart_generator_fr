@@ -3,6 +3,7 @@
     <section class="graph__drawing_area" ref="drawAreaCon">
       <div ref="drawArea"></div>
       <section class="save_image_con">
+        <!-- TODO 把按钮挪到右下角，再加个保存数据的按钮 -->
         <el-button @click="handleSaveIamge">保存图片</el-button>
       </section>
     </section>
@@ -42,6 +43,7 @@ watch(
 );
 
 provide('curChart', chartRef);
+
 // 初始化新图形
 function initChart() {
   scaling(); // 缩放显示

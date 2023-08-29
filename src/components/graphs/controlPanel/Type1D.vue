@@ -139,7 +139,7 @@ const updateData = (val, data, axis, placeToReplace) => {
   axis = axis === 'x' ? 0 : 1;
   otherAxis = otherAxis === 'x' ? 0 : 1;
 
-  // BUG 坐标数量检查
+  // BUG 坐标数量检查的显示
   const maxLengh =
     val.length > otherData.length ? val.length : otherData.length;
   const res = [];

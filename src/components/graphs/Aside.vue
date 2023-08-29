@@ -8,22 +8,21 @@
       />
     </section>
     <el-scrollbar>
-      <!-- TODO 修改名称 -->
       <el-menu class="no-right-border" :default-active="activeGraph">
         <el-menu-item
           class="menu__graph show__icon"
           v-for="graph in graphs"
-          :key="graph.$extra.uuid"
-          :index="graph.$extra.uuid"
-          @click="emit('selectGraph', graph.$extra.uuid)"
+          :key="graph.createdGraphId"
+          :index="graph.createdGraphId.toString()"
+          @click="emit('selectGraph', graph.createdGraphId, graph.graphTypeId)"
         >
           <span>
             <el-icon><document /></el-icon>
-            <span class="graph__name">{{ graph.title.text ? graph.title.text : '未命名图形' }}</span>
+            <span class="graph__name">{{ graph.graphName }}</span>
           </span>
           <DeleteButton
             class="del-button"
-            :item-to-delete="graph.$extra.uuid"
+            :item-to-delete="graph.createdGraphId"
             @delete-item="confirmDelete"
           />
         </el-menu-item>
@@ -46,6 +45,7 @@ const handleGraphAdded = (uuid) => {
   activeGraph.value = uuid;
   emit('selectGraph', uuid);
 };
+
 // TODO 增加示意图
 
 // 删除

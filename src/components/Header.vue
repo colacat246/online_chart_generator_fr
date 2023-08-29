@@ -5,10 +5,13 @@
       <el-menu-item index="/graphs">绘图</el-menu-item>
     </el-menu>
     <h1>Online Chart Generator</h1>
+    <UserVue></UserVue>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import UserVue from './user/User.vue';
+</script>
 
 <style lang="less" scoped>
 .header_con {
@@ -32,6 +35,11 @@
     // border: 5px solid red;
     // width: 300px;
     height: 50px;
+  }
+  & > .user_menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
