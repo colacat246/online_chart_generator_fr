@@ -87,7 +87,7 @@
 </template>
 
 <script setup>
-import { inject, ref, watch, nextTick } from 'vue';
+import { ref } from 'vue';
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
@@ -163,10 +163,10 @@ const setGraphRef = (el, curDataId) => {
   }
 };
 
-// FIXME 
+// FIXME
+// // 处理鼠标悬浮title提示
 // watch([graph, activeData], handleTitleTip, { immediate: true });
 
-// // 处理鼠标悬浮title提示
 // async function handleTitleTip() {
 //   await nextTick();
 //   for (const i in graphControlProps.refs) {

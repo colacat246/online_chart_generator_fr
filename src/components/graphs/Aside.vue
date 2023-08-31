@@ -3,7 +3,7 @@
     <section class="border-bottom">
       <AddGraph class="menu__create__new" />
     </section>
-    <el-scrollbar>
+    <el-scrollbar class="aside-scroll">
       <el-menu
         class="no-right-border"
         :default-active="activeGraphId"
@@ -58,12 +58,18 @@ async function deleteGraph(createdGraphId) {
 </script>
 
 <style lang="less" scoped>
+@add_graph_height: 20px;
 .no-right-border {
   border-right: 0 !important;
 }
 div {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  .aside-scroll {
+    max-height: 100%;
+  }
   .menu__graph {
     justify-content: space-between;
     .graph__name {
@@ -85,8 +91,13 @@ div {
     padding: 15px;
     padding-left: 22px;
 
-    .menu__create__new *:hover {
-      color: #409eff;
+    .menu__create__new {
+      height: @add_graph_height;
+      display: flex;
+      justify-content: center;
+      & *:hover {
+        color: #409eff;
+      }
     }
     .aside__button {
       margin: 8px;
