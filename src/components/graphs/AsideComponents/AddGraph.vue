@@ -63,6 +63,8 @@ function openAddNewGraphDialog(graph) {
   newGraph.graphName = `新${graph.name}`;
   addGraphDialogVisible.value = true;
 }
+// TODO 跳转
+// TODO 使用RequestDialog
 
 async function addNewGraph() {
   // TODO 做一个全局提示逻辑，处理异常

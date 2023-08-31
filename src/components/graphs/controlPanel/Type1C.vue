@@ -26,8 +26,10 @@ import Legend from '@/components/graphs/controlItems/Legend.vue';
 import AxisVal from '@/components/graphs/controlItems/AxisVal.vue';
 import AuxLine from '@/components/graphs/controlItems/AuxLine.vue';
 import { toRefs, ref } from 'vue';
-const props = defineProps(['graph']);
-const { graph: curGraph } = toRefs(props);
+import { storeToRefs } from 'pinia';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { graph: curGraph } = storeToRefs(graphStore);
 
 const activeData = ref('xAuxLine');
 </script>

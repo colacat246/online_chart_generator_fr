@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import UserVue from './user/User.vue';
+import UserVue from '@/components/user/User.vue';
 </script>
 
 <style lang="less" scoped>

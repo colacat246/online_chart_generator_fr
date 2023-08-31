@@ -12,7 +12,6 @@
     <el-scrollbar class="control-comp">
       <component
         :is="panels[panelType][graph.$extra.graphTypeId]"
-        :graph="graph"
       />
     </el-scrollbar>
   </section>
@@ -26,8 +25,10 @@ import {
   Type2C,
   Type2D,
 } from '@/components/graphs/controlPanel';
-const props = defineProps(['graph']);
-const { graph } = toRefs(props);
+import { storeToRefs } from 'pinia';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { graph } = storeToRefs(graphStore);
 const panelType = ref('data');
 const panels = {
   data: {

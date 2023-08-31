@@ -4,6 +4,7 @@
       <el-button text @click="loginFormVisible = true" type="primary"
         >登录</el-button
       >
+      <!-- TODO 改用RequestDialog -->
       <el-dialog v-model="loginFormVisible" title="登录">
         <el-form :model="loginForm">
           <el-form-item label="用户名">

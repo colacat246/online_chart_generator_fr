@@ -1,10 +1,10 @@
 <template>
   <el-collapse
     accordion
-    v-if="curGraph && curGraph.series"
-    v-model="activeData"
+    v-if="graph && graph.series"
+    v-model="activeSeriesData"
   >
-    <template v-for="curData in curGraph.series" :key="curData.$extra.id">
+    <template v-for="curData in graph.series" :key="curData.$extra.id">
       <el-collapse-item :name="curData.$extra.id">
         <template #title>
           <div class="title-con">
@@ -69,7 +69,7 @@
           </section>
           <SwitchColorVue
             v-model="curData.color"
-            :series="curGraph.series"
+            :series="graph.series"
             :id="curData.$extra.id"
           ></SwitchColorVue>
         </div>
@@ -81,45 +81,23 @@
       </el-collapse-item>
     </template>
     <div class="flex_con">
-      <el-button type="primary" size="small" @click="addNewLine($event)"
-        >添加新曲线</el-button
-      >
+      <AddNewSeries></AddNewSeries>
     </div>
   </el-collapse>
 </template>
 
 <script setup>
-import { inject, computed, toRefs, ref, watch, nextTick, onMounted } from 'vue';
+import { inject, ref, watch, nextTick } from 'vue';
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
 import DeleteButtonVue from '@/components/generalComponents/DeleteButton.vue';
+import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
 
-const blurBtn = inject('blurBtn');
-const genId = inject('genUuid');
-const genNewName = inject('genNewName');
-
-import { storeData } from '@/store/data';
-const storeD = storeData();
-storeD.$subscribe((mut, state) => {
-  console.log(mut.type);
-  console.log(mut.storeId);
-  console.log(mut.payload);
-  console.log(state);
-});
-// const { graphs } = storeToRefs(storeD);
-const props = defineProps(['graph']);
-const { graph: curGraph } = toRefs(props);
-const curGraphId = computed(() => curGraph.value.$extra.uuid);
-// const { currentRoute } = useRouter();
-// 图表Id
-// const curGraphId = computed(() => {
-//   return currentRoute.value.params.id;
-// });
-// 通过图表Id拿到当前图表对象
-// const curGraph = computed(() => {
-// return graphs.value.find((i) => i.id === curGraphId.value);
-// });
+import { storeToRefs } from 'pinia';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { graph, activeSeriesData } = storeToRefs(graphStore);
 
 // 转换input的输出、输入
 const unzipData = (val, axis) => {
@@ -162,43 +140,15 @@ const updateData = (val, data, axis, placeToReplace) => {
   placeToReplace.data = res;
 };
 
-// 添加新折线
-// TODO name不能重复
-const addNewLine = (evt) => {
-  blurBtn(evt);
-  const curSeries = curGraph.value.series;
-  const id = genId();
-  const defaultLineTemplate = {
-    $extra: {
-      id,
-    },
-    name: genNewName('新曲线', curSeries, (i) => i.name),
-    data: [[], []],
-    type: 'line',
-    color: undefined,
-    lineStyle: {},
-    symbol: 'none',
-    symbolSize: 7,
-    lineStyle: {
-      width: 1.5,
-      type: 'solid',
-    },
-    smooth: 0,
-  };
-  curSeries.push(defaultLineTemplate);
-  // 展开新面板
-  activeData.value = id;
-};
-
 // 删除曲线
 const handleDeleteLine = (id) => {
-  const idx = curGraph.value.series.findIndex((i) => i.$extra.id === id);
-  curGraph.value.series.splice(idx, 1);
+  const idx = graph.value.series.findIndex((i) => i.$extra.id === id);
+  graph.value.series.splice(idx, 1);
 };
 
 // 控制面板当前曲线，默认展开第一个
 const activeData = ref(
-  curGraph.value.series[0] ? curGraph.value.series[0].$extra.id : ''
+  graph.value.series[0] ? graph.value.series[0].$extra.id : ''
 );
 
 // 控制面板属性，结构为 属性 -> id
@@ -213,17 +163,18 @@ const setGraphRef = (el, curDataId) => {
   }
 };
 
-watch([curGraphId, activeData], handleTitleTip, { immediate: true });
+// FIXME 
+// watch([graph, activeData], handleTitleTip, { immediate: true });
 
-// 处理鼠标悬浮title提示
-async function handleTitleTip() {
-  await nextTick();
-  for (const i in graphControlProps.refs) {
-    graphControlProps.refs[i].title = '点击编辑曲线';
-  }
-  if (activeData.value === '') return; // 面板未改变时返回
-  graphControlProps.refs[activeData.value].title = '收起';
-}
+// // 处理鼠标悬浮title提示
+// async function handleTitleTip() {
+//   await nextTick();
+//   for (const i in graphControlProps.refs) {
+//     graphControlProps.refs[i].title = '点击编辑曲线';
+//   }
+//   if (activeData.value === '') return; // 面板未改变时返回
+//   graphControlProps.refs[activeData.value].title = '收起';
+// }
 </script>
 
 <style lang="less" scoped>

@@ -1,18 +1,19 @@
 <template>
   <div class="border-right">
     <section class="border-bottom">
-      <AddGraph
-        class="menu__create__new"
-      />
+      <AddGraph class="menu__create__new" />
     </section>
     <el-scrollbar>
-      <el-menu class="no-right-border" :default-active="activeGraph">
+      <el-menu
+        class="no-right-border"
+        :default-active="activeGraphId"
+        @select="(idx) => graphListStore.setActiveGraphId(idx)"
+      >
         <el-menu-item
           class="menu__graph show__icon"
           v-for="graph in graphList"
-          :key="graph.createdGraphId"
+          :key="graph.createdGraphId.toString()"
           :index="graph.createdGraphId.toString()"
-          @click="handleSelectGraph(graph.createdGraphId)"
         >
           <span>
             <el-icon><document /></el-icon>
@@ -21,7 +22,7 @@
           <DeleteButton
             class="del-button"
             :item-to-delete="graph.createdGraphId"
-            @delete-item="confirmDelete"
+            @delete-item="deleteGraph"
           />
         </el-menu-item>
       </el-menu>
@@ -32,43 +33,28 @@
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import AddGraph from './AsideComponents/AddGraph.vue';
-import { ref, watchEffect, inject } from 'vue';
+import api from '@/config/createRequest.js';
 import { storeToRefs } from 'pinia';
 import { useGraphListStore } from '@/store/graphList';
 const graphListStore = useGraphListStore();
-const { graphList } = storeToRefs(graphListStore);
-
-const handleSelectGraph = inject('handleSelectGraph');
-
-const activeGraph = ref(null);
-watchEffect(() => {
-  activeGraph.value =
-    graphList.value.length > 0 ? graphList.value[0].createdGraphId.toString() : null;
-});
+const { graphList, activeGraphId } = storeToRefs(graphListStore);
 
 // TODO 增加示意图
 
 // 删除
-const confirmDelete = (id) => {
-  const idx = graphList.value.findIndex((i) => i.$extra.uuid === id);
-  graphList.value.splice(idx, 1);
-
-  // 删除后的路由跳转
-  if (id !== activeGraph.value) return;
-  const graphToShow = graphList.value[idx - 1]
-    ? graphList.value[idx - 1]
-    : graphList.value[idx]
-    ? graphList.value[idx]
-    : null;
-  let res;
-  if (!graphToShow) {
-    res = null;
-  } else {
-    res = graphToShow.$extra.uuid;
+async function deleteGraph(createdGraphId) {
+  try {
+    const res = await api.delete('/userGraph', { data: { createdGraphId } });
+    graphListStore.setGraphList(res.data.data.graphList);
+    // 删除的是当前图形，进行跳转
+    if (createdGraphId.toString() === graphListStore.activeGraphIdGetter) {
+      graphListStore.setActiveGraphId(res.data.data.curGraphId);
+    }
+  } catch (err) {
+    // TODO
+    console.log(err);
   }
-  activeGraph.value = res;
-  emit('selectGraph', res);
-};
+}
 </script>
 
 <style lang="less" scoped>

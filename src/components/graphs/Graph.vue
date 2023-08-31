@@ -7,7 +7,7 @@
         <el-button @click="handleSaveIamge">保存图片</el-button>
       </section>
     </section>
-    <GraphControlVue class="graph-control" :graph="graph" />
+    <GraphControlVue class="graph-control" />
   </div>
 </template>
 
@@ -15,14 +15,16 @@
 // 此组件接收graph属性
 import GraphControlVue from '@/components/graphs/GraphControl.vue';
 import * as echarts from 'echarts';
-import { onMounted, watch, ref, toRefs, provide } from 'vue';
+import { onMounted, watch, ref, provide } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { graph } = storeToRefs(graphStore);
 
 const drawArea = ref();
 const drawAreaCon = ref();
 let chartRef = ref({}); // 这个用来provide给ColorSwitcher
 let chartInstance;
-const props = defineProps(['graph']);
-const { graph } = toRefs(props); // 把属性变成响应式
 
 onMounted(() => {
   chartInstance = echarts.init(drawArea.value);

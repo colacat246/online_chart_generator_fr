@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { inject, computed, toRefs, ref, watch, nextTick } from 'vue';
+import { inject, computed, toRefs, ref, watch, nextTick, reactive } from 'vue';
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
@@ -104,20 +104,12 @@ const blurBtn = inject('blurBtn');
 const genId = inject('genUuid');
 const genNewName = inject('genNewName');
 
-// const storeD = storeData();
-// const { graphs } = storeToRefs(storeD);
-const props = defineProps(['graph']);
-const { graph: curGraph } = toRefs(props);
+import { storeToRefs } from 'pinia';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { graph: curGraph } = storeToRefs(graphStore);
+
 const curGraphId = computed(() => curGraph.value.$extra.uuid);
-// const { currentRoute } = useRouter();
-// 图表Id
-// const curGraphId = computed(() => {
-//   return currentRoute.value.params.id;
-// });
-// 通过图表Id拿到当前图表对象
-// const curGraph = computed(() => {
-// return graphs.value.find((i) => i.id === curGraphId.value);
-// });
 
 // 转换input的输出、输入
 const unzipData = (val, axis) => {
