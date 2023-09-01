@@ -3,7 +3,7 @@ import HomeVue from '@/components/Home.vue';
 import GraphsVue from '@/components/graphs/Graphs.vue';
 
 const routes = [
-  { path: '/', redirect: '/login' },
+  { path: '/', redirect: '/home' },
   { path: '/home', component: HomeVue },
   { path: '/graphs', component: GraphsVue },
 ];

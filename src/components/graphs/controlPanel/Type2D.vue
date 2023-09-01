@@ -15,12 +15,7 @@
             >
               {{ curData.name }}
             </section>
-            <DeleteButtonVue
-              :item-to-delete="curData.$extra.id"
-              @delete-item="handleDeleteLine"
-              size="16"
-              class="del-button"
-            ></DeleteButtonVue>
+            <DeleteSeries :series-id="curData.$extra.id"></DeleteSeries>
           </div>
         </template>
         <div class="item-con">
@@ -87,12 +82,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
-import DeleteButtonVue from '@/components/generalComponents/DeleteButton.vue';
 import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
+import DeleteSeries from '@/components/graphs/controlItems/DeleteSeries.vue';
+import { ref } from 'vue';
+import api from '@/config/createRequest.js';
 
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -140,11 +136,6 @@ const updateData = (val, data, axis, placeToReplace) => {
   placeToReplace.data = res;
 };
 
-// 删除曲线
-const handleDeleteLine = (id) => {
-  const idx = graph.value.series.findIndex((i) => i.$extra.id === id);
-  graph.value.series.splice(idx, 1);
-};
 
 // 控制面板当前曲线，默认展开第一个
 const activeData = ref(

@@ -10,20 +10,19 @@
       <el-menu-item index="2" @click="panelType = 'conf'">背景区</el-menu-item>
     </el-menu>
     <el-scrollbar class="control-comp">
-      <component
-        :is="panels[panelType][graph.$extra.graphTypeId]"
-      />
+      <component :is="panels[panelType][graph.$extra.graphTypeId]" />
     </el-scrollbar>
   </section>
 </template>
 
 <script setup>
-import { toRefs, ref } from 'vue';
+import { ref } from 'vue';
 import {
   Type1C,
   Type1D,
   Type2C,
   Type2D,
+  Type2Dtest
 } from '@/components/graphs/controlPanel';
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -33,7 +32,7 @@ const panelType = ref('data');
 const panels = {
   data: {
     1: Type1D,
-    2: Type2D,
+    2: Type2Dtest,
   },
   conf: {
     1: Type1C,

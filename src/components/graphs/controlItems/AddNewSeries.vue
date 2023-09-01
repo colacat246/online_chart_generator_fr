@@ -4,8 +4,13 @@
     confirm-name="确定"
     :model="[
       { label: '名称', key: 'seriesName', val: '新数据组', show: true },
-      { label: '', key: 'createdGraphId', val: graphStore.graphIdIntGetter, show: false },
-  ]"
+      {
+        label: '',
+        key: 'createdGraphId',
+        val: graphStore.graphIdIntGetter,
+        show: false,
+      },
+    ]"
     :confirm-fn="addNewSeries"
   >
     <template v-slot="{ toggleFn }">
@@ -28,10 +33,7 @@ async function addNewSeries(data) {
     if (res.data.statusCodeValue !== 999) {
       throw res.data.message;
     }
-    graphStore.setGraph({
-      newGraph: res.data.data.graph,
-      activeSeries: res.data.data.newSeriesId,
-    });
+    graphStore.addSeries(res.data.data.graph, res.data.data.newSeriesId);
   } catch (err) {
     // TODO
     console.log(err);

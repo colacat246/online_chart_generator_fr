@@ -86,7 +86,7 @@ async function handleSelectGraph(createdGraphId) {
   }
   const res = await api.get(`/userGraph/${createdGraphId}`);
   // TODO catch error
-  graphStore.setGraph({ graphId: createdGraphId, newGraph: res.data.data });
+  graphStore.changeGraph(createdGraphId, res.data.data);
 }
 
 provide('handleSelectGraph', handleSelectGraph);
