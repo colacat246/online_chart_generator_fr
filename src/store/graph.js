@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+// import api from '@/config/createRequest.js';
+// import _ from 'lodash';
 
 export const useGraphStore = defineStore('graphStore', {
   state: () => {
@@ -6,6 +8,7 @@ export const useGraphStore = defineStore('graphStore', {
       graph: null,
       graphId: null, // 是string
       activeSeriesData: '',
+      changeCount: 2,
     };
   },
   actions: {
@@ -13,6 +16,7 @@ export const useGraphStore = defineStore('graphStore', {
       this.graphId = graphId.toString();
       this.setGraph(newGraph);
       this.resetActiveSeriesId();
+      this.resetChange();
     },
 
     addSeries(newGraph, newSeriesId) {
@@ -43,13 +47,29 @@ export const useGraphStore = defineStore('graphStore', {
       }
     },
 
-    // 基础功能
+    // 基础功能，注意全部使用patch方法，避免被changeCount监听器监听到
     setGraph(newGraph) {
-      this.graph = newGraph;
+      this.$patch((state) => {
+        state.graph = newGraph;
+      });
     },
 
     setActiveSeriesId(id) {
-      this.activeSeriesData = id;
+      this.$patch((state) => {
+        state.activeSeriesData = id;
+      });
+    },
+
+    change() {
+      this.$patch((state) => {
+        state.changeCount++;
+      });
+    },
+
+    resetChange() {
+      this.$patch((state) => {
+        state.changeCount = 0;
+      });
     },
   },
   getters: {
@@ -58,6 +78,12 @@ export const useGraphStore = defineStore('graphStore', {
     },
     activeSeriesIdGetter: (state) => {
       return state.activeSeriesData;
+    },
+    changeCountGetter: (state) => {
+      return state.changeCount;
+    },
+    graphGetter: (state) => {
+      return state.graph;
     },
   },
 });

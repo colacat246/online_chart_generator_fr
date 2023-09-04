@@ -68,6 +68,12 @@ graphListStore.$onAction(({ name, args, after }) => {
   }
 });
 
+graphStore.$subscribe((mutate, state) => {
+  if (mutate.type === 'direct') {
+    graphStore.change();
+  }
+});
+
 async function getGraphList() {
   try {
     const res = await api.get('/userGraphList');

@@ -8,15 +8,14 @@
     @confirm="emit('deleteItem', itemToDelete)"
   >
     <template #reference>
-      <!-- 父组件的class绑定到这个上面，父组件用:deep()穿透可实现悬浮显示 -->
-      <el-icon title="删除" v-bind="$attrs" @click.stop class="delete-button"
-        ><delete
-      /></el-icon>
+      <IconButton title="删除" :show-on-outer-hover="true" v-bind="$attrs" @click.stop><delete
+      /></IconButton>
     </template>
   </el-popconfirm>
 </template>
 
 <script setup>
+import IconButton from '@/components/generalComponents/IconButton.vue';
 import { Warning } from '@element-plus/icons-vue';
 const { itemToDelete } = defineProps(['itemToDelete']);
 const emit = defineEmits(['deleteItem']);

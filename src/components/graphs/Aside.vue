@@ -19,27 +19,65 @@
             <el-icon><document /></el-icon>
             <span class="graph__name">{{ graph.graphName }}</span>
           </span>
+          <IconButton
+            v-show="
+              activeGraphId === graph.createdGraphId.toString() &&
+              graphStore.changeCountGetter !== 0
+            "
+            title="保存"
+            hover-color="#2a598a"
+            @click="saveChange"
+            ><EditPen
+          /></IconButton>
           <DeleteButton
-            class="del-button"
+            class="button_show"
             :item-to-delete="graph.createdGraphId"
             @delete-item="deleteGraph"
           />
         </el-menu-item>
       </el-menu>
+      <button @click="graphStore.change()">change</button>
     </el-scrollbar>
   </div>
 </template>
 
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
+import IconButton from '@/components/generalComponents/IconButton.vue';
 import AddGraph from './AsideComponents/AddGraph.vue';
 import api from '@/config/createRequest.js';
 import { storeToRefs } from 'pinia';
 import { useGraphListStore } from '@/store/graphList';
 const graphListStore = useGraphListStore();
 const { graphList, activeGraphId } = storeToRefs(graphListStore);
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
 
 // TODO 增加示意图
+
+// 保存更改
+async function saveChange() {
+  const res = await api.put('/userGraph', {
+    createdGraphId: graphStore.graphIdIntGetter,
+    data: graphStore.graphGetter,
+  });
+  // TODO 提示自动保存
+  if (res.data.data.isUpdated) {
+    graphStore.resetChange();
+  }
+}
+
+// 更新次数达到一定后自动保存
+graphStore.$onAction(({ name, store, after }) => {
+  if (name === 'change') {
+    after(async () => {
+      if (store.changeCountGetter < 5) {
+        return;
+      }
+      await saveChange();
+    });
+  }
+});
 
 // 删除
 async function deleteGraph(createdGraphId) {
@@ -75,11 +113,11 @@ div {
     .graph__name {
       overflow: hidden;
       display: inline-block;
-      width: 100px;
+      width: 85px;
       text-overflow: ellipsis;
     }
   }
-  :deep(.show__icon:hover .del-button) {
+  :deep(.show__icon:hover .button_show) {
     // display: inherit;
     visibility: visible;
     opacity: 1;

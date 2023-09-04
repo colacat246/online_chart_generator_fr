@@ -39,11 +39,11 @@ import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
 const { graph, activeSeriesData } = storeToRefs(graphStore);
 
+// 处理title
 // 控制面板属性，结构为 属性 -> id
 const graphControlProps = {
   refs: {},
 };
-
 // 折叠面板展开时不显示提示title
 const setGraphRef = (el, curDataId) => {
   if (el) {
@@ -60,6 +60,7 @@ watch(() => activeSeriesData.value, async () => {
   if (activeSeriesData.value === '') return; // 面板未改变时返回
   graphControlProps.refs[activeSeriesData.value].title = '收起';
 }, {immediate: true});
+
 </script>
 
 <style lang="less" scoped>

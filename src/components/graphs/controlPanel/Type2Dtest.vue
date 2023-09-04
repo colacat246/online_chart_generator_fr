@@ -1,6 +1,10 @@
 <template>
   <SeriesPanelContainerVue>
-    <template v-slot="{ series }"> {{ series.$extra.id }}</template>
+    <template v-slot="{ series }">
+      <div>
+        {{ series.$extra.id }}
+      </div>
+    </template>
   </SeriesPanelContainerVue>
 </template>
 
