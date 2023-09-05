@@ -99,13 +99,11 @@ const handleSaveIamge = () => {
 </script>
 
 <style lang="less" scoped>
-@graph-area-height: calc(100vh - @header-height);
-@drawing-area-width: calc(@graph-area-width - 400px);
 .graph__area__con {
-  height: @graph-area-height;
-  width: @graph-area-width;
+  height: @main-height;
+  width: @main-width;
   display: grid;
-  grid-template-columns: @drawing-area-width 400px;
+  grid-template-columns: @drawing-area-width @controller-area-width;
   & > * {
     box-sizing: border-box;
   }
@@ -115,7 +113,7 @@ const handleSaveIamge = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: @graph-area-height;
+    height: @main-height;
     width: @drawing-area-width;
     box-sizing: border-box;
     & > div {

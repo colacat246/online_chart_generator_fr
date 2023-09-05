@@ -1,4 +1,5 @@
 import api from '@/config/createRequest.js';
+import { ElMessage } from 'element-plus';
 
 export async function selectGraphAPI(createdGraphId, graphStore) {
   if (!createdGraphId) {
@@ -28,6 +29,11 @@ export async function saveChangeAPI(graphStore) {
     createdGraphId: graphStore.graphIdIntGetter,
     data: graphStore.graphGetter,
   });
+  ElMessage({
+    message: 'ok',
+    type: 'success',
+  });
+
   // TODO 提示自动保存
   if (res.data.data.isUpdated) {
     graphStore.resetChange();

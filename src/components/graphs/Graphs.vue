@@ -1,13 +1,13 @@
 <template>
   <div class="graphs_con">
     <AsideVue class="aside"></AsideVue>
-    <div v-if="loginState === 1" v-loading="loginLoading">
-      <!-- TODO 切换时的骨架屏 -->
-      <GraphVue v-if="graph" :is-loading="isLoading" />
-      <!-- TODO 待添加图形的页面编写 -->
-      <div v-if="!(graph || loginLoading)">请在左侧边栏创建图形</div>
+    <div v-if="loginState === 1" v-loading="pageLoading">
+      <GraphVue v-if="graph && !pageLoading" :is-loading="isLoading" />
+      <div v-if="!graph && !pageLoading" class="hint_con">
+        <span>暂无图形，可在左侧边栏创建图形</span>
+      </div>
     </div>
-    <div v-else>请登录</div>
+    <div v-else class="hint_con"><span>请登录</span></div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
 const { graph } = storeToRefs(graphStore);
 
-const loginLoading = ref(true);
+const pageLoading = ref(true);
 
 onBeforeMount(async () => {
   if (userStore.isLogin) {
@@ -51,7 +51,7 @@ userStore.$onAction(({ name, after }) => {
   switch (name) {
     // 登录成功后获取graphList
     case 'loginOk':
-      loginLoading.value = true;
+      pageLoading.value = true;
       after(async () => {
         await getGraphListAPI(graphListStore);
       });
@@ -71,7 +71,7 @@ graphListStore.$onAction(({ name, args, after }) => {
       // OPTIMIZE 发送一次网络请求，减小延迟
       after(async () => {
         await changeGraphLoadingCall(graphStore, args[0]);
-        if (loginLoading.value) loginLoading.value = false;
+        if (pageLoading.value) pageLoading.value = false;
       });
       return;
     default:
@@ -102,9 +102,18 @@ graphStore.$onAction(({ name, store, after }) => {
 <style lang="less" scoped>
 .graphs_con {
   position: relative;
-  height: calc(100vh - @header-height);
+  height: @main-height;
   width: 100vw;
   display: grid;
-  grid-template-columns: @aside-width calc(100vw - @aside-width);
+  grid-template-columns: @aside-width @main-width;
+}
+
+.hint_con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 25px;
+  color: #525457;
 }
 </style>

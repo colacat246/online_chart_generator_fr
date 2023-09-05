@@ -1,3 +1,9 @@
 @header-height: 50px;
+@footer-height: 30px;
 @aside-width: 200px;
-@graph-area-width: calc(100vw - @aside-width);
+
+@main-height: calc(100vh - @header-height - @footer-height);
+@main-width: calc(100vw - @aside-width);
+
+@controller-area-width: 400px;
+@drawing-area-width: calc(@main-width - 400px);
