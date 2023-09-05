@@ -4,7 +4,6 @@ export const useGraphListStore = defineStore('graphListStore', {
   state: () => {
     return {
       graphList: [],
-      // TODO 当前所选图形ID
       activeGraphId: '',
     };
   },

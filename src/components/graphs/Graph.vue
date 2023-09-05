@@ -1,10 +1,9 @@
 <template>
-  <div class="graph__area__con">
+  <div v-loading="isLoading" class="graph__area__con">
     <section class="graph__drawing_area" ref="drawAreaCon">
       <div ref="drawArea"></div>
       <section class="save_image_con">
-        <!-- TODO 把按钮挪到右下角，再加个保存数据的按钮 -->
-        <el-button @click="handleSaveIamge">保存图片</el-button>
+        <el-button @click="handleSaveIamge">保存图片至本地</el-button>
       </section>
     </section>
     <GraphControlVue class="graph-control" />
@@ -15,11 +14,14 @@
 // 此组件接收graph属性
 import GraphControlVue from '@/components/graphs/GraphControl.vue';
 import * as echarts from 'echarts';
-import { onMounted, watch, ref, provide } from 'vue';
+import { onMounted, toRefs, watch, ref, provide } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
 const { graph } = storeToRefs(graphStore);
+
+const props = defineProps(['isLoading']);
+const { isLoading } = toRefs(props);
 
 const drawArea = ref();
 const drawAreaCon = ref();

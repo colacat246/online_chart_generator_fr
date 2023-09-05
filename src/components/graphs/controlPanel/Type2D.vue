@@ -19,7 +19,6 @@
           </div>
         </template>
         <div class="item-con">
-          <!-- TODO 检查标题重复，去掉series.$extra.id -->
           <span>名称</span>
           <input type="text" v-model="curData.name" />
         </div>
@@ -87,8 +86,6 @@ import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.v
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
 import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
 import DeleteSeries from '@/components/graphs/controlItems/DeleteSeries.vue';
-import { ref } from 'vue';
-import api from '@/config/createRequest.js';
 
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -115,7 +112,6 @@ const updateData = (val, data, axis, placeToReplace) => {
   axis = axis === 'x' ? 0 : 1;
   otherAxis = otherAxis === 'x' ? 0 : 1;
 
-  // BUG 坐标数量检查的显示
   const maxLengh =
     val.length > otherData.length ? val.length : otherData.length;
   const res = [];
@@ -137,10 +133,6 @@ const updateData = (val, data, axis, placeToReplace) => {
 };
 
 
-// 控制面板当前曲线，默认展开第一个
-const activeData = ref(
-  graph.value.series[0] ? graph.value.series[0].$extra.id : ''
-);
 
 // 控制面板属性，结构为 属性 -> id
 let graphControlProps = {
@@ -154,18 +146,6 @@ const setGraphRef = (el, curDataId) => {
   }
 };
 
-// FIXME
-// // 处理鼠标悬浮title提示
-// watch([graph, activeData], handleTitleTip, { immediate: true });
-
-// async function handleTitleTip() {
-//   await nextTick();
-//   for (const i in graphControlProps.refs) {
-//     graphControlProps.refs[i].title = '点击编辑曲线';
-//   }
-//   if (activeData.value === '') return; // 面板未改变时返回
-//   graphControlProps.refs[activeData.value].title = '收起';
-// }
 </script>
 
 <style lang="less" scoped>

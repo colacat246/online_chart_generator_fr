@@ -18,7 +18,7 @@
             <DeleteSeries :series-id="curData.$extra.id"></DeleteSeries>
           </div>
         </template>
-        <slot :series="curData">
+        <slot :series="curData" :graph="graph">
           <div>default</div>
         </slot>
       </el-collapse-item>

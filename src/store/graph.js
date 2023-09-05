@@ -1,6 +1,4 @@
 import { defineStore } from 'pinia';
-// import api from '@/config/createRequest.js';
-// import _ from 'lodash';
 
 export const useGraphStore = defineStore('graphStore', {
   state: () => {
@@ -8,7 +6,7 @@ export const useGraphStore = defineStore('graphStore', {
       graph: null,
       graphId: null, // 是string
       activeSeriesData: '',
-      changeCount: 2,
+      changeCount: 0,
     };
   },
   actions: {

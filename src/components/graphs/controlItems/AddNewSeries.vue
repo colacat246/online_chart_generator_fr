@@ -11,7 +11,7 @@
         show: false,
       },
     ]"
-    :confirm-fn="addNewSeries"
+    :confirm-fn="async (data) => addNewSeriesAPI(data, graphStore)"
   >
     <template v-slot="{ toggleFn }">
       <el-button type="primary" size="small" @click="toggleFn($event)"
@@ -23,22 +23,9 @@
 
 <script setup>
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
-import api from '@/config/createRequest.js';
+import { addNewSeriesAPI } from '@/api/seriesAPI.js';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
-
-async function addNewSeries(data) {
-  try {
-    const res = await api.post('/userGraphSeries', data);
-    if (res.data.statusCodeValue !== 999) {
-      throw res.data.message;
-    }
-    graphStore.addSeries(res.data.data.graph, res.data.data.newSeriesId);
-  } catch (err) {
-    // TODO
-    console.log(err);
-  }
-}
 </script>
 
 <style lang="less" scoped></style>

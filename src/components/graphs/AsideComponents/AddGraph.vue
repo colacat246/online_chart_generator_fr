@@ -25,7 +25,7 @@
                 },
                 { label: '', key: 'graphTypeId', val: graph.id, show: false },
               ]"
-              :confirm-fn="addNewGraph"
+              :confirm-fn="async (data) => addNewGraphAPI(data, graphListStore)"
             >
               <template v-slot="{ toggleFn }">
                 <span @click="toggleFn($event)">
@@ -41,31 +41,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
-import api from '@/config/createRequest.js';
+import { addNewGraphAPI } from '@/api/graphAPI.js';
 import { graphTypes } from '@/config/graphTypes';
 import { useGraphListStore } from '@/store/graphList';
 const graphListStore = useGraphListStore();
-
-const dropdown = ref(null);
-// TODO 跳转
-// TODO 使用RequestDialog
-
-async function addNewGraph(data) {
-  // TODO 做一个全局提示逻辑，处理异常
-  try {
-    const res = await api.post('/userGraph', data);
-
-    if (res.data.statusCodeValue !== 999) return null;
-
-    graphListStore.setGraphList(res.data.data.graphList);
-    graphListStore.setActiveGraphId(res.data.data.newGraphId);
-  } catch (err) {
-    // TODO
-    console.log(err);
-  }
-}
 </script>
 
 <style lang="less" scoped>

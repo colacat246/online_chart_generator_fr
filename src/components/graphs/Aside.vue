@@ -26,17 +26,19 @@
             "
             title="保存"
             hover-color="#2a598a"
-            @click="saveChange"
+            @click="saveChangeAPI(graphStore)"
             ><EditPen
           /></IconButton>
           <DeleteButton
             class="button_show"
             :item-to-delete="graph.createdGraphId"
-            @delete-item="deleteGraph"
+            @delete-item="
+              async (createdGraphId) =>
+                deleteGraphAPI(createdGraphId, graphListStore)
+            "
           />
         </el-menu-item>
       </el-menu>
-      <button @click="graphStore.change()">change</button>
     </el-scrollbar>
   </div>
 </template>
@@ -44,8 +46,8 @@
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import IconButton from '@/components/generalComponents/IconButton.vue';
-import AddGraph from './AsideComponents/AddGraph.vue';
-import api from '@/config/createRequest.js';
+import AddGraph from '@/components/graphs/AsideComponents/AddGraph.vue';
+import { saveChangeAPI, deleteGraphAPI } from '@/api/graphAPI.js';
 import { storeToRefs } from 'pinia';
 import { useGraphListStore } from '@/store/graphList';
 const graphListStore = useGraphListStore();
@@ -54,45 +56,6 @@ import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
 
 // TODO 增加示意图
-
-// 保存更改
-async function saveChange() {
-  const res = await api.put('/userGraph', {
-    createdGraphId: graphStore.graphIdIntGetter,
-    data: graphStore.graphGetter,
-  });
-  // TODO 提示自动保存
-  if (res.data.data.isUpdated) {
-    graphStore.resetChange();
-  }
-}
-
-// 更新次数达到一定后自动保存
-graphStore.$onAction(({ name, store, after }) => {
-  if (name === 'change') {
-    after(async () => {
-      if (store.changeCountGetter < 5) {
-        return;
-      }
-      await saveChange();
-    });
-  }
-});
-
-// 删除
-async function deleteGraph(createdGraphId) {
-  try {
-    const res = await api.delete('/userGraph', { data: { createdGraphId } });
-    graphListStore.setGraphList(res.data.data.graphList);
-    // 删除的是当前图形，进行跳转
-    if (createdGraphId.toString() === graphListStore.activeGraphIdGetter) {
-      graphListStore.setActiveGraphId(res.data.data.curGraphId);
-    }
-  } catch (err) {
-    // TODO
-    console.log(err);
-  }
-}
 </script>
 
 <style lang="less" scoped>
