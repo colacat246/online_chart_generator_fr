@@ -43,6 +43,7 @@ bus.on('lineD:updateColor', () => {
   updateColor();
 });
 
+// FIXME series无数据时改变颜色报错
 function updateColor() {
   nextTick(() => {
     curColor.value = curChart.value.getVisual(

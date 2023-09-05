@@ -12,6 +12,7 @@
       },
     ]"
     :confirm-fn="async (data) => addNewSeriesAPI(data, graphStore)"
+    :loading-area="drawAreaCon"
   >
     <template v-slot="{ toggleFn }">
       <el-button type="primary" size="small" @click="toggleFn($event)"
@@ -23,9 +24,12 @@
 
 <script setup>
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
+import { inject } from 'vue';
 import { addNewSeriesAPI } from '@/api/seriesAPI.js';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
+
+const drawAreaCon = inject('drawAreaCon');
 </script>
 
 <style lang="less" scoped></style>

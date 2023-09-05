@@ -14,11 +14,9 @@
 // 此组件接收graph属性
 import GraphControlVue from '@/components/graphs/GraphControl.vue';
 import * as echarts from 'echarts';
-import { onMounted, toRefs, watch, ref, provide } from 'vue';
-import { storeToRefs } from 'pinia';
+import { onMounted, toRefs, ref, provide } from 'vue';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
-const { graph } = storeToRefs(graphStore);
 
 const props = defineProps(['isLoading']);
 const { isLoading } = toRefs(props);
@@ -38,27 +36,25 @@ onMounted(() => {
   };
 });
 
-watch(
-  graph,
-  () => {
-    initChart();
-  },
-  { deep: true }
-);
+graphStore.$subscribe((mutate, _) => {
+  if (!graphStore.graphGetter) return;
+  initChart();
+});
 
 provide('curChart', chartRef);
+provide('drawAreaCon', drawAreaCon);
 
 // 初始化新图形
 function initChart() {
   scaling(); // 缩放显示
   setPicSize(); // 设定尺寸
-  chartInstance.setOption(graph.value, true); // 第二个参数表示不合并opts，直接创建新组件
+  chartInstance.setOption(graphStore.graphGetter, true); // 第二个参数表示不合并opts，直接创建新组件
 }
 
 // 按原图设定尺寸
 function setPicSize() {
-  const h = graph.value.$extra.divHeight;
-  const w = graph.value.$extra.divHeight * graph.value.$extra.w2hRatio;
+  const h = graphStore.divHeightGetter;
+  const w = h * graphStore.w2hRatioGetter;
   drawArea.value.style.width = w + 'px';
   drawArea.value.style.height = h + 'px';
   chartInstance.resize();
@@ -66,8 +62,8 @@ function setPicSize() {
 
 // 原图尺寸高于显示尺寸，则进行缩放
 function scaling() {
-  const picHeight = graph.value.$extra.divHeight;
-  const w2hRatio = graph.value.$extra.w2hRatio;
+  const picHeight = graphStore.divHeightGetter;
+  const w2hRatio = graphStore.w2hRatioGetter;
   const picWidth = picHeight * w2hRatio;
 
   const w = drawAreaCon.value.offsetWidth - 15; // 注意减掉border尺寸
@@ -92,7 +88,7 @@ const handleSaveIamge = () => {
   });
   const a = document.createElement('a');
   const evt = new MouseEvent('click');
-  a.download = graph.value.title.text;
+  a.download = graphStore.titleGetter;
   a.href = url;
   a.dispatchEvent(evt);
 };

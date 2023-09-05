@@ -83,5 +83,14 @@ export const useGraphStore = defineStore('graphStore', {
     graphGetter: (state) => {
       return state.graph;
     },
+    divHeightGetter: (state) => {
+      return state.graph.$extra.divHeight;
+    },
+    w2hRatioGetter: (state) => {
+      return state.graph.$extra.w2hRatio;
+    },
+    titleGetter: (state) => {
+      return state.graph.title.text;
+    },
   },
 });

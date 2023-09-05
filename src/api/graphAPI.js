@@ -1,5 +1,6 @@
 import api from '@/config/createRequest.js';
-import { ElMessage } from 'element-plus';
+import useInfoAlert from '@/composables/infoAlert.js';
+const { setInfo } = useInfoAlert();
 
 export async function selectGraphAPI(createdGraphId, graphStore) {
   if (!createdGraphId) {
@@ -29,13 +30,9 @@ export async function saveChangeAPI(graphStore) {
     createdGraphId: graphStore.graphIdIntGetter,
     data: graphStore.graphGetter,
   });
-  ElMessage({
-    message: 'ok',
-    type: 'success',
-  });
 
-  // TODO 提示自动保存
   if (res.data.data.isUpdated) {
+    setInfo({ content: '数据已保存' });
     graphStore.resetChange();
   }
 }

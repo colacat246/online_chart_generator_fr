@@ -86,15 +86,18 @@ graphStore.$subscribe((mutate, _) => {
 });
 
 // 更新次数达到一定后自动保存
-// TODO 保存图形后给个提示
-graphStore.$onAction(({ name, store, after }) => {
-  if (name === 'change') {
-    after(async () => {
-      if (store.changeCountGetter < 5) {
-        return;
-      }
-      await saveChangeAPI(graphStore);
-    });
+graphStore.$onAction(async ({ name, store, after }) => {
+  switch (name) {
+    case 'change':
+      after(async () => {
+        if (store.changeCountGetter < 5) {
+          return;
+        }
+        await saveChangeAPI(graphStore);
+      });
+
+    default:
+      return;
   }
 });
 </script>
