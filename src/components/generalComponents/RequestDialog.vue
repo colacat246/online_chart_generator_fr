@@ -82,7 +82,6 @@ async function confirm() {
     after.value();
   } catch (err) {
     isVisible.value = true;
-    console.log(err);
     alertContent.value = err.message;
     isAlert.value = true;
   } finally {

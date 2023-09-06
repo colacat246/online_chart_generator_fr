@@ -28,17 +28,17 @@ const useInnerUserStore = defineStore('userStore', {
       };
       localStorage.setItem(tokenName, token);
     },
-    loginFail(errCode) {
-      localStorage.removeItem(tokenName);
-      this.$state = {
-        loginState: 2,
-        errCode,
-        user: {
-          name: null,
-          id: null,
-        },
-      };
-    },
+    // loginFail(errCode) {
+    //   localStorage.removeItem(tokenName);
+    //   this.$state = {
+    //     loginState: 2,
+    //     errCode,
+    //     user: {
+    //       name: null,
+    //       id: null,
+    //     },
+    //   };
+    // },
     logout() {
       localStorage.removeItem(tokenName);
       this.$state = {

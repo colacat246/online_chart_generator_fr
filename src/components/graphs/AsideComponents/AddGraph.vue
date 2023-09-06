@@ -43,7 +43,7 @@
 <script setup>
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
 import { addNewGraphAPI } from '@/api/graphAPI.js';
-import { graphTypes } from '@/config/graphTypes';
+import { graphTypes } from '@/config/graphConfs.js';
 import { useGraphListStore } from '@/store/graphList';
 const graphListStore = useGraphListStore();
 </script>

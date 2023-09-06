@@ -1,10 +1,12 @@
 <template>
   <Transition>
     <div v-if="show" class="info" :style="config[infoType].style">
-      <el-icon style="padding-right: 10px"
-        ><component :is="config[infoType].icon"
-      /></el-icon>
-      <span> {{ infoContent }} </span>
+      <span>
+        <el-icon style="padding-right: 10px"
+          ><component :is="config[infoType].icon"
+        /></el-icon>
+        <span> {{ infoContent }} </span>
+      </span>
       <el-icon style="cursor: pointer" @click="clearInfo"><Close /></el-icon>
     </div>
   </Transition>
@@ -36,11 +38,11 @@ const config = {
 .info {
   display: flex;
   padding: 0px 10px;
-  // justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
   width: 100%;
-  font-size: 15px;
+  font-size: 13px;
   & > span {
     overflow: hidden;
     text-overflow: ellipsis;

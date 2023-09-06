@@ -9,6 +9,10 @@ import { createPinia } from 'pinia';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { v4 as uuidv4 } from 'uuid';
 import { VueCookies } from 'vue-cookies';
+import { AxiosError } from 'axios';
+
+import useInfoAlert from '@/composables/infoAlert';
+const { setInfo } = useInfoAlert();
 
 const app = createApp(App);
 
@@ -20,6 +24,21 @@ const app = createApp(App);
 //     evt.target.parentNode.blur();
 //   }
 // };
+
+// 错误处理
+app.config.errorHandler = (err, instance, info) => {
+  console.warn('from vue error handler:');
+  if (err instanceof AxiosError) {
+    console.log(err);
+    setInfo({
+      content: '接口请求失败',
+      stay: true,
+      type: 'warn',
+    });
+    return;
+  }
+  throw err;
+};
 
 app.use(ElementPlus);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

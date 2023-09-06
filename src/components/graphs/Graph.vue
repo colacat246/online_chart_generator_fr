@@ -41,7 +41,6 @@ graphStore.$subscribe((mutate, _) => {
   initChart();
 });
 
-provide('curChart', chartRef);
 provide('drawAreaCon', drawAreaCon);
 
 // 初始化新图形

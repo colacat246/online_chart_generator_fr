@@ -10,7 +10,11 @@ function setInfo({ content, type, stay }) {
   if (timeout) clearTimeout(timeout);
 
   infoContent.value = content;
-  if (type) infoType.value = type;
+  if (type) {
+    infoType.value = type;
+  } else {
+    infoType.value = 'success';
+  }
   show.value = true;
   // 是否长期显示
   if (stay) {

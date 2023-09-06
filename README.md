@@ -10,10 +10,15 @@
 
 1. 画布尺寸选为固定，使用css的scale函数完成不同屏幕的匹配
 
+## notes
+
+获取曲线颜色：`chartInstance.getVisual({ seriesIndex: 1 }, 'color');`
+
 ## TODO
 
 * 防抖
 * 离开页面前保存数据
+* 更改aside中图名
 * edge缩放比例问题
 * 远程组件？
 * token过期问题

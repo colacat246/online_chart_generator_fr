@@ -2,7 +2,7 @@
   <section>
     <span>配色</span>
     <section class="switcher">
-      <el-color-picker v-model="curColor" @change="setColor" size="default" />
+      <el-color-picker v-model="color" size="default" />
       <el-button type="primary" @click="resetColor($event)" size="small"
         >恢复默认配色</el-button
       >
@@ -11,47 +11,39 @@
 </template>
 
 <script setup>
-import { nextTick, ref, inject, computed, watch } from 'vue';
-import bus from '@/libs/bus.js';
-const { modelValue, series, id } = defineProps(['modelValue', 'series', 'id']);
+import { toRefs, inject, computed } from 'vue';
+import { colorSets } from '@/config/graphConfs.js';
+const props = defineProps(['modelValue', 'series', 'id']);
+const { series, id } = toRefs(props);
+
 const emit = defineEmits(['update:modelValue']);
 const blurBtn = inject('blurBtn');
-// 拿到myChart
-const curChart = inject('curChart');
-// 获取颜色
-const curColor = ref();
 
-const idx = computed(() => {
-  return series.findIndex((i) => i.$extra.id === id);
+const color = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit('update:modelValue', value);
+    return true;
+  },
+});
+// 设置初始颜色
+const defaultColor = computed(() => {
+  const idx = series.value.findIndex((i) => i.$extra.id === id.value);
+  const colorIdx = idx % colorSets.length;
+  return colorSets[colorIdx];
 });
 
-watch(idx, updateColor, { immediate: true, flush: 'post' });
+if (!color.value) {
+  color.value = defaultColor.value;
+}
 
-// 设置颜色
-const setColor = (val) => {
-  emit('update:modelValue', val);
-  bus.emit('lineD:updateColor'); // 通知所有组件改变颜色
-};
 const resetColor = (evt) => {
   blurBtn(evt);
-  emit('update:modelValue', undefined);
-  bus.emit('lineD:updateColor'); // 通知所有组件改变颜色
+  color.value = defaultColor.value;
 };
 
-// 当有一条曲线改变颜色时，更新全部曲线颜色
-bus.on('lineD:updateColor', () => {
-  updateColor();
-});
-
-// FIXME series无数据时改变颜色报错
-function updateColor() {
-  nextTick(() => {
-    curColor.value = curChart.value.getVisual(
-      { seriesIndex: idx.value },
-      'color'
-    );
-  });
-}
 </script>
 
 <style lang="less" scoped>

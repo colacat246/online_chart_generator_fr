@@ -23,7 +23,7 @@
           { label: '用户名', key: 'userName', val: 'tom', show: true },
           { label: '密码', key: 'password', val: '556677', show: true },
         ]"
-        :confirmFn="async (data) => registerAPI(data, userStore)"
+        :confirmFn="async (data) => await registerAPI(data, userStore)"
       >
         <template v-slot="{ toggleFn }">
           <el-button text type="primary" @click="toggleFn($event)"

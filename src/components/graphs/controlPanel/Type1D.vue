@@ -2,7 +2,6 @@
   <SeriesPanelContainerVue>
     <template v-slot="{ series: curData, graph: curGraph }">
       <div class="item-con">
-        <!-- TODO 检查标题重复，去掉series.$extra.id -->
         <span>名称</span>
         <input type="text" v-model="curData.name" />
       </div>

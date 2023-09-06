@@ -1,8 +1,6 @@
 <template>
   <div class="border-top footer-con">
-    <section class="info">
-      <InfoAlertVue></InfoAlertVue>
-    </section>
+      <InfoAlertVue class="info"></InfoAlertVue>
   </div>
 </template>
 
@@ -13,12 +11,10 @@ import InfoAlertVue from '@/components/generalComponents/InfoAlert.vue';
 <style lang="less" scoped>
 .footer-con {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   .info {
-    align-self: stretch;
-    width: 150px;
-    // height: 25px;
+    width: 350px;
   }
 }
 </style>
