@@ -1,5 +1,6 @@
 <template>
   <el-icon
+    size="15px"
     :title="title"
     @click.stop
     class="icon-button"

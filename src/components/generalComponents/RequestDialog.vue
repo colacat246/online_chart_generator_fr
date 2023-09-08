@@ -69,7 +69,7 @@ async function confirm() {
   const obj = reform(model.value);
   let loadingInstance;
   try {
-    if (loadingArea) {
+    if (loadingArea.value) {
       isVisible.value = false;
       loadingInstance = ElLoading.service({
         target: loadingArea.value,

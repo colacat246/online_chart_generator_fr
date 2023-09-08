@@ -1,6 +1,6 @@
 <template>
-  <div class="border-right">
-    <section class="border-bottom">
+  <div class="border-right aside-con">
+    <section class="border-bottom add_new">
       <AddGraph class="menu__create__new" />
     </section>
     <el-scrollbar class="aside-scroll">
@@ -15,28 +15,39 @@
           :key="graph.createdGraphId.toString()"
           :index="graph.createdGraphId.toString()"
         >
-          <span>
-            <el-icon><document /></el-icon>
-            <span class="graph__name">{{ graph.graphName }}</span>
+          <span class="graph__name">
+            <el-icon class="icon" size="15px"><document /></el-icon>
+            <DisplayAndInputVue
+              class="name_and_input"
+              :show="true"
+              :created-graph-id="graph.createdGraphId"
+              v-model="graph.graphName"
+              :show-on-outer-hover="true"
+            ></DisplayAndInputVue>
           </span>
-          <IconButton
-            v-show="
-              activeGraphId === graph.createdGraphId.toString() &&
-              graphStore.changeCountGetter !== 0
-            "
-            title="保存"
-            hover-color="#2a598a"
-            @click="saveChangeAPI(graphStore)"
-            ><EditPen
-          /></IconButton>
-          <DeleteButton
-            class="button_show"
-            :item-to-delete="graph.createdGraphId"
-            @delete-item="
-              async (createdGraphId) =>
-                deleteGraphAPI(createdGraphId, graphListStore)
-            "
-          />
+          <span class="graph__edit">
+            <IconButton
+              :style="{
+                visibility:
+                  activeGraphId === graph.createdGraphId.toString() &&
+                  graphStore.changeCountGetter !== 0
+                    ? 'visible'
+                    : 'hidden',
+              }"
+              title="保存"
+              hover-color="#2a598a"
+              @click="saveChangeAPI(graphStore)"
+              ><FolderChecked
+            /></IconButton>
+            <DeleteButton
+              class="button_show"
+              :item-to-delete="graph.createdGraphId"
+              @delete-item="
+                async (createdGraphId) =>
+                  deleteGraphAPI(createdGraphId, graphListStore)
+              "
+            />
+          </span>
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
@@ -47,6 +58,7 @@
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import IconButton from '@/components/generalComponents/IconButton.vue';
 import AddGraph from '@/components/graphs/AsideComponents/AddGraph.vue';
+import DisplayAndInputVue from '@/components/generalComponents/DisplayAndInput.vue';
 import { saveChangeAPI, deleteGraphAPI } from '@/api/graphAPI.js';
 import { storeToRefs } from 'pinia';
 import { useGraphListStore } from '@/store/graphList';
@@ -63,21 +75,38 @@ const graphStore = useGraphStore();
 .no-right-border {
   border-right: 0 !important;
 }
-div {
+.aside-con {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   height: 100%;
   .aside-scroll {
-    max-height: 100%;
-  }
-  .menu__graph {
-    justify-content: space-between;
-    .graph__name {
+    height: 100%;
+    .menu__graph {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
       overflow: hidden;
-      display: inline-block;
-      width: 85px;
-      text-overflow: ellipsis;
+      padding: 0 10px !important;
+      .graph__name {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        width: 0;
+        flex: 1 1 0;
+        .icon {
+          margin: 0;
+          padding-right: 2px;
+          flex: 0 0 auto;
+        }
+        .name_and_input {
+          flex: 1 1 0;
+        }
+      }
+      .graph__edit {
+        box-sizing: border-box;
+        flex: 0 0 auto;
+      }
     }
   }
   :deep(.show__icon:hover .button_show) {
@@ -85,7 +114,7 @@ div {
     visibility: visible;
     opacity: 1;
   }
-  section {
+  .add_new {
     display: flex;
     flex-direction: column;
     align-items: left;

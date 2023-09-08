@@ -4,6 +4,9 @@
     v-if="graph && graph.series"
     v-model="activeSeriesData"
   >
+    <div class="flex_con border-bottom">
+      <AddNewSeries></AddNewSeries>
+    </div>
     <template v-for="curData in graph.series" :key="curData.$extra.id">
       <el-collapse-item :name="curData.$extra.id">
         <template #title>
@@ -23,9 +26,6 @@
         </slot>
       </el-collapse-item>
     </template>
-    <div class="flex_con">
-      <AddNewSeries></AddNewSeries>
-    </div>
   </el-collapse>
 </template>
 
@@ -52,15 +52,18 @@ const setGraphRef = (el, curDataId) => {
 };
 
 // 处理鼠标悬浮title提示
-watch(() => activeSeriesData.value, async () => {
-  await nextTick();
-  for (const i in graphControlProps.refs) {
-    graphControlProps.refs[i].title = '点击编辑曲线';
-  }
-  if (activeSeriesData.value === '') return; // 面板未改变时返回
-  graphControlProps.refs[activeSeriesData.value].title = '收起';
-}, {immediate: true});
-
+watch(
+  () => activeSeriesData.value,
+  async () => {
+    await nextTick();
+    for (const i in graphControlProps.refs) {
+      graphControlProps.refs[i].title = '点击编辑曲线';
+    }
+    if (activeSeriesData.value === '') return; // 面板未改变时返回
+    graphControlProps.refs[activeSeriesData.value].title = '收起';
+  },
+  { immediate: true }
+);
 </script>
 
 <style lang="less" scoped>
