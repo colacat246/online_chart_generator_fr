@@ -5,7 +5,9 @@
     @click.stop
     class="icon-button"
     :style="{ '--hoverColor': hoverColor }"
-    :class="{ show_on_outer_hover: showOnOuterHover }"
+    :class="{
+      'show-button-on-outer-hover': showOnOuterHover,
+    }"
     ><slot>
       <ElementPlus />
     </slot>
@@ -29,9 +31,9 @@ const { title, showOnOuterHover, hoverColor } = toRefs(props);
   color: var(--hoverColor);
 }
 
-.show_on_outer_hover {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s, color 0.2s;
-}
+// .show_on_outer_hover {
+//   visibility: hidden;
+//   opacity: 0;
+//   transition: opacity 0.5s, color 0.2s;
+// }
 </style>

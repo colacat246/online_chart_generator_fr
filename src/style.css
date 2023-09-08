@@ -28,6 +28,9 @@ input:focus {
 .border-right {
   border-right: 1px solid var(--el-border-color);
 }
+.no-border {
+  border: none !important;
+}
 .item-con {
   display: flex;
   justify-content: flex-start;
@@ -87,4 +90,43 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.container {
+  overflow: hidden;
+  display: flex;
+}
+.conatiner-full {
+  height: 100%;
+  width: 100%;
+}
+.container-center {
+  justify-content: center;
+}
+.container-align-center {
+  align-items: center;
+}
+.container-column {
+  flex-direction: column;
+}
+.item-fix {
+  flex: 0 0 auto;
+}
+.item-fill-remain {
+  width: 0;
+  flex: 1 1 auto;
+}
+.items-margin-hor-5px > * {
+  margin: 0 5px;
+}
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+.show-icon-button-on-hover:hover .show-button-on-outer-hover {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.show-button-on-outer-hover {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s, color 0.2s;
 }

@@ -34,11 +34,11 @@ onMounted(() => {
     chartInstance.resize();
     scaling();
   };
-});
 
-graphStore.$subscribe((mutate, _) => {
-  if (!graphStore.graphGetter) return;
-  initChart();
+  graphStore.$subscribe((mutate, _) => {
+    if (!graphStore.graphGetter) return;
+    initChart();
+  });
 });
 
 provide('drawAreaCon', drawAreaCon);

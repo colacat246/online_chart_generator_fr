@@ -8,7 +8,12 @@
     @confirm="emit('deleteItem', itemToDelete)"
   >
     <template #reference>
-      <IconButton title="删除" :show-on-outer-hover="true" v-bind="$attrs" @click.stop><delete
+      <IconButton
+        title="删除"
+        :show-on-outer-hover="true"
+        v-bind="$attrs"
+        @click.stop
+        ><delete
       /></IconButton>
     </template>
   </el-popconfirm>

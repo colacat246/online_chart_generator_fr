@@ -11,16 +11,13 @@
       align-center
       append-to-body
     >
-      <slot name="form">
-        <el-form v-if="model" :model="model">
-          <template v-for="item in model" :key="item.label">
-            <el-form-item v-if="item.show" :label="item.label">
-              <el-input v-model="item.val" autocomplete="off" />
-            </el-form-item>
-          </template>
-        </el-form>
-        <span v-else>mo model, add it manually</span>
-      </slot>
+      <el-form :model="model">
+        <template v-for="item in model" :key="item.label">
+          <el-form-item v-if="item.show" :label="item.label">
+            <el-input v-model="item.val" autocomplete="off" />
+          </el-form-item>
+        </template>
+      </el-form>
       <el-alert v-if="isAlert" :title="alertContent" type="warning" />
       <template #footer>
         <span class="dialog-footer">
@@ -69,6 +66,7 @@ const isAlert = ref(false);
 const alertContent = ref('');
 
 async function confirm() {
+  const obj = reform(model.value);
   let loadingInstance;
   try {
     if (loadingArea.value) {
@@ -79,13 +77,7 @@ async function confirm() {
     }
 
     isAlert.value = false;
-
-    if (model.value) {
-      const obj = reform(model.value);
-      await confirmFn.value(obj);
-    } else {
-      await confirmFn.value();
-    }
+    await confirmFn.value(obj);
     isVisible.value = false;
     after.value();
   } catch (err) {

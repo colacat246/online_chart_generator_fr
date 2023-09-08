@@ -19,7 +19,6 @@
     >
       <template v-slot="{ toggleFn }">
         <IconButtonVue
-          class="button_show"
           title="修改名称"
           :show-on-outer-hover="true"
           @click="toggleFn($event)"
