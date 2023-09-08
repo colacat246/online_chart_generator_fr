@@ -19,7 +19,9 @@
         >
           <span class="container container-align-center item-fill-remain">
             <el-icon style="margin: 0; padding-right: 2px" size="15px">
-              <document />
+              <component
+                :is="graphTypes.find((i) => i.id === graph.graphTypeId).icon"
+              />
             </el-icon>
             <DisplayAndInputVue
               class="item-fill-remain"
@@ -64,6 +66,7 @@ import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import IconButton from '@/components/generalComponents/IconButton.vue';
 import FunctionMenuVue from '@/components/graphs/AsideComponents/FunctionMenu.vue';
 import DisplayAndInputVue from '@/components/generalComponents/DisplayAndInput.vue';
+import { graphTypes } from '@/config/graphConfs.js';
 import { saveChangeAPI, deleteGraphAPI } from '@/api/graphAPI.js';
 import { storeToRefs } from 'pinia';
 import { useGraphListStore } from '@/store/graphList';
@@ -71,8 +74,6 @@ const graphListStore = useGraphListStore();
 const { graphList, activeGraphId } = storeToRefs(graphListStore);
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
-
-// TODO 增加示意图
 </script>
 
 <style lang="less" scoped></style>

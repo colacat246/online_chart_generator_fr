@@ -1,6 +1,8 @@
+import { Edit,DataLine, Histogram } from '@element-plus/icons-vue';
+
 export const graphTypes = [
-  { id: 1, name: '折线图' },
-  { id: 2, name: '类柱状图' },
+  { id: 1, name: '折线图', icon: DataLine },
+  { id: 2, name: '类柱状图', icon: Histogram },
 ];
 
 export const colorSets = [
