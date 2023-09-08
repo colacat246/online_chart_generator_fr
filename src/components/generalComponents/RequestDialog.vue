@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRefs, defineProps, inject } from 'vue';
+import { ref, reactive, toRefs, inject } from 'vue';
 import { ElLoading } from 'element-plus';
 // 传进去的值
 const props = defineProps({

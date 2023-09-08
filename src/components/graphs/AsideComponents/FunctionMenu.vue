@@ -12,7 +12,7 @@
         <el-dropdown-item>
           <AddGraphVue></AddGraphVue>
         </el-dropdown-item>
-        <el-dropdown-item @click="saveImage">保存当前图形</el-dropdown-item>
+        <el-dropdown-item @click="saveImage">下载当前图形</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

@@ -11,7 +11,7 @@
 
 <script setup>
 import DeleteButtonVue from '@/components/generalComponents/DeleteButton.vue';
-import { defineProps, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import { deleteSeriesAPI } from '@/api/seriesAPI.js';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();

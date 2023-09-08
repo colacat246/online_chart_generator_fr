@@ -18,10 +18,35 @@
           :index="graph.createdGraphId.toString()"
         >
           <span class="container container-align-center item-fill-remain">
-            <el-icon style="margin: 0; padding-right: 2px" size="15px">
-              <component
-                :is="graphTypes.find((i) => i.id === graph.graphTypeId).icon"
-              />
+            <el-icon
+              :title="
+                activeGraphId === graph.createdGraphId.toString() &&
+                graphStore.changeCountGetter !== 0
+                  ? '保存'
+                  : ''
+              "
+              @click="
+                async () =>
+                  activeGraphId === graph.createdGraphId.toString() &&
+                  graphStore.changeCountGetter !== 0 &&
+                  (await saveChangeAPI(graphStore))
+              "
+              style="margin: 0; padding-right: 5px"
+              size="15px"
+            >
+              <el-badge
+                is-dot
+                :hidden="
+                  activeGraphId !== graph.createdGraphId.toString() ||
+                  graphStore.changeCountGetter === 0
+                "
+                type="warning"
+                style="margin-right: 5px"
+              >
+                <component
+                  :is="graphTypes.find((i) => i.id === graph.graphTypeId).icon"
+                />
+              </el-badge>
             </el-icon>
             <DisplayAndInputVue
               class="item-fill-remain"
@@ -32,29 +57,14 @@
             >
             </DisplayAndInputVue>
           </span>
-          <span class="item-fix">
-            <IconButton
-              :style="{
-                visibility:
-                  activeGraphId === graph.createdGraphId.toString() &&
-                  graphStore.changeCountGetter !== 0
-                    ? 'visible'
-                    : 'hidden',
-              }"
-              title="保存"
-              hover-color="#2a598a"
-              @click.stop="saveChangeAPI(graphStore)"
-              ><FolderChecked
-            /></IconButton>
-            <DeleteButton
-              class="show-button-on-outer-hover"
-              :item-to-delete="graph.createdGraphId"
-              @delete-item="
-                async (createdGraphId) =>
-                  deleteGraphAPI(createdGraphId, graphListStore)
-              "
-            />
-          </span>
+          <DeleteButton
+            class="item-fix show-button-on-outer-hover"
+            :item-to-delete="graph.createdGraphId"
+            @delete-item="
+              async (createdGraphId) =>
+                deleteGraphAPI(createdGraphId, graphListStore)
+            "
+          />
         </el-menu-item>
       </el-menu>
     </el-scrollbar>

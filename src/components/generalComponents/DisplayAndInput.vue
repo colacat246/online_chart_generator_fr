@@ -1,6 +1,8 @@
 <template>
   <span class="con">
-    <div class="text">{{ modelValue }}</div>
+    <div class="text">
+      {{ modelValue }}
+    </div>
     <RequestDialogVue
       title="修改名称"
       confirm-name="确定"
