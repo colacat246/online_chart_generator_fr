@@ -9,9 +9,10 @@
     </span>
     <template #dropdown>
       <el-dropdown-menu style="width: 180px">
-        <el-dropdown-item class="container-center">
+        <el-dropdown-item>
           <AddGraphVue></AddGraphVue>
         </el-dropdown-item>
+        <el-dropdown-item @click="saveImage">保存当前图形</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -19,6 +20,23 @@
 
 <script setup>
 import AddGraphVue from '@/components/graphs/AsideComponents/AddGraph.vue';
+import useChartRef from '@/composables/chart.js';
+import { useGraphStore } from '@/store/graph.js';
+const graphStore = useGraphStore();
+const { getChart } = useChartRef();
+
+// TODO 改成选项框，选择像素、文件名等
+function saveImage() {
+  const url = getChart().value.getDataURL({
+    pixelRatio: 3,
+    backgroundColor: '#fff',
+  });
+  const a = document.createElement('a');
+  const evt = new MouseEvent('click');
+  a.download = graphStore.titleGetter;
+  a.href = url;
+  a.dispatchEvent(evt);
+}
 </script>
 
 <style lang="less" scoped>

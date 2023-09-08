@@ -2,9 +2,6 @@
   <div v-loading="isLoading" class="graph__area__con">
     <section class="graph__drawing_area" ref="drawAreaCon">
       <div ref="drawArea"></div>
-      <section class="save_image_con">
-        <el-button @click="handleSaveIamge">保存图片至本地</el-button>
-      </section>
     </section>
     <GraphControlVue class="graph-control" />
   </div>
@@ -17,6 +14,8 @@ import * as echarts from 'echarts';
 import { onMounted, toRefs, ref, provide } from 'vue';
 import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
+import useChartRef from '@/composables/chart.js';
+const { setChart } = useChartRef();
 
 const props = defineProps(['isLoading']);
 const { isLoading } = toRefs(props);
@@ -34,6 +33,7 @@ onMounted(() => {
     chartInstance.resize();
     scaling();
   };
+  setChart(chartRef);
 
   graphStore.$subscribe((mutate, _) => {
     if (!graphStore.graphGetter) return;
@@ -77,20 +77,6 @@ function scaling() {
   if (scaleRatio > 1) scaleRatio = 1;
   drawArea.value.style.transform = `scale(${scaleRatio})`;
 }
-
-// 保存图片
-// TODO 改成选项框，选择像素、文件名等
-const handleSaveIamge = () => {
-  const url = chartRef.value.getDataURL({
-    pixelRatio: 1,
-    backgroundColor: '#fff',
-  });
-  const a = document.createElement('a');
-  const evt = new MouseEvent('click');
-  a.download = graphStore.titleGetter;
-  a.href = url;
-  a.dispatchEvent(evt);
-};
 </script>
 
 <style lang="less" scoped>
