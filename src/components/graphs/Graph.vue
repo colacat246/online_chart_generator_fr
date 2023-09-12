@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="isLoading" class="graph__area__con">
+  <div v-loading="isLoading" class="con">
     <section class="graph__drawing_area" ref="drawAreaCon">
       <div ref="drawArea"></div>
     </section>
@@ -80,41 +80,33 @@ function scaling() {
 </script>
 
 <style lang="less" scoped>
-.graph__area__con {
-  height: @main-height;
-  width: @main-width;
-  display: grid;
-  grid-template-columns: @drawing-area-width @controller-area-width;
-  & > * {
-    box-sizing: border-box;
-  }
+.con {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
 
   .graph__drawing_area {
+    box-sizing: border-box;
     position: relative;
+    overflow: hidden;
+    flex: 1 1 65%;
+
+    // 使内部chartRef居中
     display: flex;
     justify-content: center;
     align-items: center;
-    height: @main-height;
-    width: @drawing-area-width;
-    box-sizing: border-box;
     & > div {
-      // border: 1px solid var(--el-border-color);
       box-shadow: var(--el-box-shadow-light);
       position: absolute;
-      box-sizing: content-box;
-      overflow: hidden;
-      height: 100%;
       width: 100%;
-    }
-
-    .save_image_con {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
+      height: 100%;
     }
   }
   .graph-control {
-    max-height: 100%;
+    box-sizing: border-box;
+    flex: 1 1 35%;
+    max-width: 600px;
+    overflow: hidden;
   }
 }
 </style>

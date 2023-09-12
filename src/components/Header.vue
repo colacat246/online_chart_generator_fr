@@ -1,10 +1,12 @@
 <template>
-  <div class="header_con">
-    <el-menu class="header_menu" mode="horizontal" router>
+  <div class="header_con border-bottom">
+    <el-menu class="no-border" mode="horizontal" router>
       <el-menu-item index="/home">首页</el-menu-item>
       <el-menu-item index="/graphs">绘图</el-menu-item>
     </el-menu>
-    <h1>Online Chart Generator</h1>
+    <h1 class="container container-center container-align-center">
+      Online Chart Generator
+    </h1>
     <UserVue></UserVue>
   </div>
 </template>
@@ -16,30 +18,9 @@ import UserVue from '@/components/user/User.vue';
 <style lang="less" scoped>
 .header_con {
   display: grid;
-  grid-template-columns: 2fr 4fr 2fr;
-  border-bottom: 1px solid var(--el-border-color);
-  box-sizing: border-box;
-  // justify-items: center;
-  // color: #e5eaf3;
-  // opacity: 0.8;
-  // box-shadow: var(--el-box-shadow);
-  & > h1 {
-    font-size: 22px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #66b1ff;
-  }
-  & > .header_menu {
-    // border: 5px solid red;
-    // width: 300px;
-    height: 50px;
-  }
-  & > .user_menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
+  & > :first-child {
+    overflow: hidden;
   }
 }
 </style>

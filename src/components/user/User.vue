@@ -1,5 +1,5 @@
 <template>
-  <div class="user_menu">
+  <div class="con">
     <div v-if="!isLogin">
       <RequestDialogVue
         title="登录"
@@ -32,7 +32,7 @@
         </template>
       </RequestDialogVue>
     </div>
-    <div class="container" v-else>
+    <div class="con_login" v-else>
       <div>用户名：{{ userStore.user.name }}</div>
       <el-button type="primary" @click="userStore.logout"> 退出登录 </el-button>
     </div>
@@ -52,10 +52,20 @@ const isLogin = computed(() => loginState.value === 1);
 </script>
 
 <style lang="less" scoped>
-.container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 200px;
+.con {
+  & > * {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding-right: 10px;
+    align-items: center;
+  }
+}
+.con_login {
+  & > * {
+    margin: 0 5px;
+  }
 }
 </style>

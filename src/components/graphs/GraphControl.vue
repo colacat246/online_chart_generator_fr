@@ -1,5 +1,5 @@
 <template>
-  <section class="graph-control-con">
+  <section class="graph-control-con border-left">
     <el-menu
       :ellipsis="false"
       default-active="1"
@@ -9,7 +9,7 @@
       <el-menu-item index="1" @click="panelType = 'data'">数据区</el-menu-item>
       <el-menu-item index="2" @click="panelType = 'conf'">背景区</el-menu-item>
     </el-menu>
-    <el-scrollbar class="control-comp">
+    <el-scrollbar>
       <component :is="panels[panelType][graph.$extra.graphTypeId]" />
     </el-scrollbar>
   </section>
@@ -22,7 +22,7 @@ import {
   Type1D,
   Type2C,
   Type2D,
-  Type2Dtest
+  Type2Dtest,
 } from '@/components/graphs/controlPanel';
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -43,19 +43,17 @@ const panels = {
 
 <style lang="less" scoped>
 .graph-control-con {
-  border-left: 1px solid var(--el-border-color);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: 100%;
-  .el-menu-graph-control {
+  & > :first-child {
     flex: 0;
     li {
       flex: 1;
     }
   }
-  .control-comp {
-    max-height: 100%;
+  & > :last-child {
+    flex: 1 0 0;
   }
 }
 </style>

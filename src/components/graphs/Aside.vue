@@ -73,7 +73,6 @@
 
 <script setup>
 import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
-import IconButton from '@/components/generalComponents/IconButton.vue';
 import FunctionMenuVue from '@/components/graphs/AsideComponents/FunctionMenu.vue';
 import DisplayAndInputVue from '@/components/generalComponents/DisplayAndInput.vue';
 import { graphTypes } from '@/config/graphConfs.js';

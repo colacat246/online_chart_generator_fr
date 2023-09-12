@@ -104,18 +104,24 @@ graphStore.$onAction(async ({ name, store, after }) => {
 
 <style lang="less" scoped>
 .graphs_con {
-  position: relative;
-  height: @main-height;
-  width: 100vw;
-  display: grid;
-  grid-template-columns: @aside-width @main-width;
+  display: flex;
+  align-items: stretch;
+  & > :first-child {
+    max-width: 300px;
+    min-width: 150px;
+    box-sizing: border-box;
+    flex: 1 1 20%;
+  }
+  & > :last-child {
+    box-sizing: border-box;
+    flex: 1 1 80%;
+  }
 }
 
 .hint_con {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   font-size: 25px;
   color: #525457;
 }

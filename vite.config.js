@@ -6,13 +6,12 @@ import fs from 'fs';
 
 const opts = {
   key: fs.readFileSync('./certs/key.pem'),
-  cert: fs.readFileSync('./certs/cert.pem')
+  cert: fs.readFileSync('./certs/cert.pem'),
 };
 
 export default defineConfig({
   server: {
     https: opts,
-    // https: true,
     proxy: {
       '/api': {
         target: 'https://127.0.0.1:8080',

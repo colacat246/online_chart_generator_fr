@@ -1,6 +1,6 @@
 <template>
   <div class="app_con">
-    <HeaderVue class="header"></HeaderVue>
+    <HeaderVue></HeaderVue>
     <RouterView />
     <FooterVue></FooterVue>
   </div>
@@ -16,10 +16,6 @@ import FooterVue from '@/components/Footer.vue';
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-rows: @header-height @main-height @footer-height;
-}
-.header {
-  z-index: 999;
-  height: 100%;
+  grid-template-rows: 50px auto 30px;
 }
 </style>
