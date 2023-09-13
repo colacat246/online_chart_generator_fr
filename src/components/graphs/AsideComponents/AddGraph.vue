@@ -6,7 +6,7 @@
     :confirm-fn="async () => await addNewGraphAPI(model, graphListStore)"
   >
     <template v-slot="{ toggleFn }">
-      <span @click="toggleFn($event)">新建图形</span>
+      <div class="container-full" @click="toggleFn($event)">新建图形</div>
     </template>
     <template #form>
       <el-form :model="model">

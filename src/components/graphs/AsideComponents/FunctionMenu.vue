@@ -10,7 +10,7 @@
     <template #dropdown>
       <el-dropdown-menu style="width: 180px">
         <el-dropdown-item>
-          <AddGraphVue></AddGraphVue>
+          <AddGraphVue class="container-full"></AddGraphVue>
         </el-dropdown-item>
         <el-dropdown-item @click="saveImage">下载当前图形</el-dropdown-item>
       </el-dropdown-menu>

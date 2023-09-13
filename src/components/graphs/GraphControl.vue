@@ -43,6 +43,7 @@ const panels = {
 
 <style lang="less" scoped>
 .graph-control-con {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow: hidden;

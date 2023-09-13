@@ -10,7 +10,7 @@
     <template v-for="curData in graph.series" :key="curData.$extra.id">
       <el-collapse-item :name="curData.$extra.id">
         <template #title>
-          <div class="title-con">
+          <div class="title-con show-icon-button-on-hover">
             <section
               class="title-item"
               title=""
@@ -18,7 +18,11 @@
             >
               {{ curData.name }}
             </section>
-            <DeleteSeries :series-id="curData.$extra.id"></DeleteSeries>
+            <DeleteButton
+              class="item-fix"
+              :item-to-delete="curData.$extra.id"
+              @delete-item="async (id) => await deleteSeriesAPI(id, graphStore)"
+            />
           </div>
         </template>
         <slot :series="curData" :graph="graph">
@@ -31,8 +35,9 @@
 
 <script setup>
 import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
-import DeleteSeries from '@/components/graphs/controlItems/DeleteSeries.vue';
+import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 import { nextTick, watch } from 'vue';
+import { deleteSeriesAPI } from '@/api/seriesAPI.js';
 
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -66,11 +71,4 @@ watch(
 );
 </script>
 
-<style lang="less" scoped>
-.title-con {
-  :deep(&:hover .del-button) {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-</style>
+<style lang="less" scoped></style>

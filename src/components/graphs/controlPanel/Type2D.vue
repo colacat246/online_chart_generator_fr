@@ -15,7 +15,11 @@
             >
               {{ curData.name }}
             </section>
-            <DeleteSeries :series-id="curData.$extra.id"></DeleteSeries>
+            <DeleteButton
+              class="item-fix"
+              :item-to-delete="curData.$extra.id"
+              @delete-item="async (id) => await deleteSeriesAPI(id, graphStore)"
+            />
           </div>
         </template>
         <div class="item-con">
@@ -85,7 +89,7 @@ import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
 import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
-import DeleteSeries from '@/components/graphs/controlItems/DeleteSeries.vue';
+import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
 
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -132,8 +136,6 @@ const updateData = (val, data, axis, placeToReplace) => {
   placeToReplace.data = res;
 };
 
-
-
 // 控制面板属性，结构为 属性 -> id
 let graphControlProps = {
   refs: {},
@@ -145,7 +147,6 @@ const setGraphRef = (el, curDataId) => {
     graphControlProps.refs[curDataId] = el;
   }
 };
-
 </script>
 
 <style lang="less" scoped>

@@ -6,6 +6,7 @@
     icon-color="#f56c6c"
     title="确认删除吗？"
     @confirm="emit('deleteItem', itemToDelete)"
+    :teleported="true"
   >
     <template #reference>
       <IconButton

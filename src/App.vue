@@ -17,5 +17,7 @@ import FooterVue from '@/components/Footer.vue';
   width: 100vw;
   display: grid;
   grid-template-rows: 50px auto 30px;
+  // 防止el-popconfirm撑大body
+  overflow: hidden;
 }
 </style>

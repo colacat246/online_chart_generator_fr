@@ -104,6 +104,8 @@ graphStore.$onAction(async ({ name, store, after }) => {
 
 <style lang="less" scoped>
 .graphs_con {
+  // border: 3px solid red;
+  box-sizing: border-box;
   display: flex;
   align-items: stretch;
   & > :first-child {

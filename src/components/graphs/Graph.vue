@@ -106,7 +106,7 @@ function scaling() {
     box-sizing: border-box;
     flex: 1 1 35%;
     max-width: 600px;
-    overflow: hidden;
+    // overflow: hidden;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <span>
     <!-- 按钮插槽 -->
-    <slot :toggleFn="toggleDialog">
+    <slot  :toggleFn="toggleDialog">
       <el-button @click="toggleDialog($event)">触发{{ title }}对话框</el-button>
     </slot>
     <el-dialog
