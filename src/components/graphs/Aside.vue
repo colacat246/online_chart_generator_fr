@@ -1,10 +1,10 @@
 <template>
   <div class="container container-column border-right">
     <FunctionMenuVue
-      class="container container-center border-bottom"
+      class="item-fix container container-center border-bottom"
       style="padding: 15px 0"
     />
-    <el-scrollbar>
+    <el-scrollbar style="flex: 1 1 0">
       <el-menu
         class="no-border"
         :default-active="activeGraphId"
