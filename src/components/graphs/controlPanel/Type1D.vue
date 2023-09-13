@@ -2,10 +2,6 @@
   <SeriesPanelContainerVue>
     <template v-slot="{ series: curData, graph: curGraph }">
       <div class="item-con">
-        <span>名称</span>
-        <input type="text" v-model="curData.name" />
-      </div>
-      <div class="item-con">
         <span>X轴</span>
         <input
           type="text"

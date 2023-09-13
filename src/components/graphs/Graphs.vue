@@ -81,6 +81,7 @@ graphListStore.$onAction(({ name, args, after }) => {
 
 graphStore.$subscribe((mutate, _) => {
   if (mutate.type === 'direct') {
+    console.log('here');
     graphStore.change();
   }
 });

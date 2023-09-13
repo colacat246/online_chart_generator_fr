@@ -27,13 +27,4 @@ const { itemToDelete } = defineProps(['itemToDelete']);
 const emit = defineEmits(['deleteItem']);
 </script>
 
-<style lang="less" scoped>
-.delete-button {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s, color 0.2s;
-  &:hover {
-    color: #f56c6c;
-  }
-}
-</style>
+<style lang="less" scoped></style>
