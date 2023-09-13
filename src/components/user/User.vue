@@ -33,8 +33,23 @@
       </RequestDialogVue>
     </div>
     <div class="con_login" v-else>
-      <div>用户名：{{ userStore.user.name }}</div>
-      <el-button type="primary" @click="userStore.logout"> 退出登录 </el-button>
+      <el-dropdown>
+        <span
+          class="cursor-pointer container container-align-center items-margin-hor-5px"
+        >
+          <span>{{ userStore.user.name }}</span>
+          <el-icon>
+            <arrow-down />
+          </el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu style="width: 100px" >
+            <el-dropdown-item @click="userStore.logout" class="container container-center">
+              退出登录
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>

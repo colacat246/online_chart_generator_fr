@@ -30,10 +30,4 @@ const { title, showOnOuterHover, hoverColor } = toRefs(props);
 .icon-button:hover {
   color: var(--hoverColor);
 }
-
-// .show_on_outer_hover {
-//   visibility: hidden;
-//   opacity: 0;
-//   transition: opacity 0.5s, color 0.2s;
-// }
 </style>

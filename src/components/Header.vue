@@ -18,7 +18,7 @@ import UserVue from '@/components/user/User.vue';
 <style lang="less" scoped>
 .header_con {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr minmax(280px, 2fr) 1fr;
   & > :first-child {
     overflow: hidden;
   }

@@ -110,11 +110,11 @@ graphStore.$onAction(async ({ name, store, after }) => {
     max-width: 300px;
     min-width: 150px;
     box-sizing: border-box;
-    flex: 1 1 20%;
+    flex: 1 1 15%;
   }
   & > :last-child {
     box-sizing: border-box;
-    flex: 1 1 80%;
+    flex: 1 1 85%;
   }
 }
 
