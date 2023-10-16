@@ -12,6 +12,16 @@
         />
       </div>
     </template>
+    <div class="item-con-double">
+      <section>
+        <span>水平位置</span>
+        <el-input-number size="small" v-model="curGraph.legend.right" />
+      </section>
+      <section>
+        <span>垂直位置</span>
+        <el-input-number size="small" v-model="curGraph.legend.top" />
+      </section>
+    </div>
     <div class="item-con">
       <span>方向</span>
       <el-switch
@@ -23,16 +33,6 @@
         active-value="verticle"
         inactive-value="horizontal"
       />
-    </div>
-    <div class="item-con-double">
-      <section>
-        <span>水平位置</span>
-        <el-input-number size="small" v-model="curGraph.legend.right" />
-      </section>
-      <section>
-        <span>垂直位置</span>
-        <el-input-number size="small" v-model="curGraph.legend.top" />
-      </section>
     </div>
   </el-collapse-item>
 </template>

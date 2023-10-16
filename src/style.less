@@ -40,7 +40,7 @@ input {
 
 .item-con {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin: 10px 20px 0 10px;
   font-size: 13px;
@@ -48,12 +48,12 @@ input {
     margin: 20px 0 0;
     width: 50px;
   }
-  & > input {
+  & > *:last-child {
     flex: 1;
   }
-  & > span {
+  & > *:first-child {
     margin-right: 5px;
-    min-width: 30px;
+    min-width: 50px;
   }
 }
 .item-con-double {
@@ -62,20 +62,27 @@ input {
   margin: 10px 20px 0 10px;
   & > section {
     display: flex;
-    & > * {
-      align-self: center;
-    }
-    & > span {
+    align-items: center;
+
+    & > *:first-child {
       margin-right: 5px;
-      min-width: 30px;
+      min-width: 50px;
     }
-    & > *:not(span) {
+    & > *:last-child {
       flex: 1;
     }
     &:first-child {
-      margin-right: 25px;
+      margin-right: 20px;
     }
   }
+}
+
+.switcher-item {
+  text-align: end;
+}
+
+.el-switch {
+  justify-content: flex-end;
 }
 
 .title-con {

@@ -3,7 +3,7 @@
     <span>配色</span>
     <section class="switcher">
       <el-color-picker v-model="color" size="default" />
-      <el-button type="primary" @click="resetColor($event)" size="small"
+      <el-button @click="resetColor($event)" size="small"
         >恢复默认配色</el-button
       >
     </section>
@@ -43,19 +43,17 @@ const resetColor = (evt) => {
   blurBtn(evt);
   color.value = defaultColor.value;
 };
-
 </script>
 
 <style lang="less" scoped>
 .switcher {
   display: flex;
-  // margin-left: 5px;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   & > * {
     flex: 1;
     &:last-child {
-      margin-left: 20px;
+      margin-left: 10px;
     }
   }
 }

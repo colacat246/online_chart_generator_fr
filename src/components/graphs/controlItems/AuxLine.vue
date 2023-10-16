@@ -14,19 +14,27 @@
         inactive-text="隐藏"
       />
     </div>
-    <div class="item-con">
-      <span>主辅助线颜色</span>
-      <el-color-picker v-model="axis.splitLine.lineStyle.color" size="default" 
-      :disabled="!axis.splitLine.show" 
-      />
-    </div>
-    <div class="item-con">
-      <span>主辅助线宽度</span>
-      <el-input-number v-model="axis.splitLine.lineStyle.width" size="small" 
-      :min="0"
-      :step="0.2"
-      :disabled="!axis.splitLine.show" 
-      />
+    <div class="item-con-double">
+      <section>
+        <span>主辅助线颜色</span>
+        <section class="switcher-item">
+          <el-color-picker
+            v-model="axis.splitLine.lineStyle.color"
+            size="default"
+            :disabled="!axis.splitLine.show"
+          />
+        </section>
+      </section>
+      <section>
+        <span>主辅助线宽度</span>
+        <el-input-number
+          v-model="axis.splitLine.lineStyle.width"
+          size="small"
+          :min="0"
+          :step="0.2"
+          :disabled="!axis.splitLine.show"
+        />
+      </section>
     </div>
     <div class="item-con">
       <span>副辅助线</span>
@@ -37,19 +45,27 @@
         inactive-text="隐藏"
       />
     </div>
-    <div class="item-con">
-      <span>副辅助线颜色</span>
-      <el-color-picker v-model="axis.minorSplitLine.lineStyle.color" size="default" 
-      :disabled="!axis.minorSplitLine.show" 
-      />
-    </div>
-    <div class="item-con">
-      <span>副辅助线宽度</span>
-      <el-input-number v-model="axis.minorSplitLine.lineStyle.width" size="small" 
-      :min="0"
-      :step="0.2"
-      :disabled="!axis.minorSplitLine.show" 
-      />
+    <div class="item-con-double">
+      <section>
+        <span>副辅助线颜色</span>
+        <setcion class="switcher-item">
+          <el-color-picker
+            v-model="axis.minorSplitLine.lineStyle.color"
+            size="default"
+            :disabled="!axis.minorSplitLine.show"
+          />
+        </setcion>
+      </section>
+      <section>
+        <span>副辅助线宽度</span>
+        <el-input-number
+          v-model="axis.minorSplitLine.lineStyle.width"
+          size="small"
+          :min="0"
+          :step="0.2"
+          :disabled="!axis.minorSplitLine.show"
+        />
+      </section>
     </div>
   </el-collapse-item>
 </template>

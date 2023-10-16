@@ -37,7 +37,7 @@ input:focus {
 }
 .item-con {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin: 10px 20px 0 10px;
   font-size: 13px;
@@ -46,12 +46,12 @@ input:focus {
   margin: 20px 0 0;
   width: 50px;
 }
-.item-con > input {
+.item-con > *:last-child {
   flex: 1;
 }
-.item-con > span {
+.item-con > *:first-child {
   margin-right: 5px;
-  min-width: 30px;
+  min-width: 50px;
 }
 .item-con-double {
   display: grid;
@@ -60,19 +60,23 @@ input:focus {
 }
 .item-con-double > section {
   display: flex;
+  align-items: center;
 }
-.item-con-double > section > * {
-  align-self: center;
-}
-.item-con-double > section > span {
+.item-con-double > section > *:first-child {
   margin-right: 5px;
-  min-width: 30px;
+  min-width: 50px;
 }
-.item-con-double > section > *:not(span) {
+.item-con-double > section > *:last-child {
   flex: 1;
 }
 .item-con-double > section:first-child {
-  margin-right: 25px;
+  margin-right: 20px;
+}
+.switcher-item {
+  text-align: end;
+}
+.el-switch {
+  justify-content: flex-end;
 }
 .title-con {
   display: flex;
