@@ -1,6 +1,6 @@
 <!-- 建立风琴抽屉，进行二级归类 -->
 <template>
-  <el-collapse accordion v-if="curGraph" v-model="activeData">
+  <el-collapse accordion v-if="curGraph" v-model="activeData" @change="handleChange">
     <TitleStyle name="title" :cur-graph="curGraph"></TitleStyle>
     <GraphArea name="graphArea" :cur-graph="curGraph"></GraphArea>
     <Legend name="legend" :cur-graph="curGraph"></Legend>
@@ -31,7 +31,10 @@ import { useGraphStore } from '@/store/graph.js';
 const graphStore = useGraphStore();
 const { graph: curGraph } = storeToRefs(graphStore);
 
-const activeData = ref('xAuxLine');
+const activeData = ref('title');
+const handleChange = name => {
+   activeData.value= name;
+}
 </script>
 
 <style lang="less" scoped></style>

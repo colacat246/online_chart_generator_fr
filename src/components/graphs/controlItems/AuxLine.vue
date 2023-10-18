@@ -48,13 +48,13 @@
     <div class="item-con-double">
       <section>
         <span>副辅助线颜色</span>
-        <setcion class="switcher-item">
+        <section class="switcher-item">
           <el-color-picker
             v-model="axis.minorSplitLine.lineStyle.color"
             size="default"
             :disabled="!axis.minorSplitLine.show"
           />
-        </setcion>
+        </section>
       </section>
       <section>
         <span>副辅助线宽度</span>

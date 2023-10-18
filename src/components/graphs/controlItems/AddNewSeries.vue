@@ -15,7 +15,7 @@
     :loading-area="drawAreaCon"
   >
     <template v-slot="{ toggleFn }">
-      <el-button type="primary" size="small" @click="toggleFn($event)"
+      <el-button link type="primary" size="small" @click="toggleFn($event)" style="padding: 5px 0"
         >添加新数据组</el-button
       >
     </template>

@@ -18,12 +18,11 @@
         />
       </div>
       <el-alert
-        v-show="curData.axisWarn"
+        v-if="isAlert"
         class="axis-warning"
         title="X轴与Y轴数据个数不一致"
         type="warning"
       />
-
       <LineStyleVue
         class="item-con-double"
         v-model="curData.lineStyle.type"
@@ -61,6 +60,9 @@ import SeriesPanelContainerVue from '@/components/graphs/controlItems/SeriesPane
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
 import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
 import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
+import { ref } from 'vue';
+
+const isAlert = ref(false);
 
 // 转换input的输出、输入
 const unzipData = (val, axis) => {
@@ -68,7 +70,6 @@ const unzipData = (val, axis) => {
   return val.map((i) => i[axis]).filter((i) => !isNaN(i));
 };
 const updateData = (val, data, axis, placeToReplace) => {
-  placeToReplace.axisWarn = false;
   val = val
     .trim()
     .replace(/^,/, '')
@@ -82,18 +83,16 @@ const updateData = (val, data, axis, placeToReplace) => {
   axis = axis === 'x' ? 0 : 1;
   otherAxis = otherAxis === 'x' ? 0 : 1;
 
-  // BUG 坐标数量检查的显示
   const maxLengh =
     val.length > otherData.length ? val.length : otherData.length;
   const res = [];
   for (let i = 0; i < maxLengh; i++) {
     if (!val[i] && val[i] !== 0) {
       val.push(NaN);
-      placeToReplace.axisWarn = true;
+      isAlert.value = true;
     }
     if (!otherData[i] && otherData[i] !== 0) {
       otherData.push(NaN);
-      placeToReplace.axisWarn = true;
     }
     const arr = Array(2);
     arr[axis] = val[i];
@@ -101,6 +100,14 @@ const updateData = (val, data, axis, placeToReplace) => {
     res.push(arr);
   }
   placeToReplace.data = res;
+  // 坐标数量检查，放到宏任务队列里才能被反复触发
+  Promise.resolve()
+    .then(() => {
+      isAlert.value = false;
+    })
+    .then(() => {
+      isAlert.value = placeToReplace.data.flat().includes(NaN);
+    });
 };
 </script>
 

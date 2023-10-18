@@ -22,17 +22,36 @@
         <el-input-number size="small" v-model="curGraph.legend.top" />
       </section>
     </div>
-    <div class="item-con">
-      <span>方向</span>
-      <el-switch
-        size="small"
-        v-model="curGraph.legend.orient"
-        @click.stop
-        active-text="纵向"
-        inactive-text="横向"
-        active-value="verticle"
-        inactive-value="horizontal"
-      />
+    <div class="item-con-double">
+      <section>
+        <span>方向</span>
+        <el-switch
+          size="small"
+          v-model="curGraph.legend.orient"
+          @click.stop
+          active-text="纵向"
+          inactive-text="横向"
+          active-value="verticle"
+          inactive-value="horizontal"
+        />
+      </section>
+      <section>
+        <span>字号</span>
+        <el-input-number
+          size="small"
+          v-model="curGraph.legend.textStyle.fontSize"
+        />
+      </section>
+    </div>
+    <div class="item-con-double">
+      <section>
+        <span>图例宽度</span>
+        <el-input-number size="small" v-model="curGraph.legend.itemWidth" />
+      </section>
+      <section>
+        <span>图例高度</span>
+        <el-input-number size="small" v-model="curGraph.legend.itemHeight" />
+      </section>
     </div>
   </el-collapse-item>
 </template>

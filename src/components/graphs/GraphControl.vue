@@ -22,7 +22,8 @@ import {
   Type1D,
   Type2C,
   Type2D,
-  Type2Dtest,
+  Type3C,
+  Type3D,
 } from '@/components/graphs/controlPanel';
 import { storeToRefs } from 'pinia';
 import { useGraphStore } from '@/store/graph.js';
@@ -32,11 +33,13 @@ const panelType = ref('data');
 const panels = {
   data: {
     1: Type1D,
-    2: Type2Dtest,
+    2: Type2D,
+    3: Type3D,
   },
   conf: {
     1: Type1C,
     2: Type2C,
+    3: Type3C,
   },
 };
 </script>

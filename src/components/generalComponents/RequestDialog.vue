@@ -1,32 +1,36 @@
 <template>
-  <slot :toggleFn="toggleDialog">
-    <el-button @click="toggleDialog($event)">触发{{ title }}对话框</el-button>
-  </slot>
-  <el-dialog
-    v-model="isVisible"
-    :title="title"
-    width="30%"
-    align-center
-    append-to-body
-  >
-    <slot name="form">
-      <el-form v-if="model" :model="model">
-        <template v-for="item in model" :key="item.label">
-          <el-form-item v-if="item.show" :label="item.label">
-            <el-input v-model="item.val" autocomplete="off" />
-          </el-form-item>
-        </template>
-      </el-form>
-      <span v-else>mo model, add it manually</span>
+  <div class="container container-align-center">
+    <slot :toggleFn="toggleDialog">
+      <el-button @click="toggleDialog($event)">触发{{ title }}对话框</el-button>
     </slot>
-    <el-alert v-if="isAlert" :title="alertContent" type="warning" />
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="isVisible = false">取消</el-button>
-        <el-button type="primary" @click="confirm">{{ confirmName }}</el-button>
-      </span>
-    </template>
-  </el-dialog>
+    <el-dialog
+      v-model="isVisible"
+      :title="title"
+      width="30%"
+      align-center
+      append-to-body
+    >
+      <slot name="form">
+        <el-form v-if="model" :model="model">
+          <template v-for="item in model" :key="item.label">
+            <el-form-item v-if="item.show" :label="item.label">
+              <el-input v-model="item.val" autocomplete="off" />
+            </el-form-item>
+          </template>
+        </el-form>
+        <span v-else>mo model, add it manually</span>
+      </slot>
+      <el-alert v-if="isAlert" :title="alertContent" type="warning" />
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="isVisible = false">取消</el-button>
+          <el-button type="primary" @click="confirm">{{
+            confirmName
+          }}</el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>

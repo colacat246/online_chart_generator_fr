@@ -1,159 +1,123 @@
 <template>
-  <el-collapse
-    accordion
-    v-if="graph && graph.series"
-    v-model="activeSeriesData"
-  >
-    <template v-for="curData in graph.series" :key="curData.$extra.id">
-      <el-collapse-item :name="curData.$extra.id">
-        <template #title>
-          <div class="title-con">
-            <section
-              class="title-item"
-              title=""
-              :ref="(el) => setGraphRef(el, curData.$extra.id)"
-            >
-              {{ curData.name }}
-            </section>
-            <DeleteButton
-              class="item-fix"
-              :item-to-delete="curData.$extra.id"
-              @delete-item="async (id) => await deleteSeriesAPI(id, graphStore)"
-            />
-          </div>
-        </template>
-        <div class="item-con">
-          <span>名称</span>
-          <input type="text" v-model="curData.name" />
-        </div>
-        <div class="item-con">
-          <span>X轴</span>
-          <input
-            type="text"
-            :value="unzipData(curData.data, 'x')"
-            @change="
-              updateData($event.target.value, curData.data, 'x', curData)
-            "
-          />
-        </div>
-        <div class="item-con">
-          <span>Y轴</span>
-          <input
-            type="text"
-            :value="unzipData(curData.data, 'y')"
-            @change="
-              updateData($event.target.value, curData.data, 'y', curData)
-            "
-          />
-        </div>
-        <el-alert
-          v-show="curData.axisWarn"
-          class="axis-warning"
-          title="X轴与Y轴数据个数不一致"
-          type="warning"
+  <SeriesPanelContainerVue>
+    <template v-slot="{ series, graph }">
+      <div class="item-con">
+        <span>横轴图例</span>
+        <input
+          type="text"
+          :value="unzipDataX(graph.xAxis.data)"
+          @change="updateDataX($event.target.value, graph.xAxis)"
         />
-
-        <div class="item-con-double">
-          <section>
-            <span>平滑</span>
-            <el-input-number
-              size="small"
-              v-model="curData.smooth"
-              :min="0"
-              :max="5"
-              :step="0.02"
-              :value-on-clear="0"
+      </div>
+      <div class="item-con">
+        <span>数据</span>
+        <input
+          type="text"
+          :value="unzipData(series.data)"
+          @change="updateData($event.target.value, series)"
+        />
+      </div>
+      <el-alert
+        v-if="isAlert"
+        class="axis-warning"
+        :title="alertText"
+        type="warning"
+      />
+      <div class="item-con-double">
+        <section>
+          <span>柱宽度</span>
+          <el-slider
+            v-model="series.barWidth"
+            :show-tooltip="false"
+            :min="20"
+            :max="200"
+            :step="1"
+          />
+        </section>
+        <SwitchColorVue
+          v-model="series.color"
+          :series="graph.series"
+          :id="series.$extra.id"
+        ></SwitchColorVue>
+      </div>
+      <div class="item-con-double">
+        <section>
+          <span>图例</span>
+          <el-switch
+            class="bold-switcher"
+            size="small"
+            active-text="显示"
+            inactive-text="隐藏"
+            v-model="series.label.show"
+          />
+        </section>
+        <section>
+          <span>位置</span>
+          <el-select
+            class="el-select"
+            v-model="series.label.position"
+            size="small"
+            :disabled="!series.label.show"
+          >
+            <el-option
+              v-for="item in legendPlaceOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             />
-          </section>
-          <SwitchColorVue
-            v-model="curData.color"
-            :series="graph.series"
-            :id="curData.$extra.id"
-          ></SwitchColorVue>
-        </div>
-        <SymbolSelectorVue
-          v-model="curData.symbol"
-          v-model:symbolSize="curData.symbolSize"
-          class="item-con-double"
-        ></SymbolSelectorVue>
-      </el-collapse-item>
+          </el-select>
+        </section>
+      </div>
     </template>
-    <div class="flex_con">
-      <AddNewSeries></AddNewSeries>
-    </div>
-  </el-collapse>
+  </SeriesPanelContainerVue>
 </template>
 
 <script setup>
+import SeriesPanelContainerVue from '@/components/graphs/controlItems/SeriesPanelContainer.vue';
 import SwitchColorVue from '@/components/graphs/controlItems/SwitchColor.vue';
-import SymbolSelectorVue from '@/components/graphs/controlItems/SymbolSelector.vue';
-import LineStyleVue from '@/components/graphs/controlItems/LineStyle.vue';
-import AddNewSeries from '@/components/graphs/controlItems/AddNewSeries.vue';
-import DeleteButton from '@/components/generalComponents/DeleteButton.vue';
+import { ref } from 'vue';
 
-import { storeToRefs } from 'pinia';
-import { useGraphStore } from '@/store/graph.js';
-const graphStore = useGraphStore();
-const { graph, activeSeriesData } = storeToRefs(graphStore);
+const isAlert = ref(false);
+const alertTexts = ['数据个数与横轴不一致', '数据不合规范'];
+const alertText = ref('');
 
-// 转换input的输出、输入
-const unzipData = (val, axis) => {
-  axis = axis === 'x' ? 0 : 1;
-  return val.map((i) => i[axis]).filter((i) => !isNaN(i));
+const legendPlaceOptions = [
+  { label: '内部', value: 'inside' },
+  { label: '外部', value: 'outside' },
+];
+
+const unzipData = (data) => {
+  return data.join(', ');
 };
-const updateData = (val, data, axis, placeToReplace) => {
-  placeToReplace.axisWarn = false;
-  val = val
+
+const updateData = (newVal, series) => {
+  isAlert.value = false;
+  const val = newVal
     .trim()
     .replace(/^,/, '')
     .replace(/,$/, '')
     .split(/, *,?/)
     .map((i) => parseFloat(i));
-
-  let otherAxis = axis === 'x' ? 'y' : 'x';
-  const otherData = unzipData(data, otherAxis);
-
-  axis = axis === 'x' ? 0 : 1;
-  otherAxis = otherAxis === 'x' ? 0 : 1;
-
-  const maxLengh =
-    val.length > otherData.length ? val.length : otherData.length;
-  const res = [];
-  for (let i = 0; i < maxLengh; i++) {
-    if (!val[i] && val[i] !== 0) {
-      val.push(NaN);
-      placeToReplace.axisWarn = true;
-    }
-    if (!otherData[i] && otherData[i] !== 0) {
-      otherData.push(NaN);
-      placeToReplace.axisWarn = true;
-    }
-    const arr = Array(2);
-    arr[axis] = val[i];
-    arr[otherAxis] = otherData[i];
-    res.push(arr);
+  // 检查
+  if (val.includes(NaN)) {
+    alertText.value = alertTexts[1];
+    Promise.resolve().then(() => {
+      isAlert.value = true;
+    });
+    return;
   }
-  placeToReplace.data = res;
+  series.data = val;
 };
 
-// 控制面板属性，结构为 属性 -> id
-let graphControlProps = {
-  refs: {},
+const unzipDataX = (data) => {
+  return data.join(', ');
 };
-
-// 折叠面板展开时不显示提示title
-const setGraphRef = (el, curDataId) => {
-  if (el) {
-    graphControlProps.refs[curDataId] = el;
-  }
+const updateDataX = (newVal, xAsix) => {
+  const val = newVal.split(/, *,?/).map((i) => {
+    return i.trim();
+  });
+  xAsix.data = val;
 };
 </script>
 
-<style lang="less" scoped>
-.title-con {
-  :deep(&:hover .del-button) {
-    visibility: visible;
-    opacity: 1;
-  }
-}
-</style>
+<style lang="less" scoped></style>
