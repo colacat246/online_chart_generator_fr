@@ -63,6 +63,7 @@ const useInnerUserStore = defineStore('userStore', {
   },
   getters: {
     isLogin: (state) => state.loginState === 1,
+    userNameGetter: (state) => state.user.name,
   },
 });
 

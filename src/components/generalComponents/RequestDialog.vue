@@ -12,11 +12,15 @@
     >
       <slot name="form">
         <el-form v-if="model" :model="model">
-          <template v-for="item in model" :key="item.label">
-            <el-form-item v-if="item.show" :label="item.label">
+          <div v-for="item in model" :key="item.label" class="item-con">
+            <template v-if="item.show">
+              <span>{{ item.label }}</span>
+              <el-input v-model="item.val" autocomplete="off" :type="Object.keys(item).includes('isPassword') ? 'password' : null"/>
+            </template>
+            <!-- <el-form-item v-if="item.show" :label="item.label">
               <el-input v-model="item.val" autocomplete="off" />
-            </el-form-item>
-          </template>
+            </el-form-item> -->
+          </div>
         </el-form>
         <span v-else>mo model, add it manually</span>
       </slot>

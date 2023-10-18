@@ -43,7 +43,7 @@
         <span>字体大小</span>
         <el-input-number
           size="small"
-          v-model="curGraph.series.label.normal.textStyle.fontSize"
+          v-model="curGraph.series.label.fontSize"
         />
       </section>
       <section>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, toRefs } from 'vue';
+import { toRefs } from 'vue';
 const props = defineProps(['curGraph']);
 const { curGraph } = toRefs(props);
 </script>

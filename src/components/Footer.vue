@@ -1,6 +1,9 @@
 <template>
   <div class="border-top footer-con">
-      <InfoAlertVue class="info"></InfoAlertVue>
+    <div class="dev-info" style="grid-area: left">
+      developed and maintained by colacat246
+    </div>
+    <InfoAlertVue style="grid-area: right"></InfoAlertVue>
   </div>
 </template>
 
@@ -10,11 +13,15 @@ import InfoAlertVue from '@/components/generalComponents/InfoAlert.vue';
 
 <style lang="less" scoped>
 .footer-con {
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  .info {
-    width: 350px;
+  display: grid;
+  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-areas: 'left middle right';
+  .dev-info {
+    display: flex;
+    align-items: center;
+    color: #525457;
+    font-size: 13px;
+    padding-left: 15px;
   }
 }
 </style>

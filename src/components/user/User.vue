@@ -6,9 +6,15 @@
         confirm-name="登录"
         :model="[
           { label: '用户名', key: 'userName', val: 'tom', show: true },
-          { label: '密码', key: 'password', val: '556677', show: true },
+          {
+            label: '密码',
+            key: 'password',
+            val: '556677',
+            show: true,
+            isPassword: true,
+          },
         ]"
-        :confirmFn="async (data) => loginAPI(data, userStore)"
+        :confirmFn="async (data) => await loginAPI(data, userStore)"
       >
         <template v-slot="{ toggleFn }">
           <el-button text type="primary" @click="toggleFn($event)"
@@ -20,8 +26,14 @@
         title="注册"
         confirm-name="注册"
         :model="[
-          { label: '用户名', key: 'userName', val: 'tom', show: true },
-          { label: '密码', key: 'password', val: '556677', show: true },
+          { label: '用户名', key: 'userName', val: '', show: true },
+          {
+            label: '密码',
+            key: 'password',
+            val: '',
+            show: true,
+            isPassword: true,
+          },
         ]"
         :confirmFn="async (data) => await registerAPI(data, userStore)"
       >
@@ -43,9 +55,42 @@
           </el-icon>
         </span>
         <template #dropdown>
-          <el-dropdown-menu style="width: 100px" >
-            <el-dropdown-item @click="userStore.logout" class="container container-center">
-              退出登录
+          <el-dropdown-menu >
+            <el-dropdown-item>
+              <RequestDialogVue
+                title="修改密码"
+                confirm-name="确定"
+                :confirm-fn="async (data) => await changePwAPI(data, userStore)"
+                :model="[
+                  {
+                    label: '用户名',
+                    key: 'userName',
+                    val: userStore.userNameGetter,
+                    show: false,
+                  },
+                  {
+                    label: '旧密码',
+                    key: 'oriPassword',
+                    val: '',
+                    show: true,
+                    isPassword: true,
+                  },
+                  {
+                    label: '新密码',
+                    key: 'newPassword',
+                    val: '',
+                    show: true,
+                    isPassword: true,
+                  },
+                ]"
+              >
+                <template v-slot="{ toggleFn }">
+                  <span @click="toggleFn($event)">修改密码</span>
+                </template>
+              </RequestDialogVue>
+            </el-dropdown-item>
+            <el-dropdown-item @click="userStore.logout">
+              <span>退出登录</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -57,7 +102,7 @@
 <script setup>
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
 import { computed } from 'vue';
-import { loginAPI, registerAPI } from '@/api/userAPI';
+import { loginAPI, registerAPI, changePwAPI } from '@/api/userAPI';
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/store/user';
 const userStore = useUserStore();

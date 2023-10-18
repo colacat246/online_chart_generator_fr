@@ -40,8 +40,6 @@ const config = {
   padding: 0px 10px;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
-  width: 100%;
   font-size: 13px;
   & > span {
     overflow: hidden;
