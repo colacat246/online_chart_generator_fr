@@ -1,15 +1,15 @@
 <template>
   <div class="con">
-    <div v-if="!isLogin">
+    <div v-if="!userStore.isLogin">
       <RequestDialogVue
         title="登录"
         confirm-name="登录"
-        :model="[
-          { label: '用户名', key: 'userName', val: 'tom', show: true },
+        :form-data="[
+          { label: '用户名', key: 'userName', val: '', show: true },
           {
             label: '密码',
             key: 'password',
-            val: '556677',
+            val: '',
             show: true,
             isPassword: true,
           },
@@ -25,7 +25,7 @@
       <RequestDialogVue
         title="注册"
         confirm-name="注册"
-        :model="[
+        :form-data="[
           { label: '用户名', key: 'userName', val: '', show: true },
           {
             label: '密码',
@@ -61,7 +61,7 @@
                 title="修改密码"
                 confirm-name="确定"
                 :confirm-fn="async (data) => await changePwAPI(data, userStore)"
-                :model="[
+                :form-data="[
                   {
                     label: '用户名',
                     key: 'userName',
@@ -101,14 +101,13 @@
 
 <script setup>
 import RequestDialogVue from '@/components/generalComponents/RequestDialog.vue';
-import { computed } from 'vue';
+// import { computed } from 'vue';
 import { loginAPI, registerAPI, changePwAPI } from '@/api/userAPI';
-import { storeToRefs } from 'pinia';
+// import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/store/user';
 const userStore = useUserStore();
 
-const { loginState } = storeToRefs(userStore);
-const isLogin = computed(() => loginState.value === 1);
+// const isLogin = computed(() => userStore.isLogin);
 </script>
 
 <style lang="less" scoped>

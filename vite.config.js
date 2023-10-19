@@ -10,6 +10,9 @@ const opts = {
 };
 
 export default defineConfig({
+  build: {
+    sourcemap: false,
+  },
   server: {
     // https: opts,
     proxy: {
@@ -18,8 +21,8 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         // rewrite: path => path.replace(/)
-      }
-    }
+      },
+    },
   },
   plugins: [
     vue(),

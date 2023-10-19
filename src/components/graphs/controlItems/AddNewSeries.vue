@@ -2,7 +2,7 @@
   <RequestDialogVue
     title="添加新数据组"
     confirm-name="确定"
-    :model="[
+    :form-data="[
       { label: '名称', key: 'seriesName', val: '新数据组', show: true },
       {
         label: '',

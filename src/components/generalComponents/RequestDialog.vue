@@ -11,15 +11,18 @@
       append-to-body
     >
       <slot name="form">
-        <el-form v-if="model" :model="model">
-          <div v-for="item in model" :key="item.label" class="item-con">
+        <el-form v-if="myModel" :model="myModel">
+          <div v-for="(item, idx) in myModel" :key="item.key" class="item-con">
             <template v-if="item.show">
               <span>{{ item.label }}</span>
-              <el-input v-model="item.val" autocomplete="off" :type="Object.keys(item).includes('isPassword') ? 'password' : null"/>
+              <el-input
+                v-model="item.val"
+                autocomplete="off"
+                :type="
+                  Object.keys(item).includes('isPassword') ? 'password' : null
+                "
+              />
             </template>
-            <!-- <el-form-item v-if="item.show" :label="item.label">
-              <el-input v-model="item.val" autocomplete="off" />
-            </el-form-item> -->
           </div>
         </el-form>
         <span v-else>mo model, add it manually</span>
@@ -44,7 +47,7 @@ import { ElLoading } from 'element-plus';
 const props = defineProps({
   title: String,
   confirmName: String,
-  model: Array,
+  formData: Array,
   confirmFn: Function, // 这个回调函数用于发送数据，在定义的时候有一个参数obj，是表单数据
   after: {
     // 方法完成后的回调
@@ -56,15 +59,8 @@ const props = defineProps({
     type: Object,
   },
 });
-const {
-  title,
-  confirmName,
-  model: modelProp,
-  confirmFn,
-  after,
-  loadingArea,
-} = toRefs(props);
-const model = reactive(modelProp);
+const { title, confirmName, confirmFn, after, loadingArea } = toRefs(props);
+const myModel = props.formData ? reactive(props.formData) : null;
 
 const blurBtn = inject('blurBtn');
 const isVisible = ref(false);
@@ -83,8 +79,8 @@ async function confirm() {
 
     isAlert.value = false;
 
-    if (model.value) {
-      const obj = reform(model.value);
+    if (myModel) {
+      const obj = reform(myModel);
       await confirmFn.value(obj);
     } else {
       await confirmFn.value();

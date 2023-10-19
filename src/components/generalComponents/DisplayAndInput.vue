@@ -6,7 +6,7 @@
     <RequestDialogVue
       title="修改名称"
       confirm-name="确定"
-      :model="[
+      :form-data="[
         {
           label: '图id',
           key: 'createdGraphId',
