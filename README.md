@@ -1,10 +1,35 @@
-# online_charts
+# README
+
+## 版本
+
+v0.1
+
+## 描述
+
+这是一个快速在线编辑图表的工具网站前端模块，用户可通过在线输入数据快速创建图表，并配置样式，并提供数据保存、图像下载功能。目前有折线图、柱状图、饼图三种图表，可根据需要拓展更多图形。
 
 ## 功能
 
-* 保存进度
-* 多个绘图
-* 保存图片
+* 创建多个图表
+* 数据输入
+* 多种自定义样式配置
+* 保存 / 自动保存数据
+* 保存图表至本地
+* 基于token的自动登录
+* 页面基于屏幕宽度自适应
+
+## 安装
+
+前端：
+
+```sh
+git clone https://github.com/colacat246/online_chart_generator_fr.git
+# 进入项目路径后
+npm run build
+npm run preview
+```
+
+后端：[见此](https://github.com/colacat246/online_chart_generator_ba)
 
 ## 技术栈
 
@@ -12,30 +37,15 @@
 * echarts
 * element-plus
 * pinia
+* vue-router
+* axios
+* vite
 
-## 问题解决方法
+## 项目效果截图
 
-1. 画布尺寸选为固定，使用css的scale函数完成不同屏幕的匹配
+![登录界面](readme_image/1.png)
+![主界面](readme_image/2.png)
 
-## notes
+## 试用
 
-获取曲线颜色：`chartInstance.getVisual({ seriesIndex: 1 }, 'color');`
-
-## TODO
-
-* 防抖
-* 登录框美化
-* Dialog美化
-* 离开页面前保存数据
-* edge缩放比例问题
-* token过期问题
-* 数据批量插入
-* 处理404和没有的router path
-* 处理echarts解析错误
-* latex支持
-* 字体大小等用相对尺寸，跟着图片分辨率一起调整
-* 写个按钮换算字体大小等相对关系
-
-## ref
-
-[编写vite插件](https://juejin.cn/post/7075678169122439181)
+[点击链接玩一玩吧](http://8.134.162.35:7800/)
